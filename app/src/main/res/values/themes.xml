@@ -1,0 +1,97 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!-- Theme #1 -->
+    <style name="AppTheme_darkBlue" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">#335a6c</item>
+        <item name="colorActionBarCheckmate">#3d6b81</item>
+        <!--<item name="titleTextColor">@android:color/white</item>-->
+        <!--<item name="subtitleTextColor">@android:color/white</item>-->
+        <!-- android:textColorSecondary is the color of the menu overflow icon (three vertical dots) -->
+        <!--<item name="android:textColorSecondary">@color/white</item>-->
+        <item name="colorTextBubbleBar">#094453</item>
+        <item name="colorBackgroundCheckmate">#335a6c</item>
+
+        <item name="alphaBarInRangeBackground">45</item>
+        <item name="colorBarInRangeBackground">#fef5f8</item>
+
+        <item name="colorInRange">#99c565</item>
+        <item name="colorOutOfRange">#e4d24a</item>
+        <item name="colorVeryOutOfRange">#ee8441</item>
+        <item name="colorNotEnoughData">#AEAEAE</item>
+
+        <item name="colorDayLineInRange">#ffffff</item>
+        <item name="alphaDayLineInRange">70</item>
+
+        <item name="colorDayLine">#ffffff</item>
+    </style>
+    <!-- Theme #2 -->
+    <style name="AppTheme_Blue" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">#1b788f</item>
+        <item name="colorActionBarCheckmate">#208faa</item>
+
+        <item name="colorTextBubbleBar">#155c6d</item>
+
+        <item name="colorBackgroundCheckmate">#1b788f</item>
+
+        <item name="alphaBarInRangeBackground">45</item>
+        <item name="colorBarInRangeBackground">#fef5f8</item>
+
+        <item name="colorInRange">#99c565</item>
+        <item name="colorOutOfRange">#e4d24a</item>
+        <item name="colorVeryOutOfRange">#ee8441</item>
+        <item name="colorNotEnoughData">#AEAEAE</item>
+
+        <item name="colorDayLineInRange">#ffffff</item>
+        <item name="alphaDayLineInRange">70</item>
+
+        <item name="colorDayLine">#ffffff</item>
+
+    </style>
+    <!-- Theme #3 -->
+    <style name="AppTheme_Green" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">#227253</item>
+        <item name="colorActionBarCheckmate">#288863</item>
+
+        <item name="colorTextBubbleBar">#175f43</item>
+
+        <item name="colorBackgroundCheckmate">#227253</item>
+
+        <item name="alphaBarInRangeBackground">45</item>
+        <item name="colorBarInRangeBackground">#fef5f8</item>
+
+        <item name="colorInRange">#99c565</item>
+        <item name="colorOutOfRange">#e4d24a</item>
+        <item name="colorVeryOutOfRange">#ee8441</item>
+        <item name="colorNotEnoughData">#AEAEAE</item>
+
+        <item name="colorDayLineInRange">#ffffff</item>
+        <item name="alphaDayLineInRange">70</item>
+
+        <item name="colorDayLine">#ffffff</item>
+
+    </style>
+    <!-- Theme #4 -->
+    <style name="AppTheme_Violet" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:targetApi="l">#663c4c</item>
+        <item name="colorActionBarCheckmate">#744456</item>
+
+        <item name="colorTextBubbleBar">#50162d</item>
+
+        <item name="colorBackgroundCheckmate">#663c4c</item>
+
+        <item name="alphaBarInRangeBackground">45</item>
+        <item name="colorBarInRangeBackground">#fef5f8</item>
+
+        <item name="colorInRange">#99c565</item>
+        <item name="colorOutOfRange">#e4d24a</item>
+        <item name="colorVeryOutOfRange">#ee8441</item>
+        <item name="colorNotEnoughData">#AEAEAE</item>
+
+        <item name="colorDayLineInRange">#ffffff</item>
+        <item name="alphaDayLineInRange">70</item>
+
+        <item name="colorDayLine">#ffffff</item>
+
+    </style>
+
+</resources>

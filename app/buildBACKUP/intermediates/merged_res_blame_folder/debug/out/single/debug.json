@@ -1,0 +1,190 @@
+[
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_reload_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xxhdpi\\reload_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_checkmate_owl_green_foreground.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xxhdpi\\checkmate_owl_green_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_notification_icon_owl2.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xxxhdpi\\notification_icon_owl2.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_checkmate_owl_green.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xxhdpi\\checkmate_owl_green.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_checkmate_owl_green_round.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xhdpi\\checkmate_owl_green_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_notification_icon_owl.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-mdpi\\notification_icon_owl.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_notification_icon_owl.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xxhdpi\\notification_icon_owl.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\xml_preferences.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\xml\\preferences.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_notification_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-mdpi\\notification_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_notification_icon_owl2.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xxhdpi\\notification_icon_owl2.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_notification_icon_owl.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xxxhdpi\\notification_icon_owl.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_settings_about.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\layout\\activity_settings_about.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_notification_icon_owl2.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-mdpi\\notification_icon_owl2.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\menu_menu.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\menu\\menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_reload_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xhdpi\\reload_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_checkmate_owl_green.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xhdpi\\checkmate_owl_green.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_notification_icon_owl.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xhdpi\\notification_icon_owl.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_notification_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xhdpi\\notification_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_checkmate_owl_green_round.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xxhdpi\\checkmate_owl_green_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi_notification_icon.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-anydpi\\notification_icon.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi_reload_icon.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-anydpi\\reload_icon.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_checkmate_owl_green_round.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-anydpi-v26\\checkmate_owl_green_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_checkmate_owl_green_foreground.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xhdpi\\checkmate_owl_green_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_checkmate_owl_green_round.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-hdpi\\checkmate_owl_green_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_checkmate_owl_green_background.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable\\checkmate_owl_green_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_notification_icon_owl.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-hdpi\\notification_icon_owl.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_checkmate_owl_green_round.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xxxhdpi\\checkmate_owl_green_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_checkmate_owl_green.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-anydpi-v26\\checkmate_owl_green.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_circle.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable\\circle.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_reload_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-hdpi\\reload_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_checkmate_owl_green_round.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-mdpi\\checkmate_owl_green_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_checkmate_owl_green_foreground.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-hdpi\\checkmate_owl_green_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_checkmate_owl_green.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-mdpi\\checkmate_owl_green.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_notification_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xxhdpi\\notification_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_notification_icon_owl2.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-hdpi\\notification_icon_owl2.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_checkmate_owl_green_foreground.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-mdpi\\checkmate_owl_green_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_checkmate_owl_green.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-hdpi\\checkmate_owl_green.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_checkmate_owl_green.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xxxhdpi\\checkmate_owl_green.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_reload_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-mdpi\\reload_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_checkmate_owl_green_foreground.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\mipmap-xxxhdpi\\checkmate_owl_green_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable_rectangle.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable\\rectangle.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_notification_icon_owl2.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-xhdpi\\notification_icon_owl2.png"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_settings.xml.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\layout\\activity_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_notification_icon.png.flat",
+        "source": "C:\\Users\\Nils\\StudioProjects\\CheckMate\\app\\src\\main\\res\\drawable-hdpi\\notification_icon.png"
+    }
+]

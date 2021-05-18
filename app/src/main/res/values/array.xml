@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colorTheme">
+        <item>darkBlue</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>violet</item>
+    </string-array>
+    <string-array name="colorThemeValues">
+        <item>Dark Blue</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Violet</item>
+    </string-array>
+
+    <string-array name="glucoseUnit">
+        <item>mgdl</item>
+        <item>mmoll</item>
+    </string-array>
+    <string-array name="glucoseUnitValues">
+        <item>mg/dl</item>
+        <item>mmol/l</item>
+    </string-array>
+</resources>

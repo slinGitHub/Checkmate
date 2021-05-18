@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">20210207_CheckMate2</string>
+    <string name="VeryHighHbA1c"><![CDATA[>7]]></string>
+    <string name="InRangeHbA1c">OK</string>
+    <string name="HighHbA1c"><![CDATA[>6.3]]></string>
+    <string name="OutOfRange"><![CDATA[<50%]]></string>
+    <string name="InRange"><![CDATA[OK]]></string>
+    <string name="VeryOutOfRange"><![CDATA[<40%]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="defaultColor">darkBlue</string>
+    <string name="defaultGlucoseUnit">mgdL</string>
+    <string name="hyperlink"><a href="https://slingithub.github.io/CheckmateWeb/">slingithub.github.io/CheckmateWeb</a></string>
+    <string name="crash_toast_text">Your App has crashed, do you want to send a report?</string>
+</resources>

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorBackgroundCheckmate"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?colorActionBarCheckmate"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/AppTheme_darkBlue" />
+
+    <TextView
+        android:id="@+id/lineText4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="15dp"
+        android:text=""
+        android:elevation="2dp"
+        android:background="?colorBackgroundCheckmate"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/BarChart"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/lineText5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="15dp"
+        android:background="?colorBackgroundCheckmate"
+        android:elevation="2dp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="@+id/BarChartAvg"
+        app:layout_constraintStart_toEndOf="@+id/lineText4"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/lineText6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="?colorBackgroundCheckmate"
+        android:elevation="2dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/BarChartAvg"
+        app:layout_constraintStart_toStartOf="@+id/DayLineChart"
+        app:layout_constraintTop_toBottomOf="@+id/lineText4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.81" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/LineChart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="-20dp"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="1.0"/>
+
+    <TextView
+        android:id="@+id/lineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="17dp"
+        android:text="Glucose Management Indicator"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:elevation="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/LineChartAvg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?colorBackgroundCheckmate"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+<!--    <TextView
+        android:id="@+id/lineLegendLowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="right"
+        android:text="@string/VeryHighHbA1c"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/lineLegendHigh"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/lineLegendLow"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/circle"
+        android:gravity="right"
+        app:layout_constraintBottom_toBottomOf="@+id/lineLegendLowText"
+        app:layout_constraintEnd_toStartOf="@+id/lineLegendLowText"
+        app:layout_constraintTop_toTopOf="@+id/lineLegendLowText" />
+
+    <TextView
+        android:id="@+id/lineLegendInRangeText"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/InRangeHbA1c"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/my_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/lineLegendInRange"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/green"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/lineLegendInRangeText"
+        app:layout_constraintEnd_toStartOf="@+id/lineLegendInRangeText"
+        app:layout_constraintTop_toTopOf="@+id/lineLegendInRangeText" />
+
+    <TextView
+        android:id="@+id/lineLegendHighText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="2dp"
+        android:gravity="center"
+        android:text="@string/HighHbA1c"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/lineLegendInRange"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/lineLegendHigh"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/yellow"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/lineLegendHighText"
+        app:layout_constraintEnd_toStartOf="@+id/lineLegendHighText"
+        app:layout_constraintTop_toTopOf="@+id/lineLegendHighText" />-->
+
+    <TextView
+        android:id="@+id/barText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:text="In Range (70-140mg/dl)"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/BarChart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="-20dp"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LineChart"
+        app:layout_constraintVertical_bias="1.0">
+
+    </com.github.mikephil.charting.charts.BarChart>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/BarChartAvg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="-50dp"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/LineChart"
+        app:layout_constraintVertical_bias="0.0">
+
+    </com.github.mikephil.charting.charts.BarChart>
+
+    <TextView
+        android:id="@+id/lineText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="Estimated"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/lineText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="HbA1c"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+    <!--<TextView
+        android:id="@+id/barLegendLowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:gravity="right"
+        android:text="@string/VeryOutOfRange"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/barLegendHigh" />
+
+    <TextView
+        android:id="@+id/barLegendLow"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/rectangle"
+        android:gravity="right"
+        app:layout_constraintBottom_toBottomOf="@+id/barLegendLowText"
+        app:layout_constraintEnd_toStartOf="@+id/barLegendLowText"
+        app:layout_constraintTop_toTopOf="@+id/barLegendLowText" />
+
+    <TextView
+        android:id="@+id/barLegendInRangeText"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/InRange"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/barLegendInRange"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/rectangle"
+        android:backgroundTint="@color/green"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/barLegendInRangeText"
+        app:layout_constraintEnd_toStartOf="@+id/barLegendInRangeText"
+        app:layout_constraintTop_toTopOf="@+id/barLegendInRangeText" />
+
+    <TextView
+        android:id="@+id/barLegendHighText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:text="@string/OutOfRange"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/barLegendInRange" />
+
+    <TextView
+        android:id="@+id/barLegendHigh"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/rectangle"
+        android:backgroundTint="@color/yellow"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/barLegendHighText"
+        app:layout_constraintEnd_toStartOf="@+id/barLegendHighText"
+        app:layout_constraintTop_toTopOf="@+id/barLegendHighText" />-->
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/DayLineChart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?colorBackgroundCheckmate"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/DayLineChartText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:text="Glucose Day Plot"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

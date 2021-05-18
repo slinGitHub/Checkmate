@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.a20210207_checkmate2">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/checkmate_owl_green"
+        android:label=" Checkmate"
+        android:roundIcon="@mipmap/checkmate_owl_green"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme_darkBlue"
+        android:name=".MyAcra"
+        android:hardwareAccelerated="false">
+        <receiver
+            android:name=".NotificationReceiver">
+        </receiver>
+
+        <activity android:name=".SettingsAboutActivity"
+            android:label="Settings About"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
+        <activity android:name=".SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+</manifest>

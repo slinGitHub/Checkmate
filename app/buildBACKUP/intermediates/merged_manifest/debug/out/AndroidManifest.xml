@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.a20210207_checkmate2"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="29" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:icon="@mipmap/checkmate_owl_green"
+        android:label=" Checkmate"
+        android:roundIcon="@mipmap/checkmate_owl_green"
+        android:supportsRtl="true"
+        android:testOnly="true"
+        android:theme="@style/AppTheme_darkBlue" >
+        <receiver android:name="com.example.a20210207_checkmate2.NotificationReceiver" />
+
+        <activity
+            android:name="com.example.a20210207_checkmate2.SettingsAboutActivity"
+            android:label="Settings About"
+            android:parentActivityName="com.example.a20210207_checkmate2.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.a20210207_checkmate2.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName="com.example.a20210207_checkmate2.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name="com.example.a20210207_checkmate2.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

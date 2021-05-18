@@ -1,0 +1,54 @@
+com/example/a20210207_checkmate2/CoupleChartGestureListener.java
+ com.example.a20210207_checkmate2.CoupleChartGestureListener
+com/example/a20210207_checkmate2/BarChartAvgClass.java
+ com.example.a20210207_checkmate2.BarChartAvgClass
+com/example/a20210207_checkmate2/NotificationHelper.java
+ com.example.a20210207_checkmate2.NotificationHelper
+com/example/a20210207_checkmate2/LineChartAvgClass.java
+ com.example.a20210207_checkmate2.LineChartAvgClass
+com/example/a20210207_checkmate2/SettingsActivity.java
+ com.example.a20210207_checkmate2.SettingsActivity
+com/example/a20210207_checkmate2/GlucoseEntry.java
+ com.example.a20210207_checkmate2.GlucoseEntry
+com/example/a20210207_checkmate2/BarChartClass.java
+ com.example.a20210207_checkmate2.BarChartClass
+com/example/a20210207_checkmate2/NotificationReceiver.java
+ com.example.a20210207_checkmate2.NotificationReceiver
+com/example/a20210207_checkmate2/BuildConfig.java
+ com.example.a20210207_checkmate2.BuildConfig
+com/example/a20210207_checkmate2/ReadGlucoseEntry.java
+ com.example.a20210207_checkmate2.ReadGlucoseEntry
+com/example/a20210207_checkmate2/CalcHba1c.java
+ com.example.a20210207_checkmate2.CalcHba1c
+com/example/a20210207_checkmate2/SettingsFragment.java
+ com.example.a20210207_checkmate2.SettingsFragment
+com/example/a20210207_checkmate2/MainActivity.java
+ com.example.a20210207_checkmate2.MainActivity
+ com.example.a20210207_checkmate2.MainActivity$1
+ com.example.a20210207_checkmate2.MainActivity$2
+ com.example.a20210207_checkmate2.MainActivity$3
+com/example/a20210207_checkmate2/LineChartClass.java
+ com.example.a20210207_checkmate2.LineChartClass
+com/example/a20210207_checkmate2/DayLineChartClass.java
+ com.example.a20210207_checkmate2.DayLineChartClass
+ com.example.a20210207_checkmate2.DayLineChartClass$1
+com/example/a20210207_checkmate2/ValueFormatterDateXAxis.java
+ com.example.a20210207_checkmate2.ValueFormatterDateXAxis
+com/example/a20210207_checkmate2/FillFormatter.java
+ com.example.a20210207_checkmate2.FillFormatter
+com/example/a20210207_checkmate2/ValueFormatterPercentage.java
+ com.example.a20210207_checkmate2.ValueFormatterPercentage
+com/example/a20210207_checkmate2/Hba1cEntry.java
+ com.example.a20210207_checkmate2.Hba1cEntry
+com/example/a20210207_checkmate2/AsyncResponse.java
+ com.example.a20210207_checkmate2.AsyncResponse
+com/example/a20210207_checkmate2/ValueFormatterDayPlotXAxis.java
+ com.example.a20210207_checkmate2.ValueFormatterDayPlotXAxis
+com/example/a20210207_checkmate2/ValueFormatterOneDecimal.java
+ com.example.a20210207_checkmate2.ValueFormatterOneDecimal
+com/example/a20210207_checkmate2/SettingsAboutActivity.java
+ com.example.a20210207_checkmate2.SettingsAboutActivity
+com/example/a20210207_checkmate2/SaveGlucoseData.java
+ com.example.a20210207_checkmate2.SaveGlucoseData
+com/example/a20210207_checkmate2/CalcDayLineChartStats.java
+ com.example.a20210207_checkmate2.CalcDayLineChartStats

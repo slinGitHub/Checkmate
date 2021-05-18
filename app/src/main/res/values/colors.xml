@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#80d0f6</color>
+    <color name="purple_500">#0ba2eb</color>
+    <color name="purple_700">#0981c9</color>
+    <color name="teal_200">#fa90b1</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!--color name="red">#d50000</color-->
+    <color name="red_dark">#9b0000</color>
+
+
+
+    <!-- In Range/Out Of Range/Very Out Of Range -->
+    <color name="inRange">#3fb78d</color>
+    <color name="OutOfRange">#d7f171</color>
+    <color name="veryOutOfRange">#cc155b</color>
+
+    <!-- Background Color -->
+    <color name="background">#1c6373</color>
+    <!-- Bright Background Color -->
+    <color name="background_bright">#007f86</color>
+
+    <!-- <color name="blue">#0b717e</color>-->
+
+    <!-- Line Color -->
+    <color name="line">#EEEEEE</color>
+
+    <!-- Not enough Glucose Data Points -->
+    <color name="notEnoughDataPoints">#AEAEAE</color>
+</resources>

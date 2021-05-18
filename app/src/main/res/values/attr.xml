@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBackgroundCheckmate" format="reference|color" />
+    <attr name="colorActionBarCheckmate" format="reference|color" />
+    <attr name="colorTextBubbleBar" format="reference|color" />
+
+
+    <attr name="colorBarInRangeBackground" format="reference|color" />
+    <attr name="alphaBarInRangeBackground" format="reference|integer" />
+
+    <attr name="colorInRange" format="reference|color" />
+    <attr name="colorOutOfRange" format="reference|color" />
+    <attr name="colorVeryOutOfRange" format="reference|color" />
+    <attr name="colorNotEnoughData" format="reference|color" />
+
+    <attr name="colorDayLineInRange" format="reference|color" />
+    <attr name="alphaDayLineInRange" format="reference|integer" />
+
+    <attr name="colorDayLine" format="reference|color" />
+
+</resources>
