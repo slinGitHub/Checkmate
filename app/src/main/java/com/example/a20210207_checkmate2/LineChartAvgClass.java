@@ -58,7 +58,7 @@ public class LineChartAvgClass {
         textColor = MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK);
     }
 
-    public void createChart() {
+    public void createChart(boolean selected) {
 
         //Format Axes
         xAxis.setDrawAxisLine(false);
@@ -84,6 +84,8 @@ public class LineChartAvgClass {
         //-------------------------------------------------------------------------------
         ArrayList<Entry> dataLineAvg = new ArrayList<>();
         ArrayList<Entry> dataTextAvg = new ArrayList<>();
+        ArrayList<Entry> dataBubbleSel = new ArrayList<>();
+
         Integer colorAvg;
 
         float hba1cAvgValue = BigDecimal.valueOf(hba1cAverageData.get(0).hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).floatValue();
@@ -94,10 +96,18 @@ public class LineChartAvgClass {
         } else {
             colorAvg = bubbleColorHighAbRange;
         }
+
         ArrayList<String> xAxisLabel = new ArrayList<>();
         xAxisLabel.add("30 Day\nAvg");
         dataLineAvg.add(new Entry(0, hba1cAvgValue, hba1cAvgValue));
         dataTextAvg.add(new Entry(0, hba1cAvgValue, hba1cAvgValue));
+
+        int colorBubbleSel = 0;
+        if (selected == true) {
+            colorBubbleSel = colorAvg;
+            dataBubbleSel.add(new Entry(0, hba1cAvgValue, hba1cAvgValue));
+            colorAvg = Color.WHITE;
+        }
 
         //Set Custom Label
         mAChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
@@ -105,6 +115,7 @@ public class LineChartAvgClass {
 
         LineDataSet dataLineAvgSet = new LineDataSet(dataLineAvg, "LineAvg");
         LineDataSet dataTextAvgSet = new LineDataSet(dataTextAvg, "TextAvg");
+        LineDataSet dataBubbleSelSet = new LineDataSet(dataBubbleSel, "BubbleSel");
 
         //Format Text Data
         dataTextAvgSet.setDrawCircles(false);
@@ -126,8 +137,16 @@ public class LineChartAvgClass {
         dataLineAvgSet.enableDashedLine(0f,1f,0f);
         dataLineAvgSet.setDrawHighlightIndicators(false);
 
+        //Format Bubble Data Selected
+        dataBubbleSelSet.setFillAlpha(0);
+        dataBubbleSelSet.setCircleColor(colorBubbleSel);
+        dataBubbleSelSet.setCircleRadius(17);
+        dataBubbleSelSet.setDrawValues(false);
+        dataBubbleSelSet.setDrawCircleHole(false);
+
         dataSets.add(dataLineAvgSet);
         dataSets.add(dataTextAvgSet);
+        dataSets.add(dataBubbleSelSet);
 
         //-------------------------------------------------------------------------------
         //Render Line Chart

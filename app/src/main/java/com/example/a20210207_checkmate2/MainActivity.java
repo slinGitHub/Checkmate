@@ -94,9 +94,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         if (!currentTheme.equals(theme))
             recreate();
 
+        //start Program
         startProgram();
-
-
     }
 
     //-------------------------------------------------------------------------------
@@ -280,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         //Create Line Average Chart
         //-------------------------------------------------------------------------------
         LineChartAvgClass lineAvgChart = new LineChartAvgClass(this, calcHba1c.getHba1cData(),calcHba1c.getHba1cAverageData());
-        lineAvgChart.createChart();
+        lineAvgChart.createChart(false);
         //Get Y Max and Min from Line Chart
         YAxis YAxisLeft = lineChart.mChart.getAxisLeft();
         lineAvgChart.left.setAxisMaximum(YAxisLeft.mAxisMaximum);
@@ -296,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         //Create Bar Average Chart
         //-------------------------------------------------------------------------------
         BarChartAvgClass barAvgChart = new BarChartAvgClass(this, calcHba1c.getHba1cData(),calcHba1c.getHba1cAverageData());
-        barAvgChart.createChart(calcHba1c.nDays);
+        barAvgChart.createChart(calcHba1c.nDays, false);
         //Get Y Max and Min from Bar Chart
         YAxis bYAxisLeft = barChart.bChart.getAxisLeft();
         barAvgChart.bLeft.setAxisMaximum(bYAxisLeft.mAxisMaximum);
@@ -310,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         calcDayLineChartStats.CalcMedian(calcHba1c.nDays);
 
         DayLineChartClass dayLineChart = new DayLineChartClass(this, calcHba1c.getHba1cData(), calcHba1c.getGlucoseData(), calcDayLineChartStats);
-        dayLineChart.setSettings(calcHba1c.getHba1cData().size()-1,true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+        dayLineChart.createChart(calcHba1c.getHba1cData().size()-1,true,calcHba1c.sgvMin, calcHba1c.sgvMax);
 
         //-------------------------------------------------------------------------------
         //Synchronize line and bar chart
@@ -326,9 +325,35 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
             @Override
             public void onValueSelected(Entry e, Highlight h)
             {
-                barChart.createChart((int) e.getX(),true);
                 lineChart.createChart((int) e.getX(),true);
-                dayLineChart.setSettings((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+                lineAvgChart.createChart(false);
+
+                barChart.createChart((int) e.getX(),true);
+                barAvgChart.createChart(calcHba1c.nDays,false);
+
+                dayLineChart.createChart((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+            }
+
+            @Override
+            public void onNothingSelected()
+            {
+            }
+        });
+
+        //Synchronize line chart gesture
+        lineAvgChart.mAChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener()
+        {
+            @Override
+            public void onValueSelected(Entry e, Highlight h)
+            {
+                lineChart.createChart((int) e.getX(),false);
+                lineAvgChart.createChart(true);
+
+                barChart.createChart((int) e.getX(),false);
+                barAvgChart.createChart(calcHba1c.nDays,true);
+
+                //dayLineChart.createChart((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+                dayLineChart.createMeanChart();
             }
 
             @Override
@@ -343,9 +368,34 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
             @Override
             public void onValueSelected(Entry e, Highlight h)
             {
-                barChart.createChart((int) e.getX(),true);
                 lineChart.createChart((int) e.getX(),true);
-                dayLineChart.setSettings((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+                lineAvgChart.createChart(false);
+
+                barChart.createChart((int) e.getX(),true);
+                barAvgChart.createChart(calcHba1c.nDays,false);
+
+                dayLineChart.createChart((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+            }
+
+            @Override
+            public void onNothingSelected() {
+            }
+        });
+
+        //Synchronize bar chart gesture
+        barAvgChart.bAvgChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener()
+        {
+            @Override
+            public void onValueSelected(Entry e, Highlight h)
+            {
+                lineChart.createChart((int) e.getX(),false);
+                lineAvgChart.createChart(true);
+
+                barChart.createChart((int) e.getX(),false);
+                barAvgChart.createChart(calcHba1c.nDays,true);
+
+                //dayLineChart.createChart((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+                dayLineChart.createMeanChart();
             }
 
             @Override

@@ -44,7 +44,7 @@ public class DayLineChartClass {
 
     }
 
-    public void setSettings(int daySelected, boolean useDaySelected, int yMin, int yMax) {
+    public void createChart(int daySelected, boolean useDaySelected, int yMin, int yMax) {
         //Format Axes
         XAxis xAxis = mDayChart.getXAxis();
         xAxis.setDrawAxisLine(true);
@@ -264,6 +264,85 @@ public class DayLineChartClass {
         mDayChart.getLegend().setEnabled(false);
         mDayChart.getDescription().setEnabled(false);
         mDayChart.setExtraOffsets(0, 0, 0, 10); //X-Axis Labels are drawn correctly
+
+    }
+
+    public void createMeanChart() {
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
+        ArrayList<Double> x_Axis = calcDayLineChartStats.getMeanDailyGlucoseXAxis();
+
+        ArrayList<Double> yGlucoseData5 = calcDayLineChartStats.getPercentile5GlucoseYAxis();
+        ArrayList<Entry> oneDayEntry5Glucose = new ArrayList<>();
+
+        for (int j = 0; j < x_Axis.size()-1; j++) {
+            oneDayEntry5Glucose.add(new Entry(x_Axis.get(j).floatValue(),yGlucoseData5.get(j).floatValue()));
+        }
+        LineDataSet d5 = new LineDataSet(oneDayEntry5Glucose,"5");
+        d5.setDrawCircles(false);
+        d5.setColor(mainActivity.getResources().getColor(R.color.line));
+        d5.setLineWidth(1);
+        d5.setHighlightEnabled(false);
+        d5.setDrawValues(false);
+
+        dataSets.add(d5);
+
+
+
+        ArrayList<Double> yGlucoseData95 = calcDayLineChartStats.getPercentile95GlucoseYAxis();
+        ArrayList<Entry> oneDayEntry95Glucose = new ArrayList<>();
+
+        for (int j = 0; j < x_Axis.size()-1; j++) {
+            oneDayEntry95Glucose.add(new Entry(x_Axis.get(j).floatValue(),yGlucoseData95.get(j).floatValue()));
+        }
+        LineDataSet d95 = new LineDataSet(oneDayEntry95Glucose,"95");
+        d95.setDrawCircles(false);
+        d95.setColor(mainActivity.getResources().getColor(R.color.line));
+        d95.setLineWidth(1);
+        d95.setHighlightEnabled(false);
+        d95.setDrawValues(false);
+
+        dataSets.add(d95);
+
+        d95.setDrawFilled(true);
+        d95.setFillAlpha(50);
+        d95.setFillColor(Color.LTGRAY);
+        d95.setFillFormatter(new AreaFillFormatter(d5));
+
+
+        //-------------------------------------------------------------------------------
+        //Draw Mean Line Graph
+        //-------------------------------------------------------------------------------
+        ArrayList<Double> yGlucoseData = calcDayLineChartStats.getMeanDailyGlucoseYAxis();
+        ArrayList<Entry> oneDayEntryMeanGlucose = new ArrayList<>();
+
+        for (int j = 0; j < x_Axis.size()-1; j++) {
+             oneDayEntryMeanGlucose.add(new Entry(x_Axis.get(j).floatValue(),yGlucoseData.get(j).floatValue()));
+        }
+        LineDataSet dMean = new LineDataSet(oneDayEntryMeanGlucose,"Day");
+        dMean.setDrawCircles(false);
+        dMean.setColor(mainActivity.getResources().getColor(R.color.line));
+        dMean.setLineWidth(3);
+        dMean.setHighlightEnabled(false);
+        dMean.setDrawValues(false);
+
+        dataSets.add(dMean);
+
+
+
+
+
+
+        LineData lineData = new LineData(dataSets);
+        mDayChart.setRenderer(new AreaLineLegendRenderer(mDayChart, mDayChart.getAnimator(), mDayChart.getViewPortHandler()));
+        mDayChart.setData(lineData);
+        //mDayChart.setRenderer(new MyLineLegendRenderer(mDayChart, mDayChart.getAnimator(), mDayChart.getViewPortHandler()));
+        mDayChart.invalidate();
+        mDayChart.getLegend().setEnabled(false);
+        mDayChart.getDescription().setEnabled(false);
+        mDayChart.setExtraOffsets(0, 0, 0, 10); //X-Axis Labels are drawn correctly
+
 
     }
 }

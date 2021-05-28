@@ -39,7 +39,7 @@ int bxAxisTextColor;
             bxAxisTextColor = mainActivity.getResources().getColor(R.color.line);
         }
 
-    public void createChart(int nDays) {
+    public void createChart(int nDays, boolean selected) {
 
         bxAxis = bAvgChart.getXAxis();
         bLeft = bAvgChart.getAxisLeft();
@@ -71,6 +71,7 @@ int bxAxisTextColor;
         //Load Data in Chart
         ArrayList<BarEntry> dataBar = new ArrayList<BarEntry>();
         ArrayList<BarEntry> dataBar2 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> dataBarSel = new ArrayList<BarEntry>();
 
         //Set marker Color depending on RangeValue
         ArrayList<Integer> bAcolors = new ArrayList<Integer>();
@@ -89,6 +90,10 @@ int bxAxisTextColor;
         else
             bAcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK));
 
+        if (selected) {
+            dataBarSel.add(new BarEntry(0f, val2));
+        }
+
         //Draw x-Axis labels
         bAvgChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAAxisLabel));
         bAvgChart.setXAxisRenderer(new ValueFormatterDateXAxis(bAvgChart.getViewPortHandler(), bAvgChart.getXAxis(), bAvgChart.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -96,6 +101,7 @@ int bxAxisTextColor;
         BarDataSet dataBarSet = new BarDataSet(dataBar, "DataBarBackground");
         dataBarSet.setDrawIcons(false);
         dataBarSet.setDrawValues(false);
+        dataBarSet.setHighlightEnabled(false);
         int[] colorsInt = new int[]{MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK), MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK), MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK)};
         dataBarSet.setColors(colorsInt,MaterialColors.getColor(mainActivity, R.attr.alphaBarInRangeBackground, 80));
 
@@ -104,10 +110,21 @@ int bxAxisTextColor;
         BarDataSet dataBarSet2 = new BarDataSet(dataBar2, "DataBarInRange");
         dataBarSet2.setColors(bAcolors);
         dataBarSet2.setValueTextSize(20);
+        dataBarSet2.setHighLightAlpha(0);
+        dataBarSet2.setHighLightColor(mainActivity.getResources().getColor(R.color.white));
+        dataBarSet2.setHighlightEnabled(true);
+
+        //Bar Selected with border around bar
+        BarDataSet dataBarSetSel = new BarDataSet(dataBarSel, "BarSelected");
+        dataBarSetSel.setDrawValues(false);
+        dataBarSetSel.setColors(bAcolors);
+        dataBarSetSel.setBarBorderWidth(3f);
+        dataBarSetSel.setBarBorderColor(Color.WHITE);
 
         ArrayList<IBarDataSet> dataSetsBar = new ArrayList<>();
         dataSetsBar.add(dataBarSet);
         dataSetsBar.add(dataBarSet2);
+        dataSetsBar.add(dataBarSetSel);
 
         BarData dataBarChart = new BarData(dataSetsBar);
         dataBarChart.setBarWidth(0.8f);
@@ -115,7 +132,7 @@ int bxAxisTextColor;
         dataBarChart.setValueTextColor(MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK));
 
         bAvgChart.setData(dataBarChart);
-        bAvgChart.setTouchEnabled(false);
+        bAvgChart.setTouchEnabled(true);
         bAvgChart.setFitBars(true); //Makes an error so that the bar chart is jumping to the left at reload -> do not use
         bAvgChart.setVisibleXRangeMinimum(dataBar.size());
         bAvgChart.invalidate();
