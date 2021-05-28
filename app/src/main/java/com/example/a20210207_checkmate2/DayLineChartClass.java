@@ -14,6 +14,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.renderer.DataRenderer;
+import com.github.mikephil.charting.renderer.LineChartRenderer;
 import com.google.android.material.color.MaterialColors;
 
 import java.text.SimpleDateFormat;
@@ -258,6 +260,7 @@ public class DayLineChartClass {
 
         LineData lineData = new LineData(dataSets);
 
+        mDayChart.setRenderer(new LineChartRenderer(mDayChart, mDayChart.getAnimator(), mDayChart.getViewPortHandler()));
         mDayChart.setData(lineData);
         //mDayChart.setRenderer(new MyLineLegendRenderer(mDayChart, mDayChart.getAnimator(), mDayChart.getViewPortHandler()));
         mDayChart.invalidate();
@@ -306,7 +309,7 @@ public class DayLineChartClass {
         dataSets.add(d95);
 
         d95.setDrawFilled(true);
-        d95.setFillAlpha(50);
+        d95.setFillAlpha(150);
         d95.setFillColor(Color.LTGRAY);
         d95.setFillFormatter(new AreaFillFormatter(d5));
 
