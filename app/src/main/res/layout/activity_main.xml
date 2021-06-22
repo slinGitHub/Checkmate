@@ -95,33 +95,34 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="-20dp"
+        android:layout_marginTop="25dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/lineText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="10dp"
+        android:elevation="2dp"
         android:text="Glucose Management Indicator"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:elevation="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
-
 
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/LineChartAvg"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="25dp"
         android:background="?colorBackgroundCheckmate"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -243,11 +244,11 @@
         android:id="@+id/lineText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="10dp"
+        android:elevation="2dp"
         android:text="Estimated"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:elevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
@@ -256,14 +257,13 @@
         android:id="@+id/lineText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:elevation="2dp"
         android:text="HbA1c"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:elevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/lineText2" />
 
     <!--<TextView
         android:id="@+id/barLegendLowText"
