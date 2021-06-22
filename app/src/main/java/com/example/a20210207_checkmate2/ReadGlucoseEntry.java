@@ -40,12 +40,15 @@ public class ReadGlucoseEntry extends AsyncTask<String, ArrayList<GlucoseEntry>,
 
             //Set Date Format
             Date date;
+            int sgv;
 
             //read content of the file line by line
             while ((nextLine = reader.readNext()) != null) {
                 //Epoch to Java Date
                 date = new Date(Long.parseLong(nextLine[1]));
-                values.add(new GlucoseEntry(nextLine[0], date, Integer.valueOf(nextLine[2]), nextLine[3], nextLine[4]));
+                sgv = Integer.valueOf(nextLine[2]);
+                if (sgv > 0) //Check if SGV is not zero
+                    values.add(new GlucoseEntry(nextLine[0], date, sgv, nextLine[3], nextLine[4]));
             }
 
         } catch (Exception e) {

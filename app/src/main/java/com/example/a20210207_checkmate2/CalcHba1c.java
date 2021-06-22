@@ -57,6 +57,7 @@ ArrayList<Hba1cEntry> hba1cAverageData;
         return hba1cData;
     }
 
+    //Calculate the Average Hba1c per day based on glucoseData
     public void CalcAverageHba1c (ArrayList<Hba1cEntry> glucoseData, int nDays){
         this.nDays = nDays;
 

@@ -28,6 +28,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -74,12 +76,14 @@ import com.google.gson.Gson;
 
 import org.apache.commons.lang3.ObjectUtils;
 
+import static com.example.a20210207_checkmate2.SettingsActivity.KEY_PREF_MEAN_DAYS;
+
 public class MainActivity extends AppCompatActivity implements AsyncResponse{
 
     private String currentTheme;
     private SharedPreferences sharedPref;
     private Boolean initNightscoutURL;
-
+    CalcHba1c calcHba1c;
 
 
     //-------------------------------------------------------------------------------
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setIcon(R.drawable.notification_icon_owl2); //Show Icon in Toolbar
+        getSupportActionBar().setIcon(R.drawable.ic_action_checkmateactionbarowl); //Show Icon in Toolbar
 
         startProgram();
     }
@@ -253,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
                 //-------------------------------------------------------------------------------
                 //Calculate HbA1c
                 //-------------------------------------------------------------------------------
-                CalcHba1c calcHba1c = new CalcHba1c(glucoseDataRaw);
+                calcHba1c = new CalcHba1c(glucoseDataRaw);
                 calcHba1c.CalcHba1c(this);
 
                 //Load saved settings from shared preferences
@@ -306,7 +310,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         //-------------------------------------------------------------------------------
         //Create Statistics (Mean and % in Range)
         CalcDayLineChartStats calcDayLineChartStats = new CalcDayLineChartStats(calcHba1c.getGlucoseData());
-        calcDayLineChartStats.CalcMedian(calcHba1c.nDays);
+
+        int meanDays = Integer.valueOf(sharedPref.getString(KEY_PREF_MEAN_DAYS,"7"));
+        calcDayLineChartStats.CalcMedian(meanDays);
 
         DayLineChartClass dayLineChart = new DayLineChartClass(this, calcHba1c.getHba1cData(), calcHba1c.getGlucoseData(), calcDayLineChartStats);
         dayLineChart.createChart(calcHba1c.getHba1cData().size()-1,true,calcHba1c.sgvMin, calcHba1c.sgvMax);
@@ -519,4 +525,35 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         return local;
     }
 
+
+    public void onDaysButtonClick(View view) {
+
+        //Days Array
+        int[] daysArray = new int[]{7,15,30,90};
+
+        //Get days from Shared Preferences
+        int meanDays = Integer.valueOf(sharedPref.getString(KEY_PREF_MEAN_DAYS,"90"));
+
+        //Get next element from array
+        for(int i=0;i<daysArray.length;i++){
+            if (meanDays == daysArray[3]){
+                meanDays = daysArray[0];
+                break;
+            }
+
+            if (meanDays == daysArray[i]){
+                meanDays = daysArray[i+1];
+                break;}
+        }
+
+        //Store Number of Days in Shared Preferences
+        sharedPref.edit().putString(KEY_PREF_MEAN_DAYS, String.valueOf(meanDays)).apply();
+        sharedPref.edit().apply();
+
+        CalcDayLineChartStats calcDayLineChartStats = new CalcDayLineChartStats(calcHba1c.getGlucoseData());
+        calcDayLineChartStats.CalcMedian(meanDays);
+
+        DayLineChartClass dayLineChart = new DayLineChartClass(this, calcHba1c.getHba1cData(), calcHba1c.getGlucoseData(), calcDayLineChartStats);
+        dayLineChart.createMeanChart();
+    }
 }

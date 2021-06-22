@@ -108,20 +108,23 @@ class NotificationHelper implements AsyncResponse {
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentIntent(resultPendingIntent);
 
-        if (hba1cValue <= 6.3f && inRange >= 50f)
+        //Get Values from Preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS,"6.3"));
+        float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL,"50"));
+
+        if (hba1cValue <= hba1cGoal && inRange >= inRangeGoal)
             mBuilder.setContentText("You are doing great!");
         else
-            if (hba1cValue <= 6.3f)
+            if (hba1cValue <= hba1cGoal)
                 mBuilder.setContentText("Well done! But try to stabilize your sugar level.");
             else
-                if (inRange >=50f)
+                if (inRange >=inRangeGoal)
                     mBuilder.setContentText("You are on the right way! But try to lower your surf level.");
                 else
                     mBuilder.setContentText("This is one of these days, tomorrow will be better for sure!");
 
-
         NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
         {

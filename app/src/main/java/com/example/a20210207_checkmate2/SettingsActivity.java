@@ -19,6 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String KEY_PREF_GlUCOSE_UNIT = "glucose_unit";
     public static final String KEY_PREF_DATA_POINTS = "nightscout_data_points";
     public static final String KEY_PREF_COLOR_THEME = "color_preference";
+    public static final String KEY_PREF_SWITCH_OWL = "switch_owl";
 
     public static final String KEY_PREF_HBA1C_DAYS = "hba1c_days";
 
@@ -34,13 +35,11 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String KEY_PREF_SWITCH_NOTIFICAION = "switch_notification";
     public static final String KEY_PREF_NOTIFICATION_TIME = "notification_time";
 
-
+    public static final String KEY_PREF_MEAN_DAYS = "mean_days_chart";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_settings);
 
         getSupportFragmentManager().beginTransaction()

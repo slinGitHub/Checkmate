@@ -39,6 +39,11 @@
             android:entryValues="@array/colorTheme"
             app:useSimpleSummaryProvider = "true"/>
 
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="switch_owl"
+            android:title="Display Owl Check Icon" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="HbA1c Estimation">

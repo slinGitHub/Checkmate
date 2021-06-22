@@ -1,9 +1,11 @@
 package com.example.a20210207_checkmate2;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -17,6 +19,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.renderer.DataRenderer;
 import com.github.mikephil.charting.renderer.LineChartRenderer;
 import com.github.mikephil.charting.utils.MPPointD;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.color.MaterialColors;
@@ -112,6 +115,7 @@ public class LineChartClass {
         ArrayList<Entry> dataBubble = new ArrayList<>();
         ArrayList<Entry> dataBubbleSel = new ArrayList<>();
         ArrayList<Entry> dataText = new ArrayList<>();
+        ArrayList<Entry> dataOwlIcon = new ArrayList<>();
 
         //for (Hba1cEntry element:hba1c_data){
         float hba1c_value = 0;
@@ -140,7 +144,6 @@ public class LineChartClass {
 
             //Calculate bubble to text shift
             float radiusPixels = Utils.convertDpToPixel(20);
-
 
             //Add bubble and line values
             dataBubble.add(new Entry((float) i, hba1c_value, hba1c_value));
@@ -173,6 +176,15 @@ public class LineChartClass {
 
             }
         }
+        //Check if Owl Icon should be Displayed
+        if(sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_OWL,true)) {
+            //Owl Icon - Get Bar Value
+            float val2 = BigDecimal.valueOf(hba1c_data.get(0).inRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //InRange
+            float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL, "50"));
+            //Owl Icon - Check if Hba1c and Bar are in Range
+            if ((val2 >= inRangeGoal) && (hba1c_value <= hba1cGoal))
+                dataOwlIcon.add(new Entry((float) count, hba1c_value, ContextCompat.getDrawable(mainActivity, R.drawable.owl_check3)));
+        }
 
         //-------------------------------------------------------------------------------
         //Format Line and Textdata
@@ -181,6 +193,7 @@ public class LineChartClass {
         LineDataSet dataBubbleSet = new LineDataSet(dataBubble, "Bubble");
         LineDataSet dataTextSet = new LineDataSet(dataText, "Text");
         LineDataSet dataBubbleSelSet = new LineDataSet(dataBubbleSel, "BubbleSel");
+        LineDataSet dataOwlIconSet = new LineDataSet(dataOwlIcon, "OwlIcon");
 
         mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
         //xAxis.setGranularity(1f); // minimum axis-step (interval) is
@@ -219,11 +232,18 @@ public class LineChartClass {
         dataBubbleSelSet.setDrawValues(false);
         dataBubbleSelSet.setDrawCircleHole(false);
 
+        //Format Owl Icon Data
+        dataOwlIconSet.setDrawIcons(true);
+        dataOwlIconSet.setIconsOffset(MPPointF.getInstance(0f,-40f));
+        dataOwlIconSet.setDrawValues(false);
+        dataOwlIconSet.setDrawCircles(false);
+
         dataSets = new ArrayList<>();
         dataSets.add(dataLineSet);
         dataSets.add(dataTextSet);
         dataSets.add(dataBubbleSet);
         dataSets.add(dataBubbleSelSet);
+        dataSets.add(dataOwlIconSet);
 
         //-------------------------------------------------------------------------------
         //Render Line Chart
