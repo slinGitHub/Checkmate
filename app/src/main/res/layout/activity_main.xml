@@ -88,7 +88,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.81" />
+        app:layout_constraintGuide_begin="333dp" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/LineChart"

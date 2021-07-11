@@ -14,6 +14,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.formatter.IFillFormatter;
@@ -51,6 +53,9 @@ public class DayLineChartClass {
 
     public void createChart(int daySelected, boolean useDaySelected, int yMin, int yMax) {
 
+        //Load shared Preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
+
         TextView HeaderDayMeanChart = (TextView) mainActivity.findViewById(R.id.DayLineChartText);
         HeaderDayMeanChart.setText("Glucose Day Plot");
 
@@ -81,6 +86,14 @@ public class DayLineChartClass {
         left.setTextSize(15);
         left.setTextColor(xAxisTextColor);
 
+        //If mol (instead of mg/dl is selected)
+        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL,false);
+        TextView barChartTitle = (TextView) mainActivity.findViewById(R.id.barText);
+        if (switchToMol)
+            left.setValueFormatter(new ValueFormatterDayPlotYAxis());
+        else
+            left.setValueFormatter(new DefaultValueFormatter(0));
+
         //Check if yMax/yMin is sufficient
         if (yMax > 200)
             left.setAxisMaximum((float) yMax);
@@ -105,7 +118,6 @@ public class DayLineChartClass {
         //-------------------------------------------------------------------------------
         //Draw In Range Lines
         //-------------------------------------------------------------------------------
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         double minRange = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_LOWER_RANGE,"70"));
         double maxRange = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_UPPER_RANGE,"140"));
 

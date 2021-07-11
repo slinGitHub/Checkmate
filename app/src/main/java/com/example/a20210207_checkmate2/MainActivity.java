@@ -2,6 +2,8 @@ package com.example.a20210207_checkmate2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.PreferenceManager;
@@ -152,6 +154,15 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
     }
 
     public void startProgram(){
+
+        //-------------------------------------------------------------------------------
+        //Horizontal Screen Size Setting : Guideline Position (Default is 81 percent for Nexus5X)
+        //-------------------------------------------------------------------------------
+        float guidelinePosition = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_RATIO_GUIDELINE_GMI_HBA1C,"81"));
+        Guideline guideLine = (Guideline) findViewById(R.id.guideline5);
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) guideLine.getLayoutParams();
+        params.guidePercent = guidelinePosition/100;
+        guideLine.setLayoutParams(params);
 
         //-------------------------------------------------------------------------------
         //Load local copy of glucose data
@@ -358,7 +369,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
                 barChart.createChart((int) e.getX(),false);
                 barAvgChart.createChart(calcHba1c.nDays,true);
 
-                //dayLineChart.createChart((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+                int meanDays = Integer.valueOf(sharedPref.getString(KEY_PREF_MEAN_DAYS,"7"));
+                calcDayLineChartStats.CalcMedian(meanDays);
                 dayLineChart.createMeanChart();
             }
 
@@ -400,7 +412,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
                 barChart.createChart((int) e.getX(),false);
                 barAvgChart.createChart(calcHba1c.nDays,true);
 
-                //dayLineChart.createChart((int) e.getX(),true,calcHba1c.sgvMin, calcHba1c.sgvMax);
+                int meanDays = Integer.valueOf(sharedPref.getString(KEY_PREF_MEAN_DAYS,"7"));
+                calcDayLineChartStats.CalcMedian(meanDays);
                 dayLineChart.createMeanChart();
             }
 

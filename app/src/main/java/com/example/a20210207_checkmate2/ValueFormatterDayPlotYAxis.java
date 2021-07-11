@@ -11,9 +11,9 @@ public class ValueFormatterDayPlotYAxis extends ValueFormatter {
     public String getFormattedValue(float value) {
 
         //int index = Math.round(value/60);
-        double index = Math.round((double) value*0.0555);
+        double index = Math.round((int) value*0.0555);
 
-        return (String.valueOf(index));
+        return (String.format("%.0f",index));
     }
 
 }

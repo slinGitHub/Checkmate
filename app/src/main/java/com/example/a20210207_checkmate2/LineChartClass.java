@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 
+import androidx.constraintlayout.widget.Guideline;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -255,8 +256,10 @@ public class LineChartClass {
 
         mChart.setRenderer(new CenteredTextLineChartRenderer(mChart,mChart.getAnimator(),mChart.getViewPortHandler()));
 
-        //Set number of displayed values to 6
-        mChart.setVisibleXRangeMaximum(6);
+        //Set number of displayed values (Default is 6)
+        float numberOfVisibleBubbleBars = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_VISIBLE_BUBBLEBARS,"6"));
+        mChart.setVisibleXRangeMaximum(numberOfVisibleBubbleBars);
+
         mChart.getDescription().setEnabled(false);
         mChart.getLegend().setEnabled(false);
         mChart.setScaleEnabled(false);

@@ -165,7 +165,8 @@ public class BarChartClass {
         bChart.setData(dataBarChart);
         //bChart.setFitBars(true); //Makes an error so that the bar chart is jumping to the left at reload -> do not use
         bChart.invalidate();
-        bChart.setVisibleXRangeMaximum(6);
+        float numberOfVisibleBubbleBars = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_VISIBLE_BUBBLEBARS,"6"));
+        bChart.setVisibleXRangeMaximum(numberOfVisibleBubbleBars);
 
         bChart.getDescription().setEnabled(false);
         bChart.getLegend().setEnabled(false);
@@ -185,12 +186,13 @@ public class BarChartClass {
         double glucoseRangeLow = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_LOWER_RANGE,"70"));
         double glucoseRangeHigh = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_UPPER_RANGE,"140"));
 
-        String glucoseUnit = sharedPref.getString(SettingsActivity.KEY_PREF_GlUCOSE_UNIT, "mgdl");
+        //Boolean switchToMol = Boolean.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL);
+        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL,false);
         TextView barChartTitle = (TextView) mainActivity.findViewById(R.id.barText);
-        if (glucoseUnit.equals("mgdl")) {
-            barChartTitle.setText("In Range (" + String.format("%1.0f",glucoseRangeLow) + "-" + String.format("%1.0f",glucoseRangeHigh) + "mg/dl)");
-        } else {
+        if (switchToMol) {
             barChartTitle.setText("In Range (" + String.format("%1.1f",(glucoseRangeLow*0.0555)) + "-" + String.format("%1.1f",(glucoseRangeHigh*0.0555)) + "mmol/l)");
+        } else {
+            barChartTitle.setText("In Range (" + String.format("%1.0f",glucoseRangeLow) + "-" + String.format("%1.0f",glucoseRangeHigh) + "mg/dl)");
         }
 
 

@@ -57,8 +57,9 @@ public class CalcDayLineChartStats {
         //--------------------------------------------------------
         SimpleDateFormat dfHour = new SimpleDateFormat("HH", Locale.getDefault()); // Quoted "Z" to indicate UTC, no timezone offset
         SimpleDateFormat dfMin = new SimpleDateFormat("mm", Locale.getDefault()); // Quoted "Z" to indicate UTC, no timezone offset
-        SimpleDateFormat dfSec = new SimpleDateFormat("ss", Locale.getDefault()); // Quoted "Z" to indicate UTC, no timezone offset
-        dfHour.setTimeZone(TimeZone.getTimeZone("UTC"));
+        //SimpleDateFormat dfSec = new SimpleDateFormat("ss", Locale.getDefault()); // Quoted "Z" to indicate UTC, no timezone offset
+        //dfHour.setTimeZone(TimeZone.getTimeZone("UTC"));
+        dfHour.setTimeZone(TimeZone.getDefault());
         int hours;
         int minutes;
         int glucoseTime;
@@ -68,12 +69,13 @@ public class CalcDayLineChartStats {
         for (int i = 0; i < count_svg; i++) {
             hours = Integer.valueOf(dfHour.format(glucoseData.get(i).date));
             minutes = Integer.valueOf(dfMin.format(glucoseData.get(i).date));
+
             glucoseTime = hours * 60 + minutes;
 
             //put SVG element in the right time interval
             for (int j = 0; j < day_interval; j++) {
                 time = x_Axis.get(j).intValue();
-                if (glucoseTime < (time + interval) && glucoseTime > time) {
+                if (glucoseTime < (time + interval) && glucoseTime >= time) {
                     yGlucoseData.get(j).add((double) glucoseData.get(i).sgv);
                     break;
                 }
