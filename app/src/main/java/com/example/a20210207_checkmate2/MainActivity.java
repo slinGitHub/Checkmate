@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
             //Check if nightscout website is already set in preferences
             //Get the URL string from settings
             String nightscoutURLPref = sharedPref.getString(SettingsActivity.KEY_PREF_NIGHTSCOUT_URL, ""); //Does not work right now
+            String nightscoutTokenPref = sharedPref.getString(SettingsActivity.KEY_PREF_NIGHTSCOUT_TOKEN, ""); //Does not work right now
 
             if ((nightscoutURLPref.equals("Enter your Nightscout URL here (https://YOUR_NIGHTSCOUTPAGE.herokuapp.com/)")) && (initNightscoutURL == false)){
                 initNightscoutURL = true;
@@ -224,11 +225,39 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
                         EditText txt = editTextName1; // variable to collect user input
                         editor.putString(SettingsActivity.KEY_PREF_NIGHTSCOUT_URL, txt.getText().toString());
                         editor.apply();
-                        startProgram();
                     }
                 });
 
                 alertName.show(); // display the dialog
+
+                //Input Token Dialog
+
+                AlertDialog.Builder alertName2 = new AlertDialog.Builder(this);
+                final EditText editTextName2 = new EditText(this);
+                alertName2.setTitle("Enter your Nightscout Access Token:");
+                alertName2.setMessage("XX-XXXXXXXX");
+                alertName2.setView(editTextName2);
+                LinearLayout layoutName2 = new LinearLayout(this);
+                layoutName2.setOrientation(LinearLayout.VERTICAL);
+                layoutName2.addView(editTextName2); // displays the user input bar
+                alertName2.setView(layoutName2);
+
+                alertName2.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        EditText txt2 = editTextName2; // variable to collect user input
+                        editor.putString(SettingsActivity.KEY_PREF_NIGHTSCOUT_TOKEN, txt2.getText().toString());
+                        editor.apply();
+                        startProgram();
+                    }
+                });
+                alertName2.setNegativeButton("Without Token", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        startProgram();
+                    }
+                });
+
+                alertName2.show(); // display the dialog
+
             } else {
 
                 //Max number of datapoints to receive from Nightscout
@@ -237,6 +266,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
                 //Enter String to Nightscout Data
                 //Data formation example : https://github.com/nightscout/cgm-remote-monitor/blob/master/swagger.json
                 String url = nightscoutURLPref + "/api/v1/entries/sgv.csv?count=" + nightscoutMaxDataPoints + "&find[dateString][$gte]=2015-08-28"; //All Data
+                //Add token if necessary
+                if (!nightscoutTokenPref.equals("Enter your token here for the readable role at your nightscout page."))
+                    url = url + "&token=" + nightscoutTokenPref;
                 //String url = nightscoutURLPref + "/api/v1/entries/sgv.csv?count=100000&find[dateString][$gte]=2015-08-28"; //Short Dataset
                 //String urlVeryShort = nightscoutURLPref + "/api/v1/entries/sgv.csv"; //Very Short Dataset
 

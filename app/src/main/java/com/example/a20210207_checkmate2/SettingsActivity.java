@@ -16,6 +16,8 @@ import android.view.Menu;
 public class SettingsActivity extends AppCompatActivity {
 
     public static final String KEY_PREF_NIGHTSCOUT_URL = "nightscout_url";
+    public static final String KEY_PREF_NIGHTSCOUT_TOKEN = "nightscout_token";
+
     public static final String KEY_PREF_DATA_POINTS = "nightscout_data_points";
     public static final String KEY_PREF_COLOR_THEME = "color_preference";
     public static final String KEY_PREF_SWITCH_GLUCOSE_MOL = "switch_to_mol";

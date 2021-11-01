@@ -13,6 +13,15 @@
             android:title="Nightscout URL"
             app:useSimpleSummaryProvider = "true"/>
 
+        <EditTextPreference
+            android:defaultValue="Enter your token here for the readable role at your nightscout page."
+            android:key="nightscout_token"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary=""
+            android:title="Nightscout Token"
+            app:useSimpleSummaryProvider = "true"/>
+
 <!--        <ListPreference
             android:defaultValue="@string/defaultGlucoseUnit"
             android:key="glucose_unit"
