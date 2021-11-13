@@ -48,6 +48,11 @@ class NotificationHelper implements AsyncResponse {
 
         String url = nightscoutURLPref + "/api/v1/entries/sgv.csv?count=" + nightscoutMaxDataPoints + "&find[dateString][$gte]=2015-08-28";
 
+        //Get Token if needed
+        String nightscoutTokenPref = sharedPref.getString(SettingsActivity.KEY_PREF_NIGHTSCOUT_TOKEN, ""); //Does not work right now
+        if (!nightscoutTokenPref.equals("Enter your token here for the readable role at your nightscout page."))
+            url = url + "&token=" + nightscoutTokenPref;
+
         ReadGlucoseEntry task;
         task = new ReadGlucoseEntry(this);
         task.execute(url);
