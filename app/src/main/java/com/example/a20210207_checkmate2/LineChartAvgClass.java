@@ -1,7 +1,11 @@
 package com.example.a20210207_checkmate2;
 
-import android.content.res.Configuration;
+import static com.example.a20210207_checkmate2.Utils.getHba1c_mmol;
+
+import android.content.SharedPreferences;
 import android.graphics.Color;
+
+import androidx.preference.PreferenceManager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -10,6 +14,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.color.MaterialColors;
 
@@ -107,13 +112,13 @@ public class LineChartAvgClass {
 
         ArrayList<String> xAxisLabel = new ArrayList<>();
         xAxisLabel.add("30 Day\nAvg");
-        dataLineAvg.add(new Entry(0, hba1cAvgValue, hba1cAvgValue));
-        dataTextAvg.add(new Entry(0, hba1cAvgValue, hba1cAvgValue));
+        dataLineAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
+        dataTextAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
 
         int colorBubbleSel = 0;
         if (selected == true) {
             colorBubbleSel = colorAvg;
-            dataBubbleSel.add(new Entry(0, hba1cAvgValue, hba1cAvgValue));
+            dataBubbleSel.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
             colorAvg = Color.WHITE;
         }
 
@@ -128,7 +133,15 @@ public class LineChartAvgClass {
         //Format Text Data
         dataTextAvgSet.setDrawCircles(false);
         dataTextAvgSet.setValueTextSize(20);
-        dataTextAvgSet.setValueFormatter(new ValueFormatterOneDecimal());
+        ValueFormatter formatter;
+        if (switchToMol) {
+            formatter = new ValueFormatterZeroDecimal();
+        } else {
+            formatter = new ValueFormatterOneDecimal();
+        }
+
+        dataTextAvgSet.setValueFormatter(formatter);
+
         dataTextAvgSet.enableDashedLine(0f,1f,0f);
         dataTextAvgSet.setValueTextColor(textColor);
 
@@ -174,4 +187,5 @@ public class LineChartAvgClass {
         mAChart.setScaleEnabled(false);
         mAChart.setExtraOffsets(0, 10, 0, 0); //Bottom 30 : X-Axis Labels are drawn correctly
     }
+
 }
