@@ -1,5 +1,6 @@
 package com.example.a20210207_checkmate2;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -11,6 +12,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.android.material.color.MaterialColors;
+import androidx.preference.PreferenceManager;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -40,6 +42,10 @@ int bxAxisTextColor;
         }
 
     public void createChart(int nDays, boolean selected) {
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
+        float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL,"50"));
+        float inRangeTooLow = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_TOO_LOW,"30"));
 
         bxAxis = bAvgChart.getXAxis();
         bLeft = bAvgChart.getAxisLeft();
@@ -83,13 +89,13 @@ int bxAxisTextColor;
         float val3 = BigDecimal.valueOf(hba1cAverageData.get(0).HighRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //High
         dataBar.add(new BarEntry(0f, new float[]{val1, val2, val3}));
         dataBar2.add(new BarEntry(0f, val2));
-        if (val2 >= 50f)
+        if (val2 >= inRangeGoal) {
             bAcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK));
-        else if (val2 >= 40f)
+        } else if (val2 >= inRangeTooLow) {
             bAcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK));
-        else
+        } else {
             bAcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK));
-
+        }
         if (selected) {
             dataBarSel.add(new BarEntry(0f, val2));
         }

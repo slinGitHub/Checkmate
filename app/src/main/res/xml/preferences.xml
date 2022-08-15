@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="General Settings">
+
         <EditTextPreference
             android:defaultValue="Enter your Nightscout URL here (https://YOUR_NIGHTSCOUTPAGE.herokuapp.com/)"
             android:key="nightscout_url"
@@ -11,7 +11,7 @@
             android:singleLine="true"
             android:summary=""
             android:title="Nightscout URL"
-            app:useSimpleSummaryProvider = "true"/>
+            app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             android:defaultValue="Enter your token here for the readable role at your nightscout page."
@@ -20,16 +20,16 @@
             android:singleLine="true"
             android:summary=""
             android:title="Nightscout Token"
-            app:useSimpleSummaryProvider = "true"/>
+            app:useSimpleSummaryProvider="true" />
 
-<!--        <ListPreference
-            android:defaultValue="@string/defaultGlucoseUnit"
-            android:key="glucose_unit"
-            android:title="Glucose Unit Setting"
-            android:summary="%s"
-            android:entries="@array/glucoseUnitValues"
-            android:entryValues="@array/glucoseUnit"
-            app:useSimpleSummaryProvider = "true"/>-->
+        <!--        <ListPreference
+                    android:defaultValue="@string/defaultGlucoseUnit"
+                    android:key="glucose_unit"
+                    android:title="Glucose Unit Setting"
+                    android:summary="%s"
+                    android:entries="@array/glucoseUnitValues"
+                    android:entryValues="@array/glucoseUnit"
+                    app:useSimpleSummaryProvider = "true"/>-->
 
         <EditTextPreference
             android:defaultValue="30000"
@@ -37,16 +37,16 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Max Nightscout Data Points"
-            app:useSimpleSummaryProvider = "true"/>
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:defaultValue="@string/defaultColor"
-            android:key="color_preference"
-            android:title="Color Settings"
-            android:summary="%s"
             android:entries="@array/colorThemeValues"
             android:entryValues="@array/colorTheme"
-            app:useSimpleSummaryProvider = "true"/>
+            android:key="color_preference"
+            android:summary="%s"
+            android:title="Color Settings"
+            app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
             android:defaultValue="false"
@@ -61,68 +61,107 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="HbA1c Estimation">
+
         <EditTextPreference
             android:defaultValue="90"
             android:key="hba1c_days"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Days Used for HbA1c Calculation"
-            app:useSimpleSummaryProvider = "true"/>
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Treatment Goals">
+
         <EditTextPreference
             android:defaultValue="6.3"
             android:key="hba1c_goal"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="GMI Goal (x.x)"
-            app:useSimpleSummaryProvider = "true"/>
+            android:title="GMI Goal (x.x) %"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="45"
+            android:key="hba1c_goal_mol"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="GMI Goal (xx) mmol/mol"
+            app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             android:defaultValue="6.7"
             android:key="hba1c_veryHigh"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="GMI Very High (x.x)"
-            app:useSimpleSummaryProvider = "true"/>
+            android:title="GMI Very High (x.x) %"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="50"
+            android:key="hba1c_veryHigh_mol"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="GMI Very High (xx) mmol/mol"
+            app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             android:defaultValue="50"
             android:key="in_range_goal"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="In Range Goal (x%)"
-            app:useSimpleSummaryProvider = "true"/>
+            android:title="In Range Goal (x) %"
+            app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             android:defaultValue="40"
             android:key="in_range_too_low"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="In Range Too Low (x%)"
-            app:useSimpleSummaryProvider = "true"/>
+            android:title="In Range Too Low (x) %"
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Glucose Level for In-Range Evaluation">
+
         <EditTextPreference
             android:defaultValue="140"
             android:key="upper_range"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Upper Value (mg/dl)"
-            app:useSimpleSummaryProvider = "true"/>
+            android:title="Upper Value (xxx) mg/dl"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="7.8"
+            android:key="upper_range_mol"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Upper Value (x.x) mmol/ml"
+            app:useSimpleSummaryProvider="true" />
+
         <EditTextPreference
             android:defaultValue="70"
             android:key="lower_range"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Lower Value (mg/dl)"
-            app:useSimpleSummaryProvider = "true"/>
+            android:title="Lower Value (xx) mg/dl"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="3.9"
+            android:key="lower_range_mol"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Lower Value (x.x) mmol/ml"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Daily HbA1c Notification">
+
         <SwitchPreference
             android:defaultValue="true"
             android:key="switch_notification"
@@ -133,18 +172,19 @@
             android:key="notification_time"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            app:useSimpleSummaryProvider = "true"/>
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Screen Size Settings">
+
         <EditTextPreference
             android:defaultValue="6"
             android:key="screen_visible_bubblesBars"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Number of Displayed GMI and In-Range Bars"
-            app:useSimpleSummaryProvider = "true"/>
+            app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             android:defaultValue="81"
@@ -152,8 +192,8 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Horizontal Screen Ratio GMI (to HbA1c) (x%))"
-            app:useSimpleSummaryProvider = "true"/>
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
-

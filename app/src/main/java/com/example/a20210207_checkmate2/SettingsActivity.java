@@ -26,13 +26,17 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String KEY_PREF_HBA1C_DAYS = "hba1c_days";
 
     public static final String KEY_PREF_HBA1C_GOALS = "hba1c_goal";
+    public static final String KEY_PREF_HBA1C_GOALS_MOL = "hba1c_goal_mol";
     public static final String KEY_PREF_HBA1C_VERY_HIGH = "hba1c_veryHigh";
+    public static final String KEY_PREF_HBA1C_VERY_HIGH_MOL = "hba1c_veryHigh_mol";
 
     public static final String KEY_PREF_IN_RANGE_GOAL = "in_range_goal";
     public static final String KEY_PREF_IN_RANGE_TOO_LOW = "in_range_too_low";
 
     public static final String KEY_PREF_UPPER_RANGE = "upper_range";
+    public static final String KEY_PREF_UPPER_RANGE_MOL = "upper_range_mol";
     public static final String KEY_PREF_LOWER_RANGE = "lower_range";
+    public static final String KEY_PREF_LOWER_RANGE_MOL = "lower_range_mol";
 
     public static final String KEY_PREF_SWITCH_NOTIFICAION = "switch_notification";
     public static final String KEY_PREF_NOTIFICATION_TIME = "notification_time";

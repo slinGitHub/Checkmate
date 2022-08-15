@@ -1,5 +1,7 @@
 package com.example.a20210207_checkmate2;
 
+import static com.example.a20210207_checkmate2.Utils.getHba1c_mmol;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -86,13 +88,13 @@ class NotificationHelper implements AsyncResponse {
 
         int notificationId = 1;
 
-        float hba1cValue = 0;
+        double hba1cValue = 0;
         float inRange = 0;
 
         CalcHba1c calcHba1c = new CalcHba1c(glucoseDataRaw);
         calcHba1c.CalcHba1c(mContext);
 
-        hba1cValue = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).floatValue();
+        hba1cValue = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).doubleValue();
         inRange = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).inRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //InRange
 
         //Intent intent = new Intent(mContext , NotificationActivity.class);
@@ -108,15 +110,18 @@ class NotificationHelper implements AsyncResponse {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
         mBuilder.setSmallIcon(R.drawable.notification_icon_owl2);
 
+        //Get Values from Preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
+        float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS,"6.3"));
+        float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL,"50"));
+
+        hba1cValue = getHba1c_mmol(hba1cValue, switchToMol);
+
         mBuilder.setContentTitle("Your Hba1c today: " + hba1cValue + " / In Range: " + String.format("%.0f",inRange) + "%")
                 .setAutoCancel(false)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentIntent(resultPendingIntent);
-
-        //Get Values from Preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS,"6.3"));
-        float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL,"50"));
 
         if (hba1cValue <= hba1cGoal && inRange >= inRangeGoal)
             mBuilder.setContentText("You are doing great!");
@@ -146,6 +151,5 @@ class NotificationHelper implements AsyncResponse {
         assert mNotificationManager != null;
         mNotificationManager.notify(notificationId /* Request Code */, mBuilder.build());
     }
-
 
 }

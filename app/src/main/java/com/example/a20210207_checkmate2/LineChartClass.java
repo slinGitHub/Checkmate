@@ -1,11 +1,10 @@
 package com.example.a20210207_checkmate2;
 
-import android.content.Context;
+import static com.example.a20210207_checkmate2.Utils.getHba1c_mmol;
+
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 
-import androidx.constraintlayout.widget.Guideline;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
@@ -16,19 +15,15 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.renderer.DataRenderer;
-import com.github.mikephil.charting.renderer.LineChartRenderer;
-import com.github.mikephil.charting.utils.MPPointD;
 import com.github.mikephil.charting.utils.MPPointF;
-import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.color.MaterialColors;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
 
 public class LineChartClass {
@@ -69,20 +64,22 @@ public class LineChartClass {
 
         //Get Values from Preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
-        float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS,"6.3"));
-        float hba1cHigh = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_VERY_HIGH,"7.0"));
-
+        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
+        double hba1cGoal = Double.parseDouble(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS, "6.3"));
+        hba1cGoal = getHba1c_mmol(hba1cGoal, switchToMol);
+        double hba1cHigh = Double.parseDouble(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_VERY_HIGH, "7.0"));
+        hba1cHigh = getHba1c_mmol(hba1cHigh, switchToMol);
         //Check Rotation of smartphone and modify Bubble and Line Position (NOT Text)
         int orientation = mainActivity.getResources().getConfiguration().orientation;
 
 
         //Calculate the Delta Ymax/Ymin from Data and calculate the modifier based on the result
         //Get MinMax from HbA1c data
-        double hba1cMax =hba1c_data.get(0).hba1c;
+        double hba1cMax = getHba1cValue(0, switchToMol);
         double hba1cMin = hba1cMax;
 
-        for(int i=1;i<hba1c_data.size();i++){
-            double compareValue = hba1c_data.get(i).hba1c;
+        for (int i = 1; i < hba1c_data.size(); i++) {
+            double compareValue = getHba1cValue(i, switchToMol);
             if (compareValue > hba1cMax)
                 hba1cMax = compareValue;
             if (compareValue < hba1cMin)
@@ -112,7 +109,7 @@ public class LineChartClass {
         right.setDrawGridLines(false); // no grid lines
 
         //Load Data in Chart
-        ArrayList<Entry> dataLine= new ArrayList<>();
+        ArrayList<Entry> dataLine = new ArrayList<>();
         ArrayList<Entry> dataBubble = new ArrayList<>();
         ArrayList<Entry> dataBubbleSel = new ArrayList<>();
         ArrayList<Entry> dataText = new ArrayList<>();
@@ -125,7 +122,7 @@ public class LineChartClass {
 
         //Get maximum number of measurements a day -> detect days without enough data
         double maxValues = 0;
-        for(Hba1cEntry entry : hba1c_data){
+        for (Hba1cEntry entry : hba1c_data) {
             if (entry.nValues > maxValues)
                 maxValues = entry.nValues;
         }
@@ -136,7 +133,7 @@ public class LineChartClass {
 
         for (int i = 0; i <= count; i++) {
 
-            hba1c_value = BigDecimal.valueOf(hba1c_data.get(count - i).hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).floatValue();
+            hba1c_value = getHba1cValue(count - i, switchToMol);
 
             //Set X-Axis Label
             SimpleDateFormat df = new SimpleDateFormat("E\ndd/MM", Locale.getDefault()); // Quoted "Z" to indicate UTC, no timezone offset
@@ -169,7 +166,7 @@ public class LineChartClass {
             }
 
             //Color day selected brighter
-            if (useDaySelected == true && i == daySelected){
+            if (useDaySelected == true && i == daySelected) {
 
                 colorBubbleSel = colors.get(i);
                 dataBubbleSel.add(new Entry((float) i, hba1c_value, hba1c_value));
@@ -178,7 +175,7 @@ public class LineChartClass {
             }
         }
         //Check if Owl Icon should be Displayed
-        if(sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_OWL,true)) {
+        if (sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_OWL, true)) {
             //Owl Icon - Get Bar Value
             float val2 = BigDecimal.valueOf(hba1c_data.get(0).inRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //InRange
             float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL, "50"));
@@ -211,8 +208,15 @@ public class LineChartClass {
         dataTextSet.setDrawCircles(false);
         dataTextSet.setValueTextSize(20);
         dataTextSet.setValueTextColor(textColor);
-        dataTextSet.enableDashedLine(0f,1f,0f);
-        dataTextSet.setValueFormatter(new ValueFormatterOneDecimal());
+        dataTextSet.enableDashedLine(0f, 1f, 0f);
+        ValueFormatter formatter;
+        if (switchToMol) {
+            formatter = new ValueFormatterZeroDecimal();
+        } else {
+            formatter = new ValueFormatterOneDecimal();
+        }
+
+        dataTextSet.setValueFormatter(formatter);
         dataTextSet.setHighlightEnabled(false);
 
         //Format Bubble Data
@@ -235,7 +239,7 @@ public class LineChartClass {
 
         //Format Owl Icon Data
         dataOwlIconSet.setDrawIcons(true);
-        dataOwlIconSet.setIconsOffset(MPPointF.getInstance(0f,-40f));
+        dataOwlIconSet.setIconsOffset(MPPointF.getInstance(0f, -40f));
         dataOwlIconSet.setDrawValues(false);
         dataOwlIconSet.setDrawCircles(false);
 
@@ -254,10 +258,10 @@ public class LineChartClass {
         mChart.setData(data);
         mChart.invalidate();
 
-        mChart.setRenderer(new CenteredTextLineChartRenderer(mChart,mChart.getAnimator(),mChart.getViewPortHandler()));
+        mChart.setRenderer(new CenteredTextLineChartRenderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler()));
 
         //Set number of displayed values (Default is 6)
-        float numberOfVisibleBubbleBars = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_VISIBLE_BUBBLEBARS,"6"));
+        float numberOfVisibleBubbleBars = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_VISIBLE_BUBBLEBARS, "6"));
         mChart.setVisibleXRangeMaximum(numberOfVisibleBubbleBars);
 
         mChart.getDescription().setEnabled(false);
@@ -268,6 +272,13 @@ public class LineChartClass {
         //mChart.setViewPortOffsets(0f,0f,120f,0f);
     }
 
+    private float getHba1cValue(int index, Boolean switchToMol) {
+        double hba1c = hba1c_data.get(index).hba1c;
+        if (switchToMol) {
+            double hba1c_mmol = getHba1c_mmol(hba1c, true);
+            return BigDecimal.valueOf(hba1c_mmol).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue();
+        }
+        return BigDecimal.valueOf(hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).floatValue();
 }
 
-
+}
