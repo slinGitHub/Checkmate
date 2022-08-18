@@ -203,13 +203,12 @@ ArrayList<Hba1cEntry> hba1cAverageData;
 
         }
 
-        //Copy last day to hba1c entry after loop is finished
+        // Dont save the last day, it not complete and therefore incorrect, mostly gray
+        // Copy last day to hba1c entry after loop is finished
         // Calculate Hba1c
-        hba1c = ((sgv_sum/svg_i) + 46.7) / 28.7;
-        day = day_joda.toDate();
-        //Write Data to Array
-        hba1cData.add(new Hba1cEntry(day,hba1c,(glucoseIn/(glucoseIn+glucoseHigh+glucoseLow)),(glucoseHigh/(glucoseIn+glucoseHigh+glucoseLow)),-(glucoseLow/(glucoseIn+glucoseHigh+glucoseLow)),svg_i,glucoseEntryData));
+        // hba1c = ((sgv_sum/svg_i) + 46.7) / 28.7;
+        // day = day_joda.toDate();
+        // Write Data to Array
+        // hba1cData.add(new Hba1cEntry(day,hba1c,(glucoseIn/(glucoseIn+glucoseHigh+glucoseLow)),(glucoseHigh/(glucoseIn+glucoseHigh+glucoseLow)),-(glucoseLow/(glucoseIn+glucoseHigh+glucoseLow)),svg_i,glucoseEntryData));
     }
-
-
 }

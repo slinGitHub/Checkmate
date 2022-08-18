@@ -2,27 +2,22 @@ package com.example.a20210207_checkmate2;
 
 import static com.example.a20210207_checkmate2.Utils.getHba1c_mmol;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.provider.Settings;
 
 import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 class NotificationHelper implements AsyncResponse {
 
@@ -35,23 +30,23 @@ class NotificationHelper implements AsyncResponse {
         Hba1c = 0;
     }
 
-    void setHba1c(double Hba1c){
+    void setHba1c(double Hba1c) {
         this.Hba1c = Hba1c;
     }
 
 
     void createNotification() {
-        //If local data can be retrieved load first local and then update data
+        // If local data can be retrieved load first local and then update data
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
         String nightscoutURLPref = sharedPref.getString(SettingsActivity.KEY_PREF_NIGHTSCOUT_URL, "");
-        int nightscoutMaxDataPoints = Integer.parseInt(sharedPref.getString(SettingsActivity.KEY_PREF_DATA_POINTS,"30000"));
+        int nightscoutMaxDataPoints = Integer.parseInt(sharedPref.getString(SettingsActivity.KEY_PREF_DATA_POINTS, "30000"));
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String url = nightscoutURLPref + "/api/v1/entries/sgv.csv?count=" + nightscoutMaxDataPoints + "&find[dateString][$gte]=" + date;
 
-        String url = nightscoutURLPref + "/api/v1/entries/sgv.csv?count=" + nightscoutMaxDataPoints + "&find[dateString][$gte]=2015-08-28";
-
-        //Get Token if needed
-        String nightscoutTokenPref = sharedPref.getString(SettingsActivity.KEY_PREF_NIGHTSCOUT_TOKEN, ""); //Does not work right now
+        // Get Token if needed
+        String nightscoutTokenPref = sharedPref.getString(SettingsActivity.KEY_PREF_NIGHTSCOUT_TOKEN, ""); // Does not work right now
         if (!nightscoutTokenPref.equals("Enter your token here for the readable role at your nightscout page."))
             url = url + "&token=" + nightscoutTokenPref;
 
@@ -113,31 +108,28 @@ class NotificationHelper implements AsyncResponse {
         //Get Values from Preferences
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
         Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
-        float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS,"6.3"));
-        float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL,"50"));
+        float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS, "6.3"));
+        float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL, "50"));
 
         hba1cValue = getHba1c_mmol(hba1cValue, switchToMol);
 
-        mBuilder.setContentTitle("Your Hba1c today: " + hba1cValue + " / In Range: " + String.format("%.0f",inRange) + "%")
+        mBuilder.setContentTitle("Your Hba1c today: " + hba1cValue + " / In Range: " + String.format("%.0f", inRange) + "%")
                 .setAutoCancel(false)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentIntent(resultPendingIntent);
 
         if (hba1cValue <= hba1cGoal && inRange >= inRangeGoal)
             mBuilder.setContentText("You are doing great!");
+        else if (hba1cValue <= hba1cGoal)
+            mBuilder.setContentText("Well done! But try to stabilize your sugar level.");
+        else if (inRange >= inRangeGoal)
+            mBuilder.setContentText("You are on the right way! But try to lower your surf level.");
         else
-            if (hba1cValue <= hba1cGoal)
-                mBuilder.setContentText("Well done! But try to stabilize your sugar level.");
-            else
-                if (inRange >=inRangeGoal)
-                    mBuilder.setContentText("You are on the right way! But try to lower your surf level.");
-                else
-                    mBuilder.setContentText("This is one of these days, tomorrow will be better for sure!");
+            mBuilder.setContentText("This is one of these days, tomorrow will be better for sure!");
 
         NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
-        {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
             notificationChannel.enableLights(true);
