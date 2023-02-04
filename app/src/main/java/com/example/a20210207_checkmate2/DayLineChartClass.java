@@ -210,6 +210,8 @@ public class DayLineChartClass {
             d.setLineWidth(3);
             d.setHighlightEnabled(false);
             d.setDrawValues(false);
+            d.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
             dataSets.add(d);
 
             //Draw a circle at the end of the line only if present day is activ

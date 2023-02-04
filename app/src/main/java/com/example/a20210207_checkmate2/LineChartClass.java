@@ -154,16 +154,16 @@ public class LineChartClass {
             //Add second data set for the hba1c values
             dataText.add(new Entry((float) i, hba1c_value, hba1c_value));
 
-            if ((hba1c_data.get(count - i).nValues > (0.5 * maxValues)) || i == count) {
+            //if ((hba1c_data.get(count - i).nValues > (0.5 * maxValues)) || i == count) {
                 if (value <= hba1cGoal)
                     colors.add(bubbleColorInRange);
                 else if (value > hba1cGoal && value < hba1cHigh)
                     colors.add(bubbleColorAboveRange);
                 else
                     colors.add(bubbleColorHighAbRange);
-            } else {
-                colors.add(bubbleNotEnoughDataColor);
-            }
+            //} else {
+            //    colors.add(bubbleNotEnoughDataColor);
+            //}
 
             //Color day selected brighter
             if (useDaySelected == true && i == daySelected) {

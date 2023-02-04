@@ -101,7 +101,7 @@ public class BarChartClass {
             dataBar2.add(new BarEntry(i, val2));
 
 
-            if ((hba1c_data.get(count - i).nValues > (0.5 * maxValues)) || i == count) {
+            //if ((hba1c_data.get(count - i).nValues > (0.5 * maxValues)) || i == count) {
                 if (val2 >= inRangeGoal) {
                     bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK));
                     //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK));
@@ -112,10 +112,10 @@ public class BarChartClass {
                     bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK));
                     //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK));
                 }
-            } else {
-                bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK));
-                //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK));
-            }
+            //} else {
+            //    bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK));
+            //    //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK));
+            //}
 
             //Color day selected brighter
             if (useDaySelected == true && i == daySelected){
