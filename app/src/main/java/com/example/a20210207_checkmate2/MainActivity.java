@@ -111,6 +111,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setIcon(R.drawable.ic_action_checkmateactionbarowl); // Show Icon in Toolbar
 
+        //Notification Alarm Scheduler
+        if (sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_NOTIFICAION, true)) {
+            AlarmScheduler.schedule(this, sharedPref);
+        }
+
     }
 
     public void setAppTheme(String theme) {
@@ -442,14 +447,13 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         // Start Notification Alarm
         //-------------------------------------------------------------------------------
         if (sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_NOTIFICAION, true)) {
-            myAlarm();
+            AlarmScheduler.schedule(this, sharedPref);
         } else {
-            //Delete Notification Channels set
+            AlarmScheduler.cancel(this);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationManager mNotificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                String id = "10001";
-                mNotificationManager.deleteNotificationChannel(id);
+                mNotificationManager.deleteNotificationChannel("10001");
             }
         }
 
@@ -464,39 +468,39 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    public void myAlarm() {
-        int notificationId = 1;
-        String notification_time = sharedPref.getString(SettingsActivity.KEY_PREF_NOTIFICATION_TIME, "20:00");
-        String[] values = notification_time.split(":");
-
-
-        //Calendar calendar = Calendar.getInstance();
-        //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-/*        try {
-            calendar.setTime(sdf.parse(notification_time));
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-        }*/
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, parseInt(values[0]));
-        calendar.set(Calendar.MINUTE, parseInt(values[1]));
-        calendar.set(Calendar.SECOND, 0);
-
-        if (calendar.getTime().compareTo(new Date()) < 0)
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-
-        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        if (alarmManager != null) {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-        }
-
-    }
+//    public void myAlarm() {
+//        int notificationId = 1;
+//        String notification_time = sharedPref.getString(SettingsActivity.KEY_PREF_NOTIFICATION_TIME, "20:00");
+//        String[] values = notification_time.split(":");
+//
+//
+//        //Calendar calendar = Calendar.getInstance();
+//        //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+///*        try {
+//            calendar.setTime(sdf.parse(notification_time));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//
+//        }*/
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.HOUR_OF_DAY, parseInt(values[0]));
+//        calendar.set(Calendar.MINUTE, parseInt(values[1]));
+//        calendar.set(Calendar.SECOND, 0);
+//
+//        if (calendar.getTime().compareTo(new Date()) < 0)
+//            calendar.add(Calendar.DAY_OF_MONTH, 1);
+//
+//        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//
+//        if (alarmManager != null) {
+//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+//
+//        }
+//
+//    }
 
     //-------------------------------------------------------------------------------
     // Options Menu
