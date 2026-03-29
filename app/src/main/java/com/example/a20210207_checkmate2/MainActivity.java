@@ -1,7 +1,6 @@
 package com.example.a20210207_checkmate2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
@@ -16,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +46,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import static com.example.a20210207_checkmate2.SettingsActivity.KEY_PREF_MEAN_DAYS;
 import static java.lang.Integer.parseInt;
+import android.provider.Settings;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private Boolean isSyncServiceRunning = false;
     private ArrayList<GlucoseEntry> glucoseDataRawStore = new ArrayList<>();
     private CalcHba1c calcHba1c;
-    private static ActionMenuItemView buttonSync;
+    private View buttonSync;
     private static RotateAnimation rotateAnimation;
 
     //-------------------------------------------------------------------------------
@@ -83,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rotateAnimation = new RotateAnimation(360, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimation.setDuration((long) 2 * 500);
         rotateAnimation.setRepeatCount(Animation.INFINITE);
 
@@ -111,10 +113,22 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setIcon(R.drawable.ic_action_checkmateactionbarowl); // Show Icon in Toolbar
 
-        //Notification Alarm Scheduler
+        // Notification Alarm Scheduler
         if (sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_NOTIFICAION, true)) {
             AlarmScheduler.schedule(this, sharedPref);
         }
+
+        // NEU: Android 12+ Exact Alarm Permission prüfen
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Intent exactAlarmIntent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                exactAlarmIntent.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(exactAlarmIntent);
+            }
+        }
+
+
 
     }
 

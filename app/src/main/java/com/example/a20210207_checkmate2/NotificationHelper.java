@@ -24,6 +24,7 @@ class NotificationHelper implements AsyncResponse {
     private Context mContext;
     private static final String NOTIFICATION_CHANNEL_ID = "10001";
     private double Hba1c;
+    private Runnable onFinished; // NEU: Callback
 
     NotificationHelper(Context context) {
         mContext = context;
@@ -34,6 +35,11 @@ class NotificationHelper implements AsyncResponse {
         this.Hba1c = Hba1c;
     }
 
+    // NEU: Methode mit Callback
+    void createNotification(Runnable onFinished) {
+        this.onFinished = onFinished;
+        createNotification();
+    }
 
     void createNotification() {
         // If local data can be retrieved load first local and then update data
@@ -142,6 +148,11 @@ class NotificationHelper implements AsyncResponse {
         }
         assert mNotificationManager != null;
         mNotificationManager.notify(notificationId /* Request Code */, mBuilder.build());
+
+        // NEU: Callback aufrufen – Android darf den Prozess jetzt beenden
+        if (onFinished != null) {
+            onFinished.run();
+        }
     }
 
 }
