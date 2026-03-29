@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private View buttonSync;
     private static RotateAnimation rotateAnimation;
 
+
     //-------------------------------------------------------------------------------
     // Reload Content after getting back to Main window
     //-------------------------------------------------------------------------------
@@ -116,6 +117,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         // Notification Alarm Scheduler
         if (sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_NOTIFICAION, true)) {
             AlarmScheduler.schedule(this, sharedPref);
+        }
+
+        // POST_NOTIFICATIONS Permission abfragen (Android 13+)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (androidx.core.content.ContextCompat.checkSelfPermission(
+                    this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                androidx.core.app.ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                        1001
+                );
+            }
         }
 
         // NEU: Android 12+ Exact Alarm Permission prüfen
@@ -314,16 +328,24 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
                 // Call the chart creation algorithm
                 createCharts(calcHba1c);
-            } else {
-                Toast.makeText(this, "No new Glucose Data found..", Toast.LENGTH_SHORT).show();
             }
         }
+
+        if (glucoseDataRaw != null && glucoseDataRaw.size() == 0) {
+            Toast.makeText(this, "No Glucose Data found at the provided Nightscout URL..", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Nightscout data received..", Toast.LENGTH_SHORT).show();
+        }
+
         if (saveData) {
             isSyncServiceRunning = false;
         }
         if (buttonSync != null) {
             buttonSync.clearAnimation();
         }
+
+
+
     }
 
     public void createCharts(CalcHba1c calcHba1c) {

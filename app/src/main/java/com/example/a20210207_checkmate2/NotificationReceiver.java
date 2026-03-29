@@ -17,6 +17,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        android.util.Log.d("CheckmateNotification", "NotificationReceiver:Alarm wurde ausgelöst!");
 
         final PendingResult result = goAsync(); // Android warten lassen
 

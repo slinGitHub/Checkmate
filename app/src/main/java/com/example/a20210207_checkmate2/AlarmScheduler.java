@@ -44,6 +44,10 @@ public class AlarmScheduler {
                     AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent
             );
         }
+        android.util.Log.d("CheckmateNotification", "AlarmScheduler:Alarm registriert für: " +
+                String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)) +
+                " am " + calendar.getTime());
+
     }
 
     public static void cancel(Context context) {

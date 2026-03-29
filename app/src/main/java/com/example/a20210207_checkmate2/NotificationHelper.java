@@ -2,6 +2,8 @@ package com.example.a20210207_checkmate2;
 
 import static com.example.a20210207_checkmate2.Utils.getHba1c_mmol;
 
+import static java.lang.Integer.parseInt;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,6 +28,7 @@ class NotificationHelper implements AsyncResponse {
     private double Hba1c;
     private Runnable onFinished; // NEU: Callback
 
+
     NotificationHelper(Context context) {
         mContext = context;
         Hba1c = 0;
@@ -42,13 +45,14 @@ class NotificationHelper implements AsyncResponse {
     }
 
     void createNotification() {
+        android.util.Log.d("CheckmateNotification", "NotificationReceiver:Getting Data from Nightscout!");
         // If local data can be retrieved load first local and then update data
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
         String nightscoutURLPref = sharedPref.getString(SettingsActivity.KEY_PREF_NIGHTSCOUT_URL, "");
         int nightscoutMaxDataPoints = Integer.parseInt(sharedPref.getString(SettingsActivity.KEY_PREF_DATA_POINTS, "30000"));
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String date = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
         String url = nightscoutURLPref + "/api/v1/entries/sgv.csv?count=" + nightscoutMaxDataPoints + "&find[dateString][$gte]=" + date;
 
         // Get Token if needed
@@ -61,93 +65,97 @@ class NotificationHelper implements AsyncResponse {
         task.execute(url);
     }
 
-
-/*            FileInputStream fis;
-            fis = mContext.openFileInput("glucoseDataRaw.dat");
-            BufferedInputStream bfis = new BufferedInputStream(fis);
-            ObjectInputStream is = new ObjectInputStream(bfis);
-            ArrayList<GlucoseEntry> glucoseDataRaw = (ArrayList<GlucoseEntry>) is.readObject();
-            is.close();
-            fis.close();
-
-            CalcHba1c calcHba1c = new CalcHba1c(glucoseDataRaw);
-            calcHba1c.CalcHba1c(mContext);
-
-            hba1cValue = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).floatValue();
-            inRange = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).inRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //InRange
-
-        } catch (FileNotFoundException fileNotFoundException){
-            //Do Something
-        } catch (IOException ioException){
-            //Do Something
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }*/
-
     @Override
     public void processFinish(ArrayList<GlucoseEntry> glucoseDataRaw, boolean saveData) {
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        android.util.Log.d("CheckmateNotification", "NotificationReceiver:Creating Notification!");
 
         int notificationId = 1;
 
         double hba1cValue = 0;
         float inRange = 0;
 
-        CalcHba1c calcHba1c = new CalcHba1c(glucoseDataRaw);
-        calcHba1c.CalcHba1c(mContext);
+        CalcHba1c calcHba1c = null;
 
-        hba1cValue = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).doubleValue();
-        inRange = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).inRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //InRange
+        if (glucoseDataRaw != null) {
+            if (glucoseDataRaw.size() > 0) {
+                //-------------------------------------------------------------------------------
+                // Calculate HbA1c
+                //-------------------------------------------------------------------------------
+                calcHba1c = new CalcHba1c(glucoseDataRaw);
+                calcHba1c.CalcHba1c(mContext);
 
-        //Intent intent = new Intent(mContext , NotificationActivity.class);
-        Intent intent = new Intent(mContext, MainActivity.class);
+                hba1cValue = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).hba1c).setScale(1, BigDecimal.ROUND_HALF_DOWN).doubleValue();
+                inRange = BigDecimal.valueOf(calcHba1c.getHba1cData().get(0).inRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //InRange
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //Intent intent = new Intent(mContext , NotificationActivity.class);
+                Intent intent = new Intent(mContext, MainActivity.class);
 
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
-                notificationId /* Request code */, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+                PendingIntent resultPendingIntent = PendingIntent.getActivity(
+                        mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE
+                );
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
-        mBuilder.setSmallIcon(R.drawable.notification_icon_owl2);
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
+                mBuilder.setSmallIcon(R.drawable.notification_icon_owl2);
 
-        //Get Values from Preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
-        float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS, "6.3"));
-        float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL, "50"));
+                //Get Values from Preferences
+                Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
+                float hba1cGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_GOALS, "6.3"));
+                float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL, "50"));
 
-        hba1cValue = getHba1c_mmol(hba1cValue, switchToMol);
+                hba1cValue = getHba1c_mmol(hba1cValue, switchToMol);
 
-        mBuilder.setContentTitle("Your Hba1c today: " + hba1cValue + " / In Range: " + String.format("%.0f", inRange) + "%")
-                .setAutoCancel(false)
-                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                .setContentIntent(resultPendingIntent);
+                mBuilder.setContentTitle("Your Hba1c today: " + hba1cValue + " / In Range: " + String.format("%.0f", inRange) + "%")
+                        .setAutoCancel(false)
+                        .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                        .setContentIntent(resultPendingIntent);
 
-        if (hba1cValue <= hba1cGoal && inRange >= inRangeGoal)
-            mBuilder.setContentText("You are doing great!");
-        else if (hba1cValue <= hba1cGoal)
-            mBuilder.setContentText("Well done! But try to stabilize your sugar level.");
-        else if (inRange >= inRangeGoal)
-            mBuilder.setContentText("You are on the right way! But try to lower your surf level.");
-        else
-            mBuilder.setContentText("This is one of these days, tomorrow will be better for sure!");
+                if (hba1cValue <= hba1cGoal && inRange >= inRangeGoal)
+                    mBuilder.setContentText("You are doing great!");
+                else if (hba1cValue <= hba1cGoal)
+                    mBuilder.setContentText("Well done! But try to stabilize your sugar level.");
+                else if (inRange >= inRangeGoal)
+                    mBuilder.setContentText("You are on the right way! But try to lower your surf level.");
+                else
+                    mBuilder.setContentText("This is one of these days, tomorrow will be better for sure!");
 
-        NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.GREEN);
-            notificationChannel.enableVibration(true);
-            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            assert mNotificationManager != null;
-            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
-            mNotificationManager.createNotificationChannel(notificationChannel);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    int importance = NotificationManager.IMPORTANCE_HIGH;
+                    NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
+                    notificationChannel.enableLights(true);
+                    notificationChannel.setLightColor(Color.GREEN);
+                    notificationChannel.enableVibration(true);
+                    notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                    assert mNotificationManager != null;
+                    mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
+                    mNotificationManager.createNotificationChannel(notificationChannel);
+                }
+                //        assert mNotificationManager != null;
+                //        mNotificationManager.notify(notificationId /* Request Code */, mBuilder.build());
+
+                boolean canPost = true;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                    canPost = androidx.core.content.ContextCompat.checkSelfPermission(
+                            mContext, android.Manifest.permission.POST_NOTIFICATIONS
+                    ) == android.content.pm.PackageManager.PERMISSION_GRANTED;
+                }
+
+                if (mNotificationManager != null && canPost) {
+                    mNotificationManager.notify(notificationId, mBuilder.build());
+                } // Sonst Notification überspringen
+
+            }
+
+        } else {
+                android.util.Log.d("CheckmateNotification", "NotificationReceiver:No data available for notification!");
+                return; // Keine Daten, keine Notification
         }
-        assert mNotificationManager != null;
-        mNotificationManager.notify(notificationId /* Request Code */, mBuilder.build());
+
 
         // NEU: Callback aufrufen – Android darf den Prozess jetzt beenden
         if (onFinished != null) {
