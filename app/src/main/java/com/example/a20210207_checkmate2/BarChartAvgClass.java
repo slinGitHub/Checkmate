@@ -133,7 +133,7 @@ int bxAxisTextColor;
         dataSetsBar.add(dataBarSetSel);
 
         BarData dataBarChart = new BarData(dataSetsBar);
-        dataBarChart.setBarWidth(0.8f);
+        dataBarChart.setBarWidth(1.2f);
         dataBarChart.setValueFormatter(new ValueFormatterPercentage());
         dataBarChart.setValueTextColor(MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK));
 
