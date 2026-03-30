@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -58,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private ArrayList<GlucoseEntry> glucoseDataRawStore = new ArrayList<>();
     private CalcHba1c calcHba1c;
     private View buttonSync;
-    private static RotateAnimation rotateAnimation;
+    private RotateAnimation rotateAnimation;
+    long syncStartTime;
 
 
     //-------------------------------------------------------------------------------
@@ -139,6 +141,23 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 Intent exactAlarmIntent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
                 exactAlarmIntent.setData(Uri.parse("package:" + getPackageName()));
                 startActivity(exactAlarmIntent);
+            }
+        }
+
+        PowerManager pwrm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            boolean isIgnoring = pwrm.isIgnoringBatteryOptimizations(getPackageName());
+            if (!isIgnoring) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Battery Optimization")
+                        .setMessage("To receive alerts reliably, please disable battery optimization for CheckMate.")
+                        .setPositiveButton("Settings", (p1, p2) -> {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+                            }
+                        })
+                        .setNegativeButton("Later", null)
+                        .show();
             }
         }
 
@@ -269,6 +288,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 }
 
                 buttonSync = this.findViewById(R.id.action_reload);
+                // Save start time before executing task
+                syncStartTime = System.currentTimeMillis();
                 if (buttonSync != null) {
                     buttonSync.startAnimation(rotateAnimation);
                 }
