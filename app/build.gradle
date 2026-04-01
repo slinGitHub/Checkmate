@@ -35,12 +35,18 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference:1.2.1'
-
+    implementation "androidx.work:work-runtime:2.9.0"
+    // Für den WorkManager
+    implementation "androidx.work:work-runtime:2.9.0"
+    // Für asynchrone Worker (CallbackToFutureAdapter)
+    implementation "androidx.concurrent:concurrent-futures:1.1.0"
+    
     // Drittanbieter
     implementation 'com.opencsv:opencsv:5.7.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'joda-time:joda-time:2.12.5'
+    implementation 'com.google.guava:guava:31.1-android'
 
     // ACRA (Die Version 4.x ist viel zu alt für Android 14)
     implementation 'ch.acra:acra-http:5.11.3'
