@@ -574,6 +574,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     //-------------------------------------------------------------------------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (item.getItemId() == R.id.action_aboutCheckmate) {
             Intent intent_settings_about = new Intent(this, SettingsAboutActivity.class);
             startActivity(intent_settings_about);
@@ -584,6 +585,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             startActivity(intent_settings);
             return true;
         }
+
+        if (item.getItemId() == R.id.action_export_data) {
+            // Pass the actual data list from your calcHba1c object
+            String path = ExportManager.exportHba1cToCSV(this, calcHba1c.getHba1cData());
+
+            if (path != null) {
+                ExportManager.shareFile(this, path);
+            } else {
+                Toast.makeText(this, "No data available to export", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+
         if (item.getItemId() == R.id.action_reload) {
             // User chose the "Favorite" action, mark the current item
             // as a favorite...

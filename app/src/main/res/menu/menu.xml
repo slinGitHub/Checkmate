@@ -14,6 +14,10 @@
         android:title="Settings"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_export_data"
+        android:title="Export data"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/action_clear_data"
         android:title="Clear data"
         app:showAsAction="never"/>

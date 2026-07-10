@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- This corresponds to context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) -->
+    <external-files-path name="my_exports" path="Download/" />
+</paths>
