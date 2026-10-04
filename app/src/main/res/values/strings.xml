@@ -12,4 +12,5 @@
     <string name="defaultGlucoseUnit">mgdL</string>
     <string name="hyperlink"><a href="https://slingithub.github.io/CheckmateWeb/">slingithub.github.io/CheckmateWeb</a></string>
     <string name="crash_toast_text">Your App has crashed, do you want to send a report?</string>
+    <string name="percent_sign">%</string>
 </resources>
