@@ -82,14 +82,14 @@ public class LowLineChartClass {
             SimpleDateFormat df = new SimpleDateFormat("E\ndd/MM", Locale.getDefault());
             xAxisLabel.add(df.format(entry.date));
 
-            // Farblogik: < 50 Rot, 50-70 Gelb, > 70 Grün
+            // Farblogik fixieren: < 50 Rot, 50-70 Gelb, > 70 Grün
             int color;
             if (entry.minGlucose < 50) {
-                color = bubbleColorHighAbRange;
+                color = bubbleColorHighAbRange; // Rot
             } else if (entry.minGlucose <= 70) {
-                color = bubbleColorAboveRange;
+                color = bubbleColorAboveRange;  // Gelb
             } else {
-                color = bubbleColorInRange;
+                color = bubbleColorInRange;     // Grün
             }
 
             int[] entryData = new int[]{entry.lowEvents, color};
@@ -107,16 +107,21 @@ public class LowLineChartClass {
         mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
         mChart.setXAxisRenderer(new ValueFormatterDateXAxis(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT)));
 
+        ValueFormatter formatter = switchToMol ? new ValueFormatterOneDecimal() : new ValueFormatterZeroDecimal();
+
+        // Linien komplett ausschalten
         dataTextSet.setDrawCircles(false);
-        dataTextSet.setDrawValues(true); // Muss true sein, damit der Renderer zeichnet
-        dataTextSet.setValueTextSize(20f); // Größerer Text
+        dataTextSet.setLineWidth(0f);
+        dataTextSet.setColor(Color.TRANSPARENT);
+        dataTextSet.setDrawValues(true); 
+        dataTextSet.setValueTextSize(20f); 
         dataTextSet.setHighlightEnabled(true);
         dataTextSet.setDrawHighlightIndicators(false);
-        
-        ValueFormatter formatter = switchToMol ? new ValueFormatterOneDecimal() : new ValueFormatterZeroDecimal();
         dataTextSet.setValueFormatter(formatter);
 
         dataBubbleSelSet.setDrawCircles(false);
+        dataBubbleSelSet.setLineWidth(0f);
+        dataBubbleSelSet.setColor(Color.TRANSPARENT);
         dataBubbleSelSet.setDrawValues(true);
         dataBubbleSelSet.setValueTextSize(20f);
         dataBubbleSelSet.setValueFormatter(formatter);
