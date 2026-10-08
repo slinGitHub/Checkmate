@@ -45,17 +45,14 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                 
                 Paint rectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 rectPaint.setStyle(Paint.Style.FILL);
-                
-                Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                borderPaint.setStyle(Paint.Style.STROKE);
-                borderPaint.setStrokeWidth(Utils.convertDpToPixel(2f));
-                borderPaint.setColor(Color.WHITE);
 
                 Paint labelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                labelPaint.setTextSize(textHeight * 0.7f);
+                labelPaint.setTextSize(textHeight * 0.65f);
                 labelPaint.setColor(Color.WHITE);
                 labelPaint.setTextAlign(Paint.Align.CENTER);
                 labelPaint.setTypeface(dataSet.getValueTypeface());
+
+                String dataSetLabel = dataSet.getLabel();
 
                 for (int j = 0; j < positions.length; j += 2) {
                     float x = positions[j];
@@ -66,40 +63,52 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     if (!mViewPortHandler.isInBoundsLeft(x) || !mViewPortHandler.isInBoundsY(y))
                         continue;
 
-                    Entry entry = dataSet.getEntryForIndex(j / 2 + mXBounds.min);
+                    int dataIndex = j / 2 + mXBounds.min;
+                    Entry entry = dataSet.getEntryForIndex(dataIndex);
                     String valText = formatter.getPointLabel(entry);
                     
-                    // Draw Box
+                    // Box-Größe basierend auf Text berechnen
                     float textWidth = mValuePaint.measureText(valText);
-                    float boxWidth = Math.max(textWidth + boxPadding * 4, Utils.convertDpToPixel(40f));
-                    float boxHeight = textHeight + boxPadding * 2;
+                    float boxWidth = Math.max(textWidth + boxPadding * 3, Utils.convertDpToPixel(38f));
+                    float boxHeight = textHeight + boxPadding * 1.8f;
                     
                     RectF rect = new RectF(x - boxWidth / 2, y - boxHeight / 2, x + boxWidth / 2, y + boxHeight / 2);
                     
-                    // Get color for this point if possible, otherwise use text color
-                    int color = dataSet.getValueTextColor(j / 2);
-                    rectPaint.setColor(color);
+                    // WICHTIG: Korrekten Farb-Index verwenden (absolut statt relativ zum Viewport)
+                    int color = dataSet.getValueTextColor(dataIndex);
                     
-                    c.drawRect(rect, rectPaint);
-                    
-                    // Draw white border if selected (color is white)
-                    if (color == Color.WHITE) {
-                        c.drawRect(rect, borderPaint);
-                    }
-                    
-                    // Draw Main Value Text
-                    int originalColor = mValuePaint.getColor();
-                    mValuePaint.setColor(Color.BLACK); // Text inside box is usually black
-                    c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
-                    mValuePaint.setColor(originalColor);
-
-                    // Draw "Nx" Label above if present in entry data
-                    Object data = entry.getData();
-                    if (data != null) {
-                        try {
-                            String label = Math.round(Double.parseDouble(data.toString())) + "x";
-                            c.drawText(label, x, y - boxHeight / 2 - boxPadding, labelPaint);
-                        } catch (NumberFormatException ignored) {}
+                    if ("BubbleSel".equals(dataSetLabel)) {
+                        // Zeichne den inneren farbigen Teil der Selektion
+                        rectPaint.setColor(color);
+                        float innerOffset = Utils.convertDpToPixel(2f);
+                        RectF innerRect = new RectF(rect.left + innerOffset, rect.top + innerOffset, 
+                                                   rect.right - innerOffset, rect.bottom - innerOffset);
+                        c.drawRect(innerRect, rectPaint);
+                        
+                        // Text innerhalb der Box
+                        int originalColor = mValuePaint.getColor();
+                        mValuePaint.setColor(Color.BLACK);
+                        c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
+                        mValuePaint.setColor(originalColor);
+                    } else if ("Text".equals(dataSetLabel) || "TextAvg".equals(dataSetLabel)) {
+                        // Normale Box zeichnen (farbig oder weiß bei Selektion im Text Dataset)
+                        rectPaint.setColor(color);
+                        c.drawRect(rect, rectPaint);
+                        
+                        // Wert-Text innerhalb der Box
+                        int originalColor = mValuePaint.getColor();
+                        mValuePaint.setColor(Color.BLACK);
+                        c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
+                        mValuePaint.setColor(originalColor);
+                        
+                        // "Nx" Label (Events) über der Box positionieren
+                        Object data = entry.getData();
+                        if (data != null) {
+                            try {
+                                String nText = Math.round(Double.parseDouble(data.toString())) + "x";
+                                c.drawText(nText, x, y - boxHeight / 2 - boxPadding / 2, labelPaint);
+                            } catch (NumberFormatException ignored) {}
+                        }
                     }
                 }
             }

@@ -3,7 +3,6 @@ package com.example.a20210207_checkmate2;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -15,11 +14,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.MPPointF;
-import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.color.MaterialColors;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -34,7 +30,6 @@ public class LowLineChartClass {
     int daysGoingBackCount;
 
     int xAxisTextColor;
-    int bubbleColorSelected;
     int bubbleColorInRange;
     int bubbleColorAboveRange;
     int bubbleColorHighAbRange;
@@ -47,7 +42,6 @@ public class LowLineChartClass {
         this.daysGoingBackCount = daysGoingBackCount;
 
         xAxisTextColor = mainActivity.getResources().getColor(R.color.line);
-        bubbleColorSelected = MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.BLACK);
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
@@ -57,7 +51,6 @@ public class LowLineChartClass {
     public void createChart(int daySelected, boolean useDaySelected) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
-        double lowerRange = Double.parseDouble(sharedPref.getString(SettingsActivity.KEY_PREF_LOWER_RANGE, "70"));
         
         XAxis xAxis = mChart.getXAxis();
         xAxis.setDrawAxisLine(false);
@@ -80,9 +73,8 @@ public class LowLineChartClass {
         right.setDrawGridLines(false);
 
         ArrayList<Entry> dataLine = new ArrayList<>();
-        ArrayList<Entry> dataBubble = new ArrayList<>();
-        ArrayList<Entry> dataBubbleSel = new ArrayList<>();
         ArrayList<Entry> dataText = new ArrayList<>();
+        ArrayList<Entry> dataBubbleSel = new ArrayList<>();
 
         final ArrayList<String> xAxisLabel = new ArrayList<>();
         int count = hba1c_data.size() - 1;
@@ -100,15 +92,17 @@ public class LowLineChartClass {
             SimpleDateFormat df = new SimpleDateFormat("E\ndd/MM", Locale.getDefault());
             xAxisLabel.add(df.format(entry.date));
 
-            dataBubble.add(new Entry((float) i, minGlucose));
+            Entry e = new Entry((float) i, minGlucose, entry.lowEvents);
+            
             if (count - daysGoingBackCount < i)
                 dataLine.add(new Entry((float) i, minGlucose));
 
-            dataText.add(new Entry((float) i, minGlucose));
+            dataText.add(e);
 
-            if (entry.minGlucose < 55) {
+            // Farblogik: < 50 Rot, 50-70 Gelb, > 70 Grün
+            if (entry.minGlucose < 50) {
                 colors.add(bubbleColorHighAbRange);
-            } else if (entry.minGlucose < lowerRange) {
+            } else if (entry.minGlucose <= 70) {
                 colors.add(bubbleColorAboveRange);
             } else {
                 colors.add(bubbleColorInRange);
@@ -116,13 +110,12 @@ public class LowLineChartClass {
 
             if (useDaySelected && i == daySelected) {
                 colorBubbleSel = colors.get(i);
-                dataBubbleSel.add(new Entry((float) i, minGlucose));
+                dataBubbleSel.add(new Entry((float) i, minGlucose, entry.lowEvents));
                 colors.set(i, Color.WHITE);
             }
         }
 
         LineDataSet dataLineSet = new LineDataSet(dataLine, "Line");
-        LineDataSet dataBubbleSet = new LineDataSet(dataBubble, "Bubble");
         LineDataSet dataTextSet = new LineDataSet(dataText, "Text");
         LineDataSet dataBubbleSelSet = new LineDataSet(dataBubbleSel, "BubbleSel");
 
@@ -135,37 +128,29 @@ public class LowLineChartClass {
         dataLineSet.setHighlightEnabled(false);
 
         dataTextSet.setDrawCircles(false);
-        dataTextSet.setValueTextSize(20);
-        dataTextSet.setValueTextColor(textColor);
-        dataTextSet.enableDashedLine(0f, 1f, 0f);
+        dataTextSet.setValueTextSize(18);
+        dataTextSet.setValueTextColors(colors);
         
         ValueFormatter formatter = switchToMol ? new ValueFormatterOneDecimal() : new ValueFormatterZeroDecimal();
         dataTextSet.setValueFormatter(formatter);
-        dataTextSet.setHighlightEnabled(false);
+        dataTextSet.setHighlightEnabled(true);
+        dataTextSet.setDrawHighlightIndicators(false);
 
-        dataBubbleSet.setCircleColors(colors);
-        dataBubbleSet.setDrawValues(false);
-        dataBubbleSet.setCircleRadius(20);
-        dataBubbleSet.enableDashedLine(0f,1f,0f);
-        dataBubbleSet.setDrawCircleHole(false);
-        dataBubbleSet.setHighlightEnabled(true);
-        dataBubbleSet.setDrawHighlightIndicators(false);
-
-        dataBubbleSelSet.setFillAlpha(0);
-        dataBubbleSelSet.setCircleColor(colorBubbleSel);
-        dataBubbleSelSet.setCircleRadius(17);
-        dataBubbleSelSet.setDrawValues(false);
-        dataBubbleSelSet.setDrawCircleHole(false);
+        dataBubbleSelSet.setDrawCircles(false);
+        dataBubbleSelSet.setDrawValues(true);
+        dataBubbleSelSet.setValueTextSize(18);
+        dataBubbleSelSet.setValueTextColor(Color.BLACK);
+        dataBubbleSelSet.setValueTextColors(java.util.Collections.singletonList(colorBubbleSel));
+        dataBubbleSelSet.setValueFormatter(formatter);
 
         dataSets = new ArrayList<>();
         dataSets.add(dataLineSet);
         dataSets.add(dataTextSet);
-        dataSets.add(dataBubbleSet);
         dataSets.add(dataBubbleSelSet);
 
         LineData data = new LineData(dataSets);
         mChart.setData(data);
-        mChart.setRenderer(new CenteredTextLineChartRenderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler()));
+        mChart.setRenderer(new RectangleTextLineChartRenderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler()));
 
         float numberOfVisibleBubbleBars = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_VISIBLE_BUBBLEBARS, "6"));
         mChart.setVisibleXRangeMaximum(numberOfVisibleBubbleBars);
@@ -173,7 +158,7 @@ public class LowLineChartClass {
         mChart.getDescription().setEnabled(false);
         mChart.getLegend().setEnabled(false);
         mChart.setScaleEnabled(false);
-        mChart.setExtraOffsets(0, 10, 0, 0);
+        mChart.setExtraOffsets(0, 30, 0, 0);
         mChart.invalidate();
     }
 }

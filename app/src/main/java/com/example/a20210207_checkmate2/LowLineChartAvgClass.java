@@ -16,9 +16,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.color.MaterialColors;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class LowLineChartAvgClass {
     LineChart mAChart;
@@ -82,16 +80,16 @@ public class LowLineChartAvgClass {
         Integer colorAvg;
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
-        double lowerRange = Double.parseDouble(sharedPref.getString(SettingsActivity.KEY_PREF_LOWER_RANGE, "70"));
 
         double minAvgValue = hba1cAverageData.get(0).minGlucose;
         if (switchToMol) {
             minAvgValue = minAvgValue / 18.0182;
         }
 
-        if (hba1cAverageData.get(0).minGlucose < 55) {
+        // Farblogik für Durchschnitt: < 50 Rot, 50-70 Gelb, > 70 Grün
+        if (hba1cAverageData.get(0).minGlucose < 50) {
             colorAvg = bubbleColorHighAbRange;
-        } else if (hba1cAverageData.get(0).minGlucose < lowerRange) {
+        } else if (hba1cAverageData.get(0).minGlucose <= 70) {
             colorAvg = bubbleColorAboveRange;
         } else {
             colorAvg = bubbleColorInRange;
@@ -99,13 +97,16 @@ public class LowLineChartAvgClass {
 
         ArrayList<String> xAxisLabel = new ArrayList<>();
         xAxisLabel.add(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_DAYS, "90") + " Day\nAvg");
-        dataLineAvg.add(new Entry(0, (float) minAvgValue));
-        dataTextAvg.add(new Entry(0, (float) minAvgValue));
+        
+        // Low Events für den Renderer mitgeben
+        Entry avgEntry = new Entry(0, (float) minAvgValue, hba1cAverageData.get(0).lowEvents);
+        dataLineAvg.add(avgEntry);
+        dataTextAvg.add(avgEntry);
 
         int colorBubbleSel = 0;
         if (selected) {
             colorBubbleSel = colorAvg;
-            dataBubbleSel.add(new Entry(0, (float) minAvgValue));
+            dataBubbleSel.add(new Entry(0, (float) minAvgValue, hba1cAverageData.get(0).lowEvents));
             colorAvg = Color.WHITE;
         }
 
@@ -122,20 +123,20 @@ public class LowLineChartAvgClass {
         dataTextAvgSet.setValueFormatter(formatter);
         dataTextAvgSet.enableDashedLine(0f, 1f, 0f);
         dataTextAvgSet.setValueTextColor(textColor);
+        dataTextAvgSet.setValueTextColors(java.util.Collections.singletonList(colorAvg));
 
-        dataLineAvgSet.setCircleColors(colorAvg);
+        dataLineAvgSet.setDrawCircles(false); // Kreise deaktivieren
         dataLineAvgSet.setLineWidth(5);
         dataLineAvgSet.setDrawValues(false);
-        dataLineAvgSet.setCircleRadius(20);
-        dataLineAvgSet.setDrawCircleHole(false);
         dataLineAvgSet.enableDashedLine(0f, 1f, 0f);
         dataLineAvgSet.setDrawHighlightIndicators(false);
 
-        dataBubbleSelSet.setFillAlpha(0);
-        dataBubbleSelSet.setCircleColor(colorBubbleSel);
-        dataBubbleSelSet.setCircleRadius(17);
-        dataBubbleSelSet.setDrawValues(false);
-        dataBubbleSelSet.setDrawCircleHole(false);
+        dataBubbleSelSet.setDrawCircles(false); // Kreise deaktivieren
+        dataBubbleSelSet.setDrawValues(true);
+        dataBubbleSelSet.setValueTextSize(20);
+        dataBubbleSelSet.setValueTextColor(Color.BLACK);
+        dataBubbleSelSet.setValueTextColors(java.util.Collections.singletonList(colorBubbleSel));
+        dataBubbleSelSet.setValueFormatter(formatter);
 
         dataSets = new ArrayList<>();
         dataSets.add(dataLineAvgSet);
@@ -143,12 +144,13 @@ public class LowLineChartAvgClass {
         dataSets.add(dataBubbleSelSet);
 
         LineData data = new LineData(dataSets);
-        mAChart.setRenderer(new CenteredTextLineChartRenderer(mAChart, mAChart.getAnimator(), mAChart.getViewPortHandler()));
+        // Rechteckigen Renderer setzen
+        mAChart.setRenderer(new RectangleTextLineChartRenderer(mAChart, mAChart.getAnimator(), mAChart.getViewPortHandler()));
         mAChart.setData(data);
         mAChart.getDescription().setEnabled(false);
         mAChart.getLegend().setEnabled(false);
         mAChart.setScaleEnabled(false);
-        mAChart.setExtraOffsets(0, 10, 0, 0);
+        mAChart.setExtraOffsets(0, 30, 0, 0);
         mAChart.invalidate();
     }
 }
