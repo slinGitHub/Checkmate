@@ -65,49 +65,58 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
 
                     int dataIndex = j / 2 + mXBounds.min;
                     Entry entry = dataSet.getEntryForIndex(dataIndex);
+                    if (entry == null) continue;
                     String valText = formatter.getPointLabel(entry);
                     
-                    // Box-Größe basierend auf Text berechnen
+                    // Box-Größe
                     float textWidth = mValuePaint.measureText(valText);
                     float boxWidth = Math.max(textWidth + boxPadding * 3, Utils.convertDpToPixel(38f));
                     float boxHeight = textHeight + boxPadding * 1.8f;
                     
                     RectF rect = new RectF(x - boxWidth / 2, y - boxHeight / 2, x + boxWidth / 2, y + boxHeight / 2);
                     
-                    // WICHTIG: Korrekten Farb-Index verwenden (absolut statt relativ zum Viewport)
-                    int color = dataSet.getValueTextColor(dataIndex);
+                    // Daten extrahieren: Events [0] und Farbe [1]
+                    Object entryData = entry.getData();
+                    int color;
+                    int events = 0;
+                    
+                    if (entryData instanceof int[]) {
+                        int[] d = (int[]) entryData;
+                        events = d[0];
+                        color = d[1];
+                    } else {
+                        color = dataSet.getValueTextColor(dataIndex);
+                    }
                     
                     if ("BubbleSel".equals(dataSetLabel)) {
-                        // Zeichne den inneren farbigen Teil der Selektion
+                        // Weißer Rahmen (Außenbox)
+                        rectPaint.setColor(Color.WHITE);
+                        c.drawRect(rect, rectPaint);
+                        
+                        // Farbige Innenbox
                         rectPaint.setColor(color);
                         float innerOffset = Utils.convertDpToPixel(2f);
                         RectF innerRect = new RectF(rect.left + innerOffset, rect.top + innerOffset, 
                                                    rect.right - innerOffset, rect.bottom - innerOffset);
                         c.drawRect(innerRect, rectPaint);
                         
-                        // Text innerhalb der Box
                         int originalColor = mValuePaint.getColor();
                         mValuePaint.setColor(Color.BLACK);
                         c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
                         mValuePaint.setColor(originalColor);
                     } else if ("Text".equals(dataSetLabel) || "TextAvg".equals(dataSetLabel)) {
-                        // Normale Box zeichnen (farbig oder weiß bei Selektion im Text Dataset)
+                        // Normale farbige Box
                         rectPaint.setColor(color);
                         c.drawRect(rect, rectPaint);
                         
-                        // Wert-Text innerhalb der Box
                         int originalColor = mValuePaint.getColor();
                         mValuePaint.setColor(Color.BLACK);
                         c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
                         mValuePaint.setColor(originalColor);
                         
-                        // "Nx" Label (Events) über der Box positionieren
-                        Object data = entry.getData();
-                        if (data != null) {
-                            try {
-                                String nText = Math.round(Double.parseDouble(data.toString())) + "x";
-                                c.drawText(nText, x, y - boxHeight / 2 - boxPadding / 2, labelPaint);
-                            } catch (NumberFormatException ignored) {}
+                        if (events > 0) {
+                            String nText = events + "x";
+                            c.drawText(nText, x, y - boxHeight / 2 - boxPadding / 2, labelPaint);
                         }
                     }
                 }

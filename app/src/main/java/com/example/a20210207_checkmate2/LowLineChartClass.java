@@ -26,14 +26,12 @@ public class LowLineChartClass {
     MainActivity mainActivity;
     ArrayList<Hba1cEntry> hba1c_data;
     ArrayList<ILineDataSet> dataSets;
-    ArrayList<Integer> colors;
     int daysGoingBackCount;
 
     int xAxisTextColor;
     int bubbleColorInRange;
     int bubbleColorAboveRange;
     int bubbleColorHighAbRange;
-    int textColor;
 
     LowLineChartClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data, int daysGoingBackCount) {
         mChart = (LineChart) mainActivity.findViewById(R.id.LowLineChart);
@@ -45,7 +43,6 @@ public class LowLineChartClass {
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
-        textColor = MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
@@ -62,25 +59,18 @@ public class LowLineChartClass {
         xAxis.setTextSize(15);
         xAxis.setTextColor(xAxisTextColor);
 
-        YAxis left = mChart.getAxisLeft();
-        left.setDrawLabels(false);
-        left.setDrawAxisLine(false);
-        left.setDrawGridLines(false);
+        mChart.getAxisLeft().setDrawLabels(false);
+        mChart.getAxisLeft().setDrawAxisLine(false);
+        mChart.getAxisLeft().setDrawGridLines(false);
+        mChart.getAxisRight().setDrawLabels(false);
+        mChart.getAxisRight().setDrawAxisLine(false);
+        mChart.getAxisRight().setDrawGridLines(false);
 
-        YAxis right = mChart.getAxisRight();
-        right.setDrawLabels(false);
-        right.setDrawAxisLine(false);
-        right.setDrawGridLines(false);
-
-        ArrayList<Entry> dataLine = new ArrayList<>();
         ArrayList<Entry> dataText = new ArrayList<>();
         ArrayList<Entry> dataBubbleSel = new ArrayList<>();
 
         final ArrayList<String> xAxisLabel = new ArrayList<>();
         int count = hba1c_data.size() - 1;
-
-        colors = new ArrayList<Integer>();
-        int colorBubbleSel = 0;
 
         for (int i = 0; i <= count; i++) {
             Hba1cEntry entry = hba1c_data.get(count - i);
@@ -92,59 +82,46 @@ public class LowLineChartClass {
             SimpleDateFormat df = new SimpleDateFormat("E\ndd/MM", Locale.getDefault());
             xAxisLabel.add(df.format(entry.date));
 
-            Entry e = new Entry((float) i, minGlucose, entry.lowEvents);
-            
-            if (count - daysGoingBackCount < i)
-                dataLine.add(new Entry((float) i, minGlucose));
-
-            dataText.add(e);
-
             // Farblogik: < 50 Rot, 50-70 Gelb, > 70 Grün
+            int color;
             if (entry.minGlucose < 50) {
-                colors.add(bubbleColorHighAbRange);
+                color = bubbleColorHighAbRange;
             } else if (entry.minGlucose <= 70) {
-                colors.add(bubbleColorAboveRange);
+                color = bubbleColorAboveRange;
             } else {
-                colors.add(bubbleColorInRange);
+                color = bubbleColorInRange;
             }
 
+            int[] entryData = new int[]{entry.lowEvents, color};
+            Entry e = new Entry((float) i, minGlucose, entryData);
+            dataText.add(e);
+
             if (useDaySelected && i == daySelected) {
-                colorBubbleSel = colors.get(i);
-                dataBubbleSel.add(new Entry((float) i, minGlucose, entry.lowEvents));
-                colors.set(i, Color.WHITE);
+                dataBubbleSel.add(new Entry((float) i, minGlucose, entryData));
             }
         }
 
-        LineDataSet dataLineSet = new LineDataSet(dataLine, "Line");
         LineDataSet dataTextSet = new LineDataSet(dataText, "Text");
         LineDataSet dataBubbleSelSet = new LineDataSet(dataBubbleSel, "BubbleSel");
 
         mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
         mChart.setXAxisRenderer(new ValueFormatterDateXAxis(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT)));
 
-        dataLineSet.setLineWidth(5);
-        dataLineSet.setColor(mainActivity.getResources().getColor(R.color.line));
-        dataLineSet.setDrawValues(false);
-        dataLineSet.setHighlightEnabled(false);
-
         dataTextSet.setDrawCircles(false);
-        dataTextSet.setValueTextSize(18);
-        dataTextSet.setValueTextColors(colors);
+        dataTextSet.setDrawValues(true); // Muss true sein, damit der Renderer zeichnet
+        dataTextSet.setValueTextSize(20f); // Größerer Text
+        dataTextSet.setHighlightEnabled(true);
+        dataTextSet.setDrawHighlightIndicators(false);
         
         ValueFormatter formatter = switchToMol ? new ValueFormatterOneDecimal() : new ValueFormatterZeroDecimal();
         dataTextSet.setValueFormatter(formatter);
-        dataTextSet.setHighlightEnabled(true);
-        dataTextSet.setDrawHighlightIndicators(false);
 
         dataBubbleSelSet.setDrawCircles(false);
         dataBubbleSelSet.setDrawValues(true);
-        dataBubbleSelSet.setValueTextSize(18);
-        dataBubbleSelSet.setValueTextColor(Color.BLACK);
-        dataBubbleSelSet.setValueTextColors(java.util.Collections.singletonList(colorBubbleSel));
+        dataBubbleSelSet.setValueTextSize(20f);
         dataBubbleSelSet.setValueFormatter(formatter);
 
         dataSets = new ArrayList<>();
-        dataSets.add(dataLineSet);
         dataSets.add(dataTextSet);
         dataSets.add(dataBubbleSelSet);
 
