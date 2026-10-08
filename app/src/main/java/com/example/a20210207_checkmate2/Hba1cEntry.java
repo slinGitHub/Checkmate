@@ -12,9 +12,11 @@ public class Hba1cEntry {
     public double LowRange;
     public double nValues;
     public ArrayList<GlucoseEntry> glucoseData;
+    public double minGlucose;
+    public int lowEvents;
 
     // Auch der Konstruktor muss public sein
-    public Hba1cEntry(Date date, double hba1c, double inRange, double HighRange, double LowRange, double nValues, ArrayList<GlucoseEntry> glucoseData) {
+    public Hba1cEntry(Date date, double hba1c, double inRange, double HighRange, double LowRange, double nValues, ArrayList<GlucoseEntry> glucoseData, double minGlucose, int lowEvents) {
         this.date = date;
         this.hba1c = hba1c;
         this.inRange = inRange;
@@ -22,5 +24,7 @@ public class Hba1cEntry {
         this.LowRange = LowRange;
         this.nValues = nValues;
         this.glucoseData = glucoseData;
+        this.minGlucose = minGlucose;
+        this.lowEvents = lowEvents;
     }
 }

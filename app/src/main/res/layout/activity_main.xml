@@ -63,14 +63,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLowEvents"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -117,37 +124,77 @@
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <TextView
+        android:id="@+id/lowLineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:elevation="6dp"
+        android:text="Low Events /d"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/LowLineChart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="-20dp"
+        android:layout_marginTop="25dp"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineLowEvents"
+        app:layout_constraintEnd_toEndOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/LowLineChartAvg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        android:background="?colorBackgroundCheckmate"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineLowEvents"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
+    <TextView
         android:id="@+id/barText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
         android:text="In Range (70-140mg/dl)"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:elevation="6dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineLowEvents" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/BarChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="-20dp"
+        android:layout_marginTop="25dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LineChart" />
+        app:layout_constraintTop_toBottomOf="@+id/guidelineLowEvents" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/BarChartAvg"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="25dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/LineChart" />
+        app:layout_constraintTop_toBottomOf="@+id/guidelineLowEvents" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/DayLineChart"

@@ -388,6 +388,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         lineAvgChart.left.setAxisMinimum(YAxisLeft.mAxisMinimum);
 
         //-------------------------------------------------------------------------------
+        // Create Low Events Line Chart
+        //-------------------------------------------------------------------------------
+        LowLineChartClass lowLineChart = new LowLineChartClass(this, calcHba1c.getHba1cData(), calcHba1c.daysGoingBackCount);
+        lowLineChart.createChart(calcHba1c.getHba1cData().size() - 1, true);
+        lowLineChart.mChart.moveViewToX(calcHba1c.getHba1cData().size());
+
+        LowLineChartAvgClass lowLineAvgChart = new LowLineChartAvgClass(this, calcHba1c.getHba1cData(), calcHba1c.getHba1cAverageData());
+        lowLineAvgChart.createChart(false);
+        YAxis LowYAxisLeft = lowLineChart.mChart.getAxisLeft();
+        lowLineAvgChart.left.setAxisMaximum(LowYAxisLeft.mAxisMaximum);
+        lowLineAvgChart.left.setAxisMinimum(LowYAxisLeft.mAxisMinimum);
+
+        //-------------------------------------------------------------------------------
         // Create Bar Chart
         //-------------------------------------------------------------------------------
         BarChartClass barChart = new BarChartClass(this, calcHba1c.getHba1cData());
@@ -419,9 +432,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         // Synchronize line and bar chart
         //-------------------------------------------------------------------------------
         lineChart.mChart.setOnChartGestureListener(new CoupleChartGestureListener(
-                lineChart.mChart, new Chart[]{barChart.bChart}));
+                lineChart.mChart, new Chart[]{barChart.bChart, lowLineChart.mChart}));
         barChart.bChart.setOnChartGestureListener(new CoupleChartGestureListener(
-                barChart.bChart, new Chart[]{lineChart.mChart}));
+                barChart.bChart, new Chart[]{lineChart.mChart, lowLineChart.mChart}));
+        lowLineChart.mChart.setOnChartGestureListener(new CoupleChartGestureListener(
+                lowLineChart.mChart, new Chart[]{lineChart.mChart, barChart.bChart}));
 
         // Synchronize line chart gesture
         lineChart.mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -429,6 +444,30 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             public void onValueSelected(Entry e, Highlight h) {
                 lineChart.createChart((int) e.getX(), true);
                 lineAvgChart.createChart(false);
+
+                lowLineChart.createChart((int) e.getX(), true);
+                lowLineAvgChart.createChart(false);
+
+                barChart.createChart((int) e.getX(), true);
+                barAvgChart.createChart(calcHba1c.nDays, false);
+
+                dayLineChart.createChart((int) e.getX(), true, calcHba1c.sgvMin, calcHba1c.sgvMax);
+            }
+
+            @Override
+            public void onNothingSelected() {
+            }
+        });
+
+        // Synchronize low line chart gesture
+        lowLineChart.mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                lineChart.createChart((int) e.getX(), true);
+                lineAvgChart.createChart(false);
+
+                lowLineChart.createChart((int) e.getX(), true);
+                lowLineAvgChart.createChart(false);
 
                 barChart.createChart((int) e.getX(), true);
                 barAvgChart.createChart(calcHba1c.nDays, false);
@@ -447,6 +486,32 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             public void onValueSelected(Entry e, Highlight h) {
                 lineChart.createChart((int) e.getX(), false);
                 lineAvgChart.createChart(true);
+
+                lowLineChart.createChart((int) e.getX(), false);
+                lowLineAvgChart.createChart(true);
+
+                barChart.createChart((int) e.getX(), false);
+                barAvgChart.createChart(calcHba1c.nDays, true);
+
+                int meanDays = parseInt(sharedPref.getString(KEY_PREF_MEAN_DAYS, "7"));
+                calcDayLineChartStats.CalcMedian(meanDays);
+                dayLineChart.createMeanChart();
+            }
+
+            @Override
+            public void onNothingSelected() {
+            }
+        });
+
+        // Synchronize low avg line chart gesture
+        lowLineAvgChart.mAChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                lineChart.createChart((int) e.getX(), false);
+                lineAvgChart.createChart(true);
+
+                lowLineChart.createChart((int) e.getX(), false);
+                lowLineAvgChart.createChart(true);
 
                 barChart.createChart((int) e.getX(), false);
                 barAvgChart.createChart(calcHba1c.nDays, true);
@@ -468,6 +533,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 lineChart.createChart((int) e.getX(), true);
                 lineAvgChart.createChart(false);
 
+                lowLineChart.createChart((int) e.getX(), true);
+                lowLineAvgChart.createChart(false);
+
                 barChart.createChart((int) e.getX(), true);
                 barAvgChart.createChart(calcHba1c.nDays, false);
 
@@ -485,6 +553,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             public void onValueSelected(Entry e, Highlight h) {
                 lineChart.createChart((int) e.getX(), false);
                 lineAvgChart.createChart(true);
+
+                lowLineChart.createChart((int) e.getX(), false);
+                lowLineAvgChart.createChart(true);
 
                 barChart.createChart((int) e.getX(), false);
                 barAvgChart.createChart(calcHba1c.nDays, true);
