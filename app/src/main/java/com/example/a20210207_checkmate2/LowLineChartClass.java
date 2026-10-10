@@ -32,6 +32,7 @@ public class LowLineChartClass {
     int bubbleColorInRange;
     int bubbleColorAboveRange;
     int bubbleColorHighAbRange;
+    int textColor;
 
     LowLineChartClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data, int daysGoingBackCount) {
         mChart = (LineChart) mainActivity.findViewById(R.id.LowLineChart);
@@ -43,6 +44,7 @@ public class LowLineChartClass {
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
+        textColor = MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
@@ -118,6 +120,7 @@ public class LowLineChartClass {
         dataTextSet.setHighlightEnabled(true);
         dataTextSet.setDrawHighlightIndicators(false);
         dataTextSet.setValueFormatter(formatter);
+        dataTextSet.setValueTextColor(textColor);
 
         dataBubbleSelSet.setDrawCircles(false);
         dataBubbleSelSet.setLineWidth(0f);
@@ -125,6 +128,7 @@ public class LowLineChartClass {
         dataBubbleSelSet.setDrawValues(true);
         dataBubbleSelSet.setValueTextSize(20f);
         dataBubbleSelSet.setValueFormatter(formatter);
+        dataBubbleSelSet.setValueTextColor(textColor);
 
         dataSets = new ArrayList<>();
         dataSets.add(dataTextSet);

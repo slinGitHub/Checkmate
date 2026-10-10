@@ -98,17 +98,19 @@ public class LowLineChartAvgClass {
         ArrayList<String> xAxisLabel = new ArrayList<>();
         xAxisLabel.add(sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_DAYS, "90") + " Day\nAvg");
         
-        // Low Events für den Renderer mitgeben
-        Entry avgEntry = new Entry(0, (float) minAvgValue, hba1cAverageData.get(0).lowEvents);
-        dataLineAvg.add(avgEntry);
-        dataTextAvg.add(avgEntry);
-
         int colorBubbleSel = 0;
         if (selected) {
             colorBubbleSel = colorAvg;
-            dataBubbleSel.add(new Entry(0, (float) minAvgValue, hba1cAverageData.get(0).lowEvents));
+            int[] selData = new int[]{hba1cAverageData.get(0).lowEvents, colorBubbleSel};
+            dataBubbleSel.add(new Entry(0, (float) minAvgValue, selData));
             colorAvg = Color.WHITE;
         }
+
+        // Low Events für den Renderer mitgeben
+        int[] avgData = new int[]{hba1cAverageData.get(0).lowEvents, colorAvg};
+        Entry avgEntry = new Entry(0, (float) minAvgValue, avgData);
+        dataLineAvg.add(avgEntry);
+        dataTextAvg.add(avgEntry);
 
         mAChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
         mAChart.setXAxisRenderer(new ValueFormatterDateXAxis(mAChart.getViewPortHandler(), mAChart.getXAxis(), mAChart.getTransformer(YAxis.AxisDependency.LEFT)));
@@ -123,7 +125,6 @@ public class LowLineChartAvgClass {
         dataTextAvgSet.setValueFormatter(formatter);
         dataTextAvgSet.enableDashedLine(0f, 1f, 0f);
         dataTextAvgSet.setValueTextColor(textColor);
-        dataTextAvgSet.setValueTextColors(java.util.Collections.singletonList(colorAvg));
 
         dataLineAvgSet.setDrawCircles(false); // Kreise deaktivieren
         dataLineAvgSet.setLineWidth(5);
@@ -134,8 +135,7 @@ public class LowLineChartAvgClass {
         dataBubbleSelSet.setDrawCircles(false); // Kreise deaktivieren
         dataBubbleSelSet.setDrawValues(true);
         dataBubbleSelSet.setValueTextSize(20);
-        dataBubbleSelSet.setValueTextColor(Color.BLACK);
-        dataBubbleSelSet.setValueTextColors(java.util.Collections.singletonList(colorBubbleSel));
+        dataBubbleSelSet.setValueTextColor(textColor);
         dataBubbleSelSet.setValueFormatter(formatter);
 
         dataSets = new ArrayList<>();

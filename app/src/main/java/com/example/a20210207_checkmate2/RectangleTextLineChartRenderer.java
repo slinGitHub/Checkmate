@@ -34,6 +34,8 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     continue;
 
                 applyValueTextStyle(dataSet);
+                int valueTextColor = dataSet.getValueTextColor(); // = textColor aus LowLineChartClass
+
                 Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
                 mXBounds.set(mChart, dataSet);
 
@@ -100,19 +102,26 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                                                    rect.right - innerOffset, rect.bottom - innerOffset);
                         c.drawRect(innerRect, rectPaint);
                         
-                        int originalColor = mValuePaint.getColor();
-                        mValuePaint.setColor(Color.BLACK);
+//                        int originalColor = mValuePaint.getColor();
+//                        mValuePaint.setColor(Color.BLACK);
+//                        c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
+//                        mValuePaint.setColor(originalColor);
+
+                        mValuePaint.setColor(valueTextColor);
                         c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
-                        mValuePaint.setColor(originalColor);
+
                     } else if ("Text".equals(dataSetLabel) || "TextAvg".equals(dataSetLabel)) {
                         // Normale farbige Box
                         rectPaint.setColor(color);
                         c.drawRect(rect, rectPaint);
                         
-                        int originalColor = mValuePaint.getColor();
-                        mValuePaint.setColor(Color.BLACK);
+//                        int originalColor = mValuePaint.getColor();
+//                        mValuePaint.setColor(Color.BLACK);
+//                        c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
+//                        mValuePaint.setColor(originalColor);
+
+                        mValuePaint.setColor(valueTextColor);
                         c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
-                        mValuePaint.setColor(originalColor);
                         
                         if (events > 0) {
                             String nText = events + "x";

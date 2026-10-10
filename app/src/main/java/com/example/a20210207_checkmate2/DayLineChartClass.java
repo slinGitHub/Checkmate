@@ -95,15 +95,15 @@ public class DayLineChartClass {
             left.setValueFormatter(new DefaultValueFormatter(0));
 
         //Check if yMax/yMin is sufficient
-        if (yMax > 200)
-            left.setAxisMaximum((float) yMax);
-        else
-            left.setAxisMaximum(200f);
+//        if (yMax > 200)
+//            left.setAxisMaximum((float) yMax);
+//        else
+        left.setAxisMaximum(300f);
 
-        if (yMin < 50)
-            left.setAxisMinimum((float) yMin);
-        else
-            left.setAxisMinimum(50f);
+//        if (yMin < 50)
+//            left.setAxisMinimum((float) yMin);
+//        else
+        left.setAxisMinimum(0f);
 
         YAxis right = mDayChart.getAxisRight();
         right.setDrawLabels(false); // no axis labels
