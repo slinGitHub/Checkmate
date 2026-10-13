@@ -24,10 +24,12 @@
         android:id="@+id/lineText4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="-15dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="-85dp"
         android:layout_marginBottom="15dp"
-        android:elevation="2dp"
-        android:background="?colorBackgroundCheckmate"
+        android:background="@drawable/bg_card_avg"
+        android:elevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/BarChart"
@@ -37,13 +39,15 @@
         android:id="@+id/lineText5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="-15dp"
         android:layout_marginBottom="15dp"
-        android:background="?colorBackgroundCheckmate"
-        android:elevation="2dp"
+        android:background="@drawable/bg_card_avg"
+        android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="@+id/BarChartAvg"
-        app:layout_constraintStart_toEndOf="@+id/lineText4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <View
@@ -51,7 +55,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        android:background="?colorBackgroundCheckmate"
+        android:layout_marginBottom="-15dp"
+        android:background="@drawable/bg_card_translucent"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/BarChartAvg"
@@ -92,6 +97,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="-20dp"
         android:layout_marginTop="25dp"
+        android:layout_marginEnd="-20dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="@+id/guideline5"
@@ -111,13 +117,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
+    <TextView
+        android:id="@+id/lineTextAverage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:elevation="6dp"
+        android:text="Avg"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/LineChartAvg"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="25dp"
-        android:background="?colorBackgroundCheckmate"
-        android:elevation="2dp"
+        android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -142,6 +162,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="-20dp"
         android:layout_marginTop="25dp"
+        android:layout_marginEnd="-20dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineLowEvents"
         app:layout_constraintEnd_toEndOf="@+id/guideline5"
@@ -153,8 +174,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="25dp"
-        android:background="?colorBackgroundCheckmate"
-        android:elevation="2dp"
+        android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineLowEvents"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -177,8 +197,9 @@
         android:id="@+id/BarChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="-20dp"
+        android:layout_marginStart="-20dp"
         android:layout_marginTop="25dp"
+        android:layout_marginEnd="-20dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
@@ -190,7 +211,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="25dp"
-        android:elevation="2dp"
+        android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -200,7 +221,6 @@
         android:id="@+id/DayLineChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?colorBackgroundCheckmate"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -216,7 +236,8 @@
         android:text="Glucose Day Plot"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -251,16 +272,29 @@
         app:layout_constraintTop_toTopOf="@+id/DayLineChartText" />
 
     <!-- Overlay for smooth transition on the left edge -->
+<!--    <View-->
+<!--        android:id="@+id/leftEdgeOverlay"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:background="@drawable/left_edge_gradient"-->
+<!--        android:elevation="3dp"-->
+<!--        android:clickable="false"-->
+<!--        android:focusable="false"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/DayLineChartText"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />-->
+
+    <!-- Overlay for smooth transition on the right edge -->
     <View
-        android:id="@+id/leftEdgeOverlay"
+        android:id="@+id/rightEdgeOverlay"
         android:layout_width="30dp"
         android:layout_height="0dp"
-        android:background="@drawable/left_edge_gradient"
+        android:layout_marginEnd="-15dp"
+        android:background="@drawable/right_edge_gradient"
         android:elevation="3dp"
         android:clickable="false"
         android:focusable="false"
         app:layout_constraintBottom_toTopOf="@+id/DayLineChartText"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

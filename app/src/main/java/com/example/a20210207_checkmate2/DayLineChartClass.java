@@ -79,20 +79,31 @@ public class DayLineChartClass {
         xAxis.setAxisMinimum(0f);
         //String testLabel = xAxis.getValueFormatter().getFormattedValue(300f);
 
+// Linke Achse: unsichtbar, aber mit identischem Range
+// (die DataSets haben die Default-Dependency LEFT, daher muss der Range gesetzt bleiben)
         YAxis left = mDayChart.getAxisLeft();
-        left.setDrawLabels(true); // no axis labels
-        left.setDrawAxisLine(true); // no axis line
-        left.setDrawGridLines(false); // no grid lines
-        left.setTextSize(15);
-        left.setTextColor(xAxisTextColor);
+        left.setDrawLabels(false);
+        left.setDrawAxisLine(false);
+        left.setDrawGridLines(false);
+        left.setAxisMaximum(300f);
+        left.setAxisMinimum(0f);
 
-        //If mol (instead of mg/dl is selected)
-        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL,false);
-        TextView barChartTitle = (TextView) mainActivity.findViewById(R.id.barText);
+// Rechte Achse: sichtbar, gleicher Range
+        YAxis right = mDayChart.getAxisRight();
+        right.setDrawLabels(true);
+        right.setDrawAxisLine(true);
+        right.setDrawGridLines(false);
+        right.setTextSize(15);
+        right.setTextColor(xAxisTextColor);
+        right.setAxisMaximum(300f);
+        right.setAxisMinimum(0f);
+
+// mol / mg/dl
+        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
         if (switchToMol)
-            left.setValueFormatter(new ValueFormatterDayPlotYAxis());
+            right.setValueFormatter(new ValueFormatterDayPlotYAxis());
         else
-            left.setValueFormatter(new DefaultValueFormatter(0));
+            right.setValueFormatter(new DefaultValueFormatter(0));
 
         //Check if yMax/yMin is sufficient
 //        if (yMax > 200)
@@ -104,11 +115,6 @@ public class DayLineChartClass {
 //            left.setAxisMinimum((float) yMin);
 //        else
         left.setAxisMinimum(0f);
-
-        YAxis right = mDayChart.getAxisRight();
-        right.setDrawLabels(false); // no axis labels
-        right.setDrawAxisLine(false); // no axis line
-        right.setDrawGridLines(false); // no grid lines
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         ArrayList<Entry> minOneDayEntry = new ArrayList<>();
