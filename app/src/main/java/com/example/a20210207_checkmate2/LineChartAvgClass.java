@@ -79,6 +79,7 @@ public class LineChartAvgClass {
         left.setDrawLabels(false); // no axis labels
         left.setDrawAxisLine(false); // no axis line
         left.setDrawGridLines(false); // no grid lines
+        left.setSpaceTop(80f); // <--- ADD THIS
 
         right.setDrawLabels(false); // no axis labels
         right.setDrawAxisLine(false); // no axis line
@@ -111,7 +112,7 @@ public class LineChartAvgClass {
         }
 
         ArrayList<String> xAxisLabel = new ArrayList<>();
-        xAxisLabel.add("30 Day\nAvg");
+        xAxisLabel.add("30 Day");
         dataLineAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
         dataTextAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
 
@@ -185,7 +186,7 @@ public class LineChartAvgClass {
         mAChart.getDescription().setEnabled(false);
         mAChart.getLegend().setEnabled(false);
         mAChart.setScaleEnabled(false);
-        mAChart.setExtraOffsets(0, 30, 0, 0); //X-Axis Labels are drawn correctly on top
+        mAChart.setExtraOffsets(0, 10, 0, 0); //X-Axis Labels on top, heading below, chart plot starts below heading
     }
 
 }

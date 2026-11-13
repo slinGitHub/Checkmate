@@ -102,6 +102,7 @@ public class LineChartClass {
         left.setDrawLabels(false); // no axis labels
         left.setDrawAxisLine(false); // no axis line
         left.setDrawGridLines(false); // no grid lines
+        left.setSpaceTop(80f); // <--- ADD THIS
 
         YAxis right = mChart.getAxisRight();
         right.setDrawLabels(false); // no axis labels
@@ -267,7 +268,7 @@ public class LineChartClass {
         mChart.getDescription().setEnabled(false);
         mChart.getLegend().setEnabled(false);
         mChart.setScaleEnabled(false);
-        mChart.setExtraOffsets(0, 30, 0, 0); //X-Axis Labels are drawn correctly
+        mChart.setExtraOffsets(0, 10, 0, 0); //X-Axis Labels on top, heading below, chart plot starts below heading
 
         //mChart.setViewPortOffsets(0f,0f,120f,0f);
     }
