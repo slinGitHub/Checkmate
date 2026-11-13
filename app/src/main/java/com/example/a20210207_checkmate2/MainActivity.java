@@ -167,15 +167,18 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     public void setAppTheme(String theme) {
         switch (theme) {
-            case "blue":
-                setTheme(R.style.AppTheme_Blue);
+            case "bright":
+                setTheme(R.style.AppTheme_bright);
                 break;
-            case "green":
-                setTheme(R.style.AppTheme_Green);
-                break;
-            case "violet":
-                setTheme(R.style.AppTheme_Violet);
-                break;
+//            case "blue":
+//                setTheme(R.style.AppTheme_Blue);
+//                break;
+//            case "green":
+//                setTheme(R.style.AppTheme_Green);
+//                break;
+//            case "violet":
+//                setTheme(R.style.AppTheme_Violet);
+//                break;
             default:
                 break;
         }

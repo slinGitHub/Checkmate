@@ -7,7 +7,7 @@
         android:label=" Checkmate"
         android:roundIcon="@mipmap/checkmate_owl_green"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme_darkBlue"
+        android:theme="@style/AppTheme_bright"
         android:hardwareAccelerated="false">
         <receiver
             android:name=".NotificationReceiver">

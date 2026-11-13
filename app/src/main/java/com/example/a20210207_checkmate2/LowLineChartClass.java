@@ -40,7 +40,7 @@ public class LowLineChartClass {
         this.hba1c_data = hba1c_data;
         this.daysGoingBackCount = daysGoingBackCount;
 
-        xAxisTextColor = mainActivity.getResources().getColor(R.color.line);
+        xAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorXAxisText, Color.BLACK);
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);

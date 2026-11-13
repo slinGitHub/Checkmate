@@ -38,7 +38,7 @@ int bxAxisTextColor;
             this.hba1cAverageData = hba1cAverageData;
 
             //Initialize Colors
-            bxAxisTextColor = mainActivity.getResources().getColor(R.color.line);
+            bxAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorGMIline, Color.BLACK);
         }
 
     public void createChart(int nDays, boolean selected) {

@@ -47,7 +47,7 @@ public class DayLineChartClass {
         this.calcDayLineChartStats = calcDayLineChartStats;
 
         //Initialize Colors
-        xAxisTextColor = mainActivity.getResources().getColor(R.color.line);
+        xAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorXAxisText, Color.BLACK);
 
     }
 
@@ -212,7 +212,7 @@ public class DayLineChartClass {
             d.setDrawCircles(false);
             d.setColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
 
-            d.setCircleColor(mainActivity.getResources().getColor(R.color.line));
+            d.setCircleColor(MaterialColors.getColor(mainActivity, R.attr.colorCircle, Color.WHITE));
             d.setLineWidth(3);
             d.setHighlightEnabled(false);
             d.setDrawValues(false);
@@ -225,7 +225,7 @@ public class DayLineChartClass {
                 //Get last Element from oneDayEntry
                 circleEntry.add(oneDayEntry.get(count_svg));
                 LineDataSet circle = new LineDataSet(circleEntry, "Day" + i);
-                circle.setCircleColor(mainActivity.getResources().getColor(R.color.line));
+                circle.setCircleColor(MaterialColors.getColor(mainActivity, R.attr.colorCircle, Color.WHITE));
                 circle.setHighlightEnabled(false);
                 circle.setDrawValues(false);
                 circle.setCircleRadius(5);
@@ -314,7 +314,7 @@ public class DayLineChartClass {
         }
         LineDataSet d5 = new LineDataSet(oneDayEntry5Glucose,"5");
         d5.setDrawCircles(false);
-        d5.setColor(mainActivity.getResources().getColor(R.color.line));
+        d5.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
         d5.setLineWidth(1);
         d5.setHighlightEnabled(false);
         d5.setDrawValues(false);
@@ -332,7 +332,7 @@ public class DayLineChartClass {
         }
         LineDataSet d95 = new LineDataSet(oneDayEntry95Glucose,"95");
         d95.setDrawCircles(false);
-        d95.setColor(mainActivity.getResources().getColor(R.color.line));
+        d95.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
         d95.setLineWidth(1);
         d95.setHighlightEnabled(false);
         d95.setDrawValues(false);
@@ -357,7 +357,7 @@ public class DayLineChartClass {
         }
         LineDataSet d25 = new LineDataSet(oneDayEntry25Glucose,"25");
         d25.setDrawCircles(false);
-        d25.setColor(mainActivity.getResources().getColor(R.color.line));
+        d25.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
         d25.setLineWidth(1);
         d25.setHighlightEnabled(false);
         d25.setDrawValues(false);
@@ -375,7 +375,7 @@ public class DayLineChartClass {
         }
         LineDataSet d75 = new LineDataSet(oneDayEntry75Glucose,"75");
         d75.setDrawCircles(false);
-        d75.setColor(mainActivity.getResources().getColor(R.color.line));
+        d75.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
         d75.setLineWidth(1);
         d75.setHighlightEnabled(false);
         d75.setDrawValues(false);
@@ -399,7 +399,7 @@ public class DayLineChartClass {
         }
         LineDataSet dMean = new LineDataSet(oneDayEntryMeanGlucose,"Day");
         dMean.setDrawCircles(false);
-        dMean.setColor(mainActivity.getResources().getColor(R.color.line));
+        dMean.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
         dMean.setLineWidth(3);
         dMean.setHighlightEnabled(false);
         dMean.setDrawValues(false);

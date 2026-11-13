@@ -18,4 +18,12 @@
 
     <attr name="colorDayLine" format="reference|color" />
 
+    <attr name="colorGMIline" format="reference|color" />
+
+    <attr name="colorXAxisText" format="reference|color" />
+    <attr name="colorCircle" format="reference|color" />
+    <attr name="colorLineDayGraphPerc" format="reference|color" />
+    <attr name="colorTextHeading" format="reference|color" />
+
+
 </resources>

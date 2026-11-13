@@ -51,7 +51,7 @@ public class LineChartClass {
         this.daysGoingBackCount = daysGoingBackCount;
 
         //Initialize Colors
-        xAxisTextColor = mainActivity.getResources().getColor(R.color.line);
+        xAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorXAxisText, Color.BLACK);
         bubbleColorSelected = MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.BLACK);
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
@@ -201,7 +201,7 @@ public class LineChartClass {
 
         //Format Line Data
         dataLineSet.setLineWidth(5);
-        dataLineSet.setColor(mainActivity.getResources().getColor(R.color.line));
+        dataLineSet.setColor(MaterialColors.getColor(mainActivity, R.attr.colorGMIline, Color.BLACK));
         dataLineSet.setDrawValues(false);
         dataLineSet.setHighlightEnabled(false);
 

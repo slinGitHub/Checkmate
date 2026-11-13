@@ -25,7 +25,7 @@
     <!-- <color name="blue">#0b717e</color>-->
 
     <!-- Line Color -->
-    <color name="line">#EEEEEE</color>
+<!--    <color name="line">#EEEEEE</color>-->
 
     <!-- Not enough Glucose Data Points -->
     <color name="notEnoughDataPoints">#AEAEAE</color>

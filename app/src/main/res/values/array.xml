@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="colorTheme">
+        <item>bright</item>
         <item>darkBlue</item>
         <item>blue</item>
         <item>green</item>
         <item>violet</item>
     </string-array>
     <string-array name="colorThemeValues">
+        <item>Bright</item>
         <item>Dark Blue</item>
         <item>Blue</item>
         <item>Green</item>

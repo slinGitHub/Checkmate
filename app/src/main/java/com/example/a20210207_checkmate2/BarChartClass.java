@@ -35,7 +35,7 @@ public class BarChartClass {
         this.hba1c_data = hba1c_data;
 
         //Initialize Colors
-        bxAxisTextColor = mainActivity.getResources().getColor(R.color.line);
+        bxAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorGMIline, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
