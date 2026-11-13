@@ -21,11 +21,18 @@ public class ValueFormatterDateXAxis extends XAxisRenderer {
     @Override
     protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
         String line[] = formattedLabel.split("\n");
-        if (!line[0].equals("")){
-            Utils.drawXAxisValue(c, line[0], x, y -50, mAxisLabelPaint, anchor, angleDegrees);
-            Utils.drawXAxisValue(c, line[1], x, y -50 + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
+        if (line.length > 0 && !line[0].equals("")) {
+            if (mXAxis.getPosition() == XAxis.XAxisPosition.TOP || mXAxis.getPosition() == XAxis.XAxisPosition.TOP_INSIDE) {
+                Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
+                if (line.length > 1) {
+                    Utils.drawXAxisValue(c, line[1], x, y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
+                }
+            } else {
+                Utils.drawXAxisValue(c, line[0], x, y - 50, mAxisLabelPaint, anchor, angleDegrees);
+                if (line.length > 1) {
+                    Utils.drawXAxisValue(c, line[1], x, y - 50 + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
+                }
+            }
         }
-        //Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
-
     }
 }

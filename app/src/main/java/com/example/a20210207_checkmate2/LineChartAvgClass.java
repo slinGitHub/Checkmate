@@ -67,9 +67,9 @@ public class LineChartAvgClass {
 
         //Format Axes
         xAxis.setDrawAxisLine(false);
-        xAxis.setDrawLabels(false);
+        xAxis.setDrawLabels(true);
         xAxis.setDrawGridLines(false);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setPosition(XAxis.XAxisPosition.TOP);
         xAxis.setSpaceMax(0.8f);
         xAxis.setSpaceMin(0.8f);
         xAxis.setTextSize(15); //Leave space on right side
@@ -185,7 +185,7 @@ public class LineChartAvgClass {
         mAChart.getDescription().setEnabled(false);
         mAChart.getLegend().setEnabled(false);
         mAChart.setScaleEnabled(false);
-        mAChart.setExtraOffsets(0, 10, 0, 0); //Bottom 30 : X-Axis Labels are drawn correctly
+        mAChart.setExtraOffsets(0, 30, 0, 0); //X-Axis Labels are drawn correctly on top
     }
 
 }

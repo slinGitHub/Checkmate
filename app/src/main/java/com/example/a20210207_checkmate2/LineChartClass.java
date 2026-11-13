@@ -89,9 +89,9 @@ public class LineChartClass {
         //Format Axes
         XAxis xAxis = mChart.getXAxis();
         xAxis.setDrawAxisLine(false);
-        xAxis.setDrawLabels(false);
+        xAxis.setDrawLabels(true);
         xAxis.setDrawGridLines(false);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setPosition(XAxis.XAxisPosition.TOP);
         xAxis.setSpaceMax(0.8f);
         xAxis.setSpaceMin(0.8f);
         xAxis.setTextSize(15); //Leave space on right side
@@ -267,7 +267,7 @@ public class LineChartClass {
         mChart.getDescription().setEnabled(false);
         mChart.getLegend().setEnabled(false);
         mChart.setScaleEnabled(false);
-        mChart.setExtraOffsets(0, 10, 0, 0); //X-Axis Labels are drawn correctly
+        mChart.setExtraOffsets(0, 30, 0, 0); //X-Axis Labels are drawn correctly
 
         //mChart.setViewPortOffsets(0f,0f,120f,0f);
     }

@@ -52,7 +52,7 @@ int bxAxisTextColor;
         bRight = bAvgChart.getAxisRight();
 
         bxAxis.setDrawAxisLine(false);
-        bxAxis.setDrawLabels(true);
+        bxAxis.setDrawLabels(false);
         bxAxis.setDrawGridLines(false);
         bxAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         //bxAxis.setSpaceMax(0.8f);
@@ -152,7 +152,7 @@ int bxAxisTextColor;
         bAvgChart.getLegend().setEnabled(false);
         bAvgChart.setScaleEnabled(false);
         bAvgChart.setDrawValueAboveBar(false);
-        bAvgChart.setExtraOffsets(0, 0, 0, 30); //X-Axis Labels are drawn correctly
+        bAvgChart.setExtraOffsets(0, 0, 0, 0);
 
     }
 

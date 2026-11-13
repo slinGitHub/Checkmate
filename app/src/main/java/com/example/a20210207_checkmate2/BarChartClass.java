@@ -52,7 +52,7 @@ public class BarChartClass {
 
         XAxis bxAxis = bChart.getXAxis();
         bxAxis.setDrawAxisLine(false);
-        bxAxis.setDrawLabels(true);
+        bxAxis.setDrawLabels(false);
         bxAxis.setDrawGridLines(false);
         bxAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         bxAxis.setSpaceMax(0.8f);
@@ -172,7 +172,7 @@ public class BarChartClass {
         bChart.getLegend().setEnabled(false);
         bChart.setScaleEnabled(false);
         bChart.setDrawValueAboveBar(false);
-        bChart.setExtraOffsets(0, 0, 0, 30); //X-Axis Labels are drawn correctly
+        bChart.setExtraOffsets(0, 0, 0, 0);
 
 
         //bChart.setViewPortOffsets(0f,0f,40f,130f);

@@ -11,7 +11,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?colorActionBarCheckmate"
+        android:background="?colorBackgroundCheckmate"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,20 +20,20 @@
         app:popupTheme="@style/AppTheme_darkBlue" />
 
     <!-- Spacing Views instead of TextViews for better performance -->
-    <View
-        android:id="@+id/lineText4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="-15dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="-85dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/bg_card_avg"
-        android:elevation="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/BarChart"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+<!--    <View-->
+<!--        android:id="@+id/lineText4"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="-15dp"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginEnd="-85dp"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:background="@drawable/bg_card_avg"-->
+<!--        android:elevation="0dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/guideline6"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guideline5"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/BarChart"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />-->
 
     <View
         android:id="@+id/lineText5"
@@ -56,26 +56,26 @@
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="-15dp"
-        android:background="@drawable/bg_card_translucent"
+        android:background="@drawable/bg_card_avg"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/BarChartAvg"
         app:layout_constraintStart_toStartOf="@+id/DayLineChart"
-        app:layout_constraintTop_toBottomOf="@+id/lineText4" />
+        app:layout_constraintTop_toBottomOf="@+id/lineText5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintGuide_percent="0.40" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineLowEvents"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.50" />
+        app:layout_constraintGuide_percent="0.60" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
