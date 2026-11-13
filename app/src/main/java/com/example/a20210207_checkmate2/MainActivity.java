@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setIcon(R.drawable.ic_action_checkmateactionbarowl); // Show Icon in Toolbar
+        getSupportActionBar().setIcon(R.drawable.ic_action_checkmateactionbarowl_black2); // Show Icon in Toolbar
 
         // Notification Alarm Scheduler
         if (sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_NOTIFICAION, true)) {

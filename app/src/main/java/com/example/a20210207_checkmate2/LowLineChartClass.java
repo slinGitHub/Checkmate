@@ -136,8 +136,7 @@ public class LowLineChartClass {
 
         LineData data = new LineData(dataSets);
         mChart.setData(data);
-        mChart.setRenderer(new RectangleTextLineChartRenderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler()));
-
+        mChart.setRenderer(new RectangleTextLineChartRenderer(mainActivity, mChart, mChart.getAnimator(), mChart.getViewPortHandler()));
         float numberOfVisibleBubbleBars = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_VISIBLE_BUBBLEBARS, "6"));
         mChart.setVisibleXRangeMaximum(numberOfVisibleBubbleBars);
 

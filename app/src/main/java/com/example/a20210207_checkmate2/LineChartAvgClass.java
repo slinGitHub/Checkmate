@@ -55,7 +55,7 @@ public class LineChartAvgClass {
         dataSets = new ArrayList<>();
 
         //Initialize Colors
-        xAxisTextColor = mainActivity.getResources().getColor(R.color.white);
+        xAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorXAxisText, Color.BLACK);
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
@@ -120,7 +120,7 @@ public class LineChartAvgClass {
         if (selected == true) {
             colorBubbleSel = colorAvg;
             dataBubbleSel.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
-            colorAvg = Color.WHITE;
+            colorAvg = MaterialColors.getColor(mainActivity, R.attr.colorTextHeading, Color.BLACK);
         }
 
         //Set Custom Label
@@ -150,7 +150,8 @@ public class LineChartAvgClass {
         //dataLineAvgSet.setColor(mainActivity.getResources().getColor(R.color.blue));
         dataLineAvgSet.setLineWidth(5);
         dataLineAvgSet.setDrawValues(false);
-        dataLineAvgSet.setValueTextColors(Collections.singletonList(mainActivity.getResources().getColor(R.color.white)));
+        //dataLineAvgSet.setValueTextColors(Collections.singletonList(mainActivity.getResources().getColor(R.color.white)));
+        dataLineAvgSet.setValueTextColors(Collections.singletonList(MaterialColors.getColor(mainActivity, R.attr.colorTextHeading, Color.BLACK)));
         dataLineAvgSet.setCircleRadius(20);
         dataLineAvgSet.setDrawCircleHole(false);
         dataLineAvgSet.setCircleHoleRadius(22);

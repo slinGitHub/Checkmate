@@ -1,5 +1,6 @@
 package com.example.a20210207_checkmate2;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,19 +15,27 @@ import com.github.mikephil.charting.renderer.LineChartRenderer;
 import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.android.material.color.MaterialColors;
 
 import java.util.List;
 
 public class RectangleTextLineChartRenderer extends LineChartRenderer {
 
-    public RectangleTextLineChartRenderer(LineDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
+    private final Context context;
+
+    public RectangleTextLineChartRenderer(Context context, LineDataProvider chart,
+                                          ChartAnimator animator, ViewPortHandler viewPortHandler) {
         super(chart, animator, viewPortHandler);
+        this.context = context;
     }
 
     @Override
     public void drawValues(Canvas c) {
         if (isDrawingValuesAllowed(mChart)) {
             List<ILineDataSet> dataSets = mChart.getLineData().getDataSets();
+
+            // Themefarbe für die "Nx"-Anzeige über der Blase (einmal pro Zeichnen auflösen)
+            int eventLabelColor = MaterialColors.getColor(context, R.attr.colorXAxisText, Color.BLACK);
 
             for (int i = 0; i < dataSets.size(); i++) {
                 ILineDataSet dataSet = dataSets.get(i);
@@ -43,14 +52,18 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                 ValueFormatter formatter = dataSet.getValueFormatter();
 
                 float textHeight = dataSet.getValueTextSize();
+
                 float boxPadding = Utils.convertDpToPixel(4f);
-                
+                float cornerRadius = Utils.convertDpToPixel(6f);          // Außenradius
+                float innerOffset = Utils.convertDpToPixel(2f);           // Rahmenstärke
+                float innerRadius = Math.max(0f, cornerRadius - innerOffset);
+
                 Paint rectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 rectPaint.setStyle(Paint.Style.FILL);
 
                 Paint labelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 labelPaint.setTextSize(textHeight * 0.65f);
-                labelPaint.setColor(Color.WHITE);
+                labelPaint.setColor(eventLabelColor);
                 labelPaint.setTextAlign(Paint.Align.CENTER);
                 labelPaint.setTypeface(dataSet.getValueTypeface());
 
@@ -69,19 +82,19 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     Entry entry = dataSet.getEntryForIndex(dataIndex);
                     if (entry == null) continue;
                     String valText = formatter.getPointLabel(entry);
-                    
+
                     // Box-Größe
                     float textWidth = mValuePaint.measureText(valText);
                     float boxWidth = Math.max(textWidth + boxPadding * 3, Utils.convertDpToPixel(38f));
                     float boxHeight = textHeight + boxPadding * 1.8f;
-                    
+
                     RectF rect = new RectF(x - boxWidth / 2, y - boxHeight / 2, x + boxWidth / 2, y + boxHeight / 2);
-                    
+
                     // Daten extrahieren: Events [0] und Farbe [1]
                     Object entryData = entry.getData();
                     int color;
                     int events = 0;
-                    
+
                     if (entryData instanceof int[]) {
                         int[] d = (int[]) entryData;
                         events = d[0];
@@ -89,23 +102,17 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     } else {
                         color = dataSet.getValueTextColor(dataIndex);
                     }
-                    
+
                     if ("BubbleSel".equals(dataSetLabel)) {
                         // Weißer Rahmen (Außenbox)
                         rectPaint.setColor(Color.WHITE);
-                        c.drawRect(rect, rectPaint);
-                        
+                        c.drawRoundRect(rect, cornerRadius, cornerRadius, rectPaint);
+
                         // Farbige Innenbox
                         rectPaint.setColor(color);
-                        float innerOffset = Utils.convertDpToPixel(2f);
-                        RectF innerRect = new RectF(rect.left + innerOffset, rect.top + innerOffset, 
-                                                   rect.right - innerOffset, rect.bottom - innerOffset);
-                        c.drawRect(innerRect, rectPaint);
-                        
-//                        int originalColor = mValuePaint.getColor();
-//                        mValuePaint.setColor(Color.BLACK);
-//                        c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
-//                        mValuePaint.setColor(originalColor);
+                        RectF innerRect = new RectF(rect.left + innerOffset, rect.top + innerOffset,
+                                rect.right - innerOffset, rect.bottom - innerOffset);
+                        c.drawRoundRect(innerRect, innerRadius, innerRadius, rectPaint);
 
                         mValuePaint.setColor(valueTextColor);
                         c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
@@ -113,19 +120,14 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     } else if ("Text".equals(dataSetLabel) || "TextAvg".equals(dataSetLabel)) {
                         // Normale farbige Box
                         rectPaint.setColor(color);
-                        c.drawRect(rect, rectPaint);
-                        
-//                        int originalColor = mValuePaint.getColor();
-//                        mValuePaint.setColor(Color.BLACK);
-//                        c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
-//                        mValuePaint.setColor(originalColor);
+                        c.drawRoundRect(rect, cornerRadius, cornerRadius, rectPaint);
 
                         mValuePaint.setColor(valueTextColor);
                         c.drawText(valText, x, y + textHeight * 0.35f, mValuePaint);
-                        
+
                         if (events > 0) {
                             String nText = events + "x";
-                            c.drawText(nText, x, y - boxHeight / 2 - boxPadding / 2, labelPaint);
+                            c.drawText(nText, x, y - boxHeight * 3 / 4 - boxPadding / 2, labelPaint);
                         }
                     }
                 }

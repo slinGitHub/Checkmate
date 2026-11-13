@@ -6,13 +6,18 @@
         <item name="android:statusBarColor" tools:targetApi="l">#EEF0F3</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="colorActionBarCheckmate">#EEF0F3</item>
+
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <!--<item name="titleTextColor">@android:color/white</item>-->
         <!--<item name="subtitleTextColor">@android:color/white</item>-->
         <!-- android:textColorSecondary is the color of the menu overflow icon (three vertical dots) -->
         <item name="android:textColorSecondary">#012D37</item>
+        <item name="colorControlNormal">#012D37</item>
 
         <item name="colorTextBubbleBar">#094453</item>
         <item name="colorBackgroundCheckmate">#EEF0F3</item>
+        <item name="colorBackgroundCheckmateAvg">#F6F7F9</item>
+        <item name="colorBackgroundCheckmateBright">#FFFFFF</item>
 
         <item name="alphaBarInRangeBackground">45</item>
         <item name="colorBarInRangeBackground">#fef5f8</item>

@@ -145,8 +145,7 @@ public class LowLineChartAvgClass {
 
         LineData data = new LineData(dataSets);
         // Rechteckigen Renderer setzen
-        mAChart.setRenderer(new RectangleTextLineChartRenderer(mAChart, mAChart.getAnimator(), mAChart.getViewPortHandler()));
-        mAChart.setData(data);
+        mAChart.setRenderer(new RectangleTextLineChartRenderer(mainActivity, mAChart, mAChart.getAnimator(), mAChart.getViewPortHandler()));        mAChart.setData(data);
         mAChart.getDescription().setEnabled(false);
         mAChart.getLegend().setEnabled(false);
         mAChart.setScaleEnabled(false);
