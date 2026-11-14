@@ -4,13 +4,13 @@ plugins {
 
 android {
 
-    compileSdk 34
+    compileSdk 35
     namespace 'com.example.a20210207_checkmate2' // Hier dein Paketname
 
     defaultConfig {
         applicationId "com.example.a20210207_checkmate2"
         minSdk 21
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -31,6 +31,8 @@ android {
 
 dependencies {
     // AndroidX & Material
+    implementation 'androidx.activity:activity:1.9.3'
+    implementation 'androidx.core:core:1.15.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
