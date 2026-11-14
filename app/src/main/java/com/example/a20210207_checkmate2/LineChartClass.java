@@ -42,6 +42,9 @@ public class LineChartClass {
     int bubbleColorHighAbRange;
     int bubbleNotEnoughDataColor;
     int textColor;
+    int textColorInRange;
+    int textColorAboveRange;
+    int textColorHighAbRange;
 
     //Constructor
     LineChartClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data, int daysGoingBackCount) {
@@ -58,6 +61,9 @@ public class LineChartClass {
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
         bubbleNotEnoughDataColor = MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK);
         textColor = MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK);
+        textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
+        textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
+        textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
@@ -130,6 +136,7 @@ public class LineChartClass {
 
         //Initialize new color array
         colors = new ArrayList<Integer>();
+        ArrayList<Integer> textColors = new ArrayList<>();
         int colorBubbleSel = 0;
 
         for (int i = 0; i <= count; i++) {
@@ -156,14 +163,19 @@ public class LineChartClass {
             dataText.add(new Entry((float) i, hba1c_value, hba1c_value));
 
             //if ((hba1c_data.get(count - i).nValues > (0.5 * maxValues)) || i == count) {
-                if (value <= hba1cGoal)
+                if (value <= hba1cGoal) {
                     colors.add(bubbleColorInRange);
-                else if (value > hba1cGoal && value < hba1cHigh)
+                    textColors.add(textColorInRange);
+                } else if (value > hba1cGoal && value < hba1cHigh) {
                     colors.add(bubbleColorAboveRange);
-                else
+                    textColors.add(textColorAboveRange);
+                } else {
                     colors.add(bubbleColorHighAbRange);
+                    textColors.add(textColorHighAbRange);
+                }
             //} else {
             //    colors.add(bubbleNotEnoughDataColor);
+            //    textColors.add(textColor);
             //}
 
             //Color day selected brighter
@@ -208,7 +220,7 @@ public class LineChartClass {
         //Format Text Data
         dataTextSet.setDrawCircles(false);
         dataTextSet.setValueTextSize(20);
-        dataTextSet.setValueTextColor(textColor);
+        dataTextSet.setValueTextColors(textColors);
         dataTextSet.enableDashedLine(0f, 1f, 0f);
         ValueFormatter formatter;
         if (switchToMol) {

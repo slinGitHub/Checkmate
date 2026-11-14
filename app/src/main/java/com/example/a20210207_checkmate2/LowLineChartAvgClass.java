@@ -17,6 +17,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.color.MaterialColors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class LowLineChartAvgClass {
     LineChart mAChart;
@@ -34,6 +35,9 @@ public class LowLineChartAvgClass {
     int bubbleColorAboveRange;
     int bubbleColorHighAbRange;
     int textColor;
+    int textColorInRange;
+    int textColorAboveRange;
+    int textColorHighAbRange;
 
     LowLineChartAvgClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data, ArrayList<Hba1cEntry> hba1cAverageData) {
         mAChart = (LineChart) mainActivity.findViewById(R.id.LowLineChartAvg);
@@ -53,6 +57,9 @@ public class LowLineChartAvgClass {
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
         textColor = MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK);
+        textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
+        textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
+        textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
     }
 
     public void createChart(boolean selected) {
@@ -78,6 +85,7 @@ public class LowLineChartAvgClass {
         ArrayList<Entry> dataBubbleSel = new ArrayList<>();
 
         Integer colorAvg;
+        Integer textColorAvg;
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
 
@@ -89,10 +97,13 @@ public class LowLineChartAvgClass {
         // Farblogik für Durchschnitt: < 50 Rot, 50-70 Gelb, > 70 Grün
         if (hba1cAverageData.get(0).minGlucose < 50) {
             colorAvg = bubbleColorHighAbRange;
+            textColorAvg = textColorHighAbRange;
         } else if (hba1cAverageData.get(0).minGlucose <= 70) {
             colorAvg = bubbleColorAboveRange;
+            textColorAvg = textColorAboveRange;
         } else {
             colorAvg = bubbleColorInRange;
+            textColorAvg = textColorInRange;
         }
 
         ArrayList<String> xAxisLabel = new ArrayList<>();
@@ -124,7 +135,7 @@ public class LowLineChartAvgClass {
         ValueFormatter formatter = switchToMol ? new ValueFormatterOneDecimal() : new ValueFormatterZeroDecimal();
         dataTextAvgSet.setValueFormatter(formatter);
         dataTextAvgSet.enableDashedLine(0f, 1f, 0f);
-        dataTextAvgSet.setValueTextColor(textColor);
+        dataTextAvgSet.setValueTextColors(Collections.singletonList(textColorAvg));
 
         dataLineAvgSet.setDrawCircles(false); // Kreise deaktivieren
         dataLineAvgSet.setLineWidth(5);
@@ -135,7 +146,7 @@ public class LowLineChartAvgClass {
         dataBubbleSelSet.setDrawCircles(false); // Kreise deaktivieren
         dataBubbleSelSet.setDrawValues(true);
         dataBubbleSelSet.setValueTextSize(20);
-        dataBubbleSelSet.setValueTextColor(textColor);
+        dataBubbleSelSet.setValueTextColors(Collections.singletonList(textColorAvg));
         dataBubbleSelSet.setValueFormatter(formatter);
 
         dataSets = new ArrayList<>();

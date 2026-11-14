@@ -43,7 +43,6 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     continue;
 
                 applyValueTextStyle(dataSet);
-                int valueTextColor = dataSet.getValueTextColor(); // = textColor aus LowLineChartClass
 
                 Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
                 mXBounds.set(mChart, dataSet);
@@ -62,7 +61,7 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                 rectPaint.setStyle(Paint.Style.FILL);
 
                 Paint labelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                labelPaint.setTextSize(textHeight * 0.65f);
+                labelPaint.setTextSize(Utils.convertDpToPixel(15f));
                 labelPaint.setColor(eventLabelColor);
                 labelPaint.setTextAlign(Paint.Align.CENTER);
                 labelPaint.setTypeface(dataSet.getValueTypeface());
@@ -79,6 +78,7 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                         continue;
 
                     int dataIndex = j / 2 + mXBounds.min;
+                    int valueTextColor = dataSet.getValueTextColor(dataIndex);
                     Entry entry = dataSet.getEntryForIndex(dataIndex);
                     if (entry == null) continue;
                     String valText = formatter.getPointLabel(entry);

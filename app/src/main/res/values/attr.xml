@@ -27,5 +27,8 @@
     <attr name="colorLineDayGraphPerc" format="reference|color" />
     <attr name="colorTextHeading" format="reference|color" />
 
+    <attr name="colorTextInRange" format="reference|color" />
+    <attr name="colorTextOutOfRange" format="reference|color" />
+    <attr name="colorTextVeryOutOfRange" format="reference|color" />
 
 </resources>

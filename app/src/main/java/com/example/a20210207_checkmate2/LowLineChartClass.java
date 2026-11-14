@@ -33,6 +33,9 @@ public class LowLineChartClass {
     int bubbleColorAboveRange;
     int bubbleColorHighAbRange;
     int textColor;
+    int textColorInRange;
+    int textColorAboveRange;
+    int textColorHighAbRange;
 
     LowLineChartClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data, int daysGoingBackCount) {
         mChart = (LineChart) mainActivity.findViewById(R.id.LowLineChart);
@@ -45,6 +48,9 @@ public class LowLineChartClass {
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
         textColor = MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK);
+        textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
+        textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
+        textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
@@ -71,6 +77,7 @@ public class LowLineChartClass {
         ArrayList<Entry> dataText = new ArrayList<>();
         ArrayList<Entry> dataBubbleSel = new ArrayList<>();
 
+        ArrayList<Integer> textColors = new ArrayList<>();
         final ArrayList<String> xAxisLabel = new ArrayList<>();
         int count = hba1c_data.size() - 1;
 
@@ -86,17 +93,22 @@ public class LowLineChartClass {
 
             // Farblogik fixieren: < 50 Rot, 50-70 Gelb, > 70 Grün
             int color;
+            int textCol;
             if (entry.minGlucose < 50) {
                 color = bubbleColorHighAbRange; // Rot
+                textCol = textColorHighAbRange;
             } else if (entry.minGlucose <= 70) {
                 color = bubbleColorAboveRange;  // Gelb
+                textCol = textColorAboveRange;
             } else {
                 color = bubbleColorInRange;     // Grün
+                textCol = textColorInRange;
             }
 
             int[] entryData = new int[]{entry.lowEvents, color};
             Entry e = new Entry((float) i, minGlucose, entryData);
             dataText.add(e);
+            textColors.add(textCol);
 
             if (useDaySelected && i == daySelected) {
                 dataBubbleSel.add(new Entry((float) i, minGlucose, entryData));
@@ -116,11 +128,11 @@ public class LowLineChartClass {
         dataTextSet.setLineWidth(0f);
         dataTextSet.setColor(Color.TRANSPARENT);
         dataTextSet.setDrawValues(true); 
-        dataTextSet.setValueTextSize(20f); 
+        dataTextSet.setValueTextSize(20f);
         dataTextSet.setHighlightEnabled(true);
         dataTextSet.setDrawHighlightIndicators(false);
         dataTextSet.setValueFormatter(formatter);
-        dataTextSet.setValueTextColor(textColor);
+        dataTextSet.setValueTextColors(textColors);
 
         dataBubbleSelSet.setDrawCircles(false);
         dataBubbleSelSet.setLineWidth(0f);

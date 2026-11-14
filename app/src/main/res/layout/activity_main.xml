@@ -286,16 +286,16 @@
 <!--        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />-->
 
     <!-- Overlay for smooth transition on the right edge -->
-    <View
-        android:id="@+id/rightEdgeOverlay"
-        android:layout_width="30dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="-15dp"
-        android:background="@drawable/right_edge_gradient"
-        android:elevation="3dp"
-        android:clickable="false"
-        android:focusable="false"
-        app:layout_constraintBottom_toTopOf="@+id/DayLineChartText"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+<!--    <View-->
+<!--        android:id="@+id/rightEdgeOverlay"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginEnd="-15dp"-->
+<!--        android:background="@drawable/right_edge_gradient"-->
+<!--        android:elevation="3dp"-->
+<!--        android:clickable="false"-->
+<!--        android:focusable="false"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/DayLineChartText"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guideline5"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

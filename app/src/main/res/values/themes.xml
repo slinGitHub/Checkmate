@@ -38,6 +38,9 @@
         <item name="colorCircle">#eeeeee</item>
         <item name="colorLineDayGraphPerc">#eeeeee</item>
         <item name="colorTextHeading">#6F7582</item>
+        <item name="colorTextInRange">#063B27</item>
+        <item name="colorTextOutOfRange">#4B3600</item>
+        <item name="colorTextVeryOutOfRange">#5F130C</item>
 
     </style>
 

@@ -39,6 +39,9 @@ public class LineChartAvgClass {
     int bubbleColorHighAbRange;
     int bubbleNotEnoughDataColor;
     int textColor;
+    int textColorInRange;
+    int textColorAboveRange;
+    int textColorHighAbRange;
 
     //Constructor
     LineChartAvgClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data,ArrayList<Hba1cEntry> hba1cAverageData) {
@@ -61,6 +64,9 @@ public class LineChartAvgClass {
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
         bubbleNotEnoughDataColor = MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK);
         textColor = MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK);
+        textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
+        textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
+        textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
     }
 
     public void createChart(boolean selected) {
@@ -93,6 +99,7 @@ public class LineChartAvgClass {
         ArrayList<Entry> dataBubbleSel = new ArrayList<>();
 
         Integer colorAvg;
+        Integer textColorAvg;
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL,false);
 
@@ -105,10 +112,13 @@ public class LineChartAvgClass {
 
         if (hba1cAvgValue <= hba1cGoal) {
             colorAvg = bubbleColorInRange;
+            textColorAvg = textColorInRange;
         } else if (hba1cAvgValue > hba1cGoal && hba1cAvgValue < hba1cHigh) {
             colorAvg = bubbleColorAboveRange;
+            textColorAvg = textColorAboveRange;
         } else {
             colorAvg = bubbleColorHighAbRange;
+            textColorAvg = textColorHighAbRange;
         }
 
         ArrayList<String> xAxisLabel = new ArrayList<>();
@@ -144,7 +154,7 @@ public class LineChartAvgClass {
         dataTextAvgSet.setValueFormatter(formatter);
 
         dataTextAvgSet.enableDashedLine(0f,1f,0f);
-        dataTextAvgSet.setValueTextColor(textColor);
+        dataTextAvgSet.setValueTextColors(Collections.singletonList(textColorAvg));
 
         dataLineAvgSet.setCircleColors(colorAvg);
         //dataLineAvgSet.setColor(mainActivity.getResources().getColor(R.color.blue));

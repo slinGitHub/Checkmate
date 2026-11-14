@@ -27,6 +27,9 @@ public class BarChartClass {
     ArrayList<Hba1cEntry> hba1c_data;
 
     int bxAxisTextColor;
+    int textColorInRange;
+    int textColorAboveRange;
+    int textColorHighAbRange;
 
     //Constructor
     BarChartClass(MainActivity mainActivity,ArrayList<Hba1cEntry> hba1c_data) {
@@ -36,6 +39,9 @@ public class BarChartClass {
 
         //Initialize Colors
         bxAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorGMIline, Color.BLACK);
+        textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
+        textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
+        textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
@@ -81,6 +87,7 @@ public class BarChartClass {
 
         //Set marker Color depending on RangeValue
         ArrayList<Integer> bcolors = new ArrayList<Integer>();
+        ArrayList<Integer> bTextColors = new ArrayList<Integer>();
 
         int count = hba1c_data.size() - 1;
         ArrayList<String> xAxisLabel = new ArrayList<>();
@@ -104,16 +111,20 @@ public class BarChartClass {
             //if ((hba1c_data.get(count - i).nValues > (0.5 * maxValues)) || i == count) {
                 if (val2 >= inRangeGoal) {
                     bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK));
+                    bTextColors.add(textColorInRange);
                     //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK));
                 } else if (val2 >= inRangeTooLow) {
                     bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK));
+                    bTextColors.add(textColorAboveRange);
                     //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK));
                 } else {
                     bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK));
+                    bTextColors.add(textColorHighAbRange);
                     //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK));
                 }
             //} else {
             //    bcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK));
+            //    bTextColors.add(textColorInRange);
             //    //bBackgroundcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorNotEnoughData, Color.BLACK));
             //}
 
@@ -141,6 +152,7 @@ public class BarChartClass {
         BarDataSet dataBarSet2 = new BarDataSet(dataBar2, "BarInRange");
         dataBarSet2.setColors(bcolors);
         dataBarSet2.setValueTextSize(20);
+        dataBarSet2.setValueTextColors(bTextColors);
         dataBarSet2.setHighLightAlpha(0);
         dataBarSet2.setHighLightColor(mainActivity.getResources().getColor(R.color.white));
         dataBarSet2.setHighlightEnabled(true);
@@ -160,8 +172,8 @@ public class BarChartClass {
         BarData dataBarChart = new BarData(dataSetsBar);
         //dataBarChart.setBarWidth(0.8f);
         dataBarChart.setValueFormatter(new ValueFormatterPercentage());
-        dataBarChart.setValueTextColor(MaterialColors.getColor(mainActivity, R.attr.colorTextBubbleBar, Color.BLACK));
 
+        bChart.setRenderer(new CustomBarChartRenderer(bChart, bChart.getAnimator(), bChart.getViewPortHandler()));
         bChart.setData(dataBarChart);
         //bChart.setFitBars(true); //Makes an error so that the bar chart is jumping to the left at reload -> do not use
         bChart.invalidate();
