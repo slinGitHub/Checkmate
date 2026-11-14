@@ -78,7 +78,7 @@ public class CenteredTextLineChartRenderer extends LineChartRenderer {
 
                     if (dataSet.isDrawValuesEnabled()) {
                         //drawValue(c, formatter.getPointLabel(entry), x, y - valOffset, dataSet.getValueTextColor(j / 2));
-                        drawValue(c, formatter.getPointLabel(entry), x, y+textHeight*0.35f, dataSet.getValueTextColor(j / 2));
+                        drawValue(c, formatter.getPointLabel(entry), x, y+textHeight*0.35f, dataSet.getValueTextColor(j / 2 + mXBounds.min));
                     }
 
                     if (entry.getIcon() != null && dataSet.isDrawIconsEnabled()) {

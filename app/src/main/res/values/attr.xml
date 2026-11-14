@@ -31,4 +31,6 @@
     <attr name="colorTextOutOfRange" format="reference|color" />
     <attr name="colorTextVeryOutOfRange" format="reference|color" />
 
+    <attr name="colorSelectedLine" format="reference|color" />
+
 </resources>

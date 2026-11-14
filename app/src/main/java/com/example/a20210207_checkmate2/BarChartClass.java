@@ -30,6 +30,7 @@ public class BarChartClass {
     int textColorInRange;
     int textColorAboveRange;
     int textColorHighAbRange;
+    int barSelectedLineColor;
 
     //Constructor
     BarChartClass(MainActivity mainActivity,ArrayList<Hba1cEntry> hba1c_data) {
@@ -42,6 +43,7 @@ public class BarChartClass {
         textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
         textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
         textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
+        barSelectedLineColor = MaterialColors.getColor(mainActivity, R.attr.colorSelectedLine, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
@@ -146,7 +148,7 @@ public class BarChartClass {
         dataBarSet.setHighlightEnabled(false);
 
         int[] colorsInt = new int[]{MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK), MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK), MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK)};
-        dataBarSet.setColors(colorsInt,MaterialColors.getColor(mainActivity, R.attr.alphaBarInRangeBackground, 80));
+        dataBarSet.setColors(colorsInt,MaterialColors.getColor(mainActivity, R.attr.alphaBarInRangeBackground, 255));
 
         //Bar with in Range Values
         BarDataSet dataBarSet2 = new BarDataSet(dataBar2, "BarInRange");
@@ -162,7 +164,7 @@ public class BarChartClass {
         dataBarSetSel.setDrawValues(false);
         dataBarSetSel.setColor(selectedBarColor);
         dataBarSetSel.setBarBorderWidth(3f);
-        dataBarSetSel.setBarBorderColor(Color.WHITE);
+        dataBarSetSel.setBarBorderColor(barSelectedLineColor);
 
         ArrayList<IBarDataSet> dataSetsBar = new ArrayList<>();
         dataSetsBar.add(dataBarSet);

@@ -84,6 +84,12 @@ public class CustomBarChartRenderer extends BarChartRenderer {
 
         trans.pointValuesToPixel(buffer.buffer);
 
+        // Gestapelte DataSets (Hintergrund) als ein durchgehender Balken zeichnen
+        if (dataSet.isStacked()) {
+            drawMergedStacks(c, buffer, dataSet, drawBorder);
+            return;
+        }
+
         final boolean isSingleColor = dataSet.getColors().size() == 1;
 
         if (isSingleColor) {
@@ -180,5 +186,49 @@ public class CustomBarChartRenderer extends BarChartRenderer {
 
         c.drawText(numberPart, x - totalWidth / 2 + numWidth / 2, y, numberPaint);
         c.drawText(percentPart, x - totalWidth / 2 + numWidth + percentWidth / 2, y, percentPaint);
+    }
+
+    private void drawMergedStacks(Canvas c, BarBuffer buffer, IBarDataSet dataSet, boolean drawBorder) {
+        float cornerRadius = Utils.convertDpToPixel(6f);
+
+        mRenderPaint.setShader(null);
+        mRenderPaint.setColor(dataSet.getColor(0));
+
+        int entryCount = Math.min(
+                (int) Math.ceil(dataSet.getEntryCount() * mAnimator.getPhaseX()),
+                dataSet.getEntryCount());
+
+        int bufferIndex = 0;
+
+        for (int i = 0; i < entryCount && bufferIndex < buffer.size(); i++) {
+            BarEntry e = dataSet.getEntryForIndex(i);
+            float[] vals = e.getYVals();
+            int segments = (vals == null) ? 1 : vals.length;
+            int end = bufferIndex + segments * 4;
+
+            // Links/rechts sind für alle Segmente eines Entrys identisch
+            float left = buffer.buffer[bufferIndex];
+            float right = buffer.buffer[bufferIndex + 2];
+
+            // Oberste und unterste Pixelkante über alle Segmente
+            float top = Float.MAX_VALUE;
+            float bottom = -Float.MAX_VALUE;
+            for (int k = bufferIndex; k < end; k += 4) {
+                top = Math.min(top, Math.min(buffer.buffer[k + 1], buffer.buffer[k + 3]));
+                bottom = Math.max(bottom, Math.max(buffer.buffer[k + 1], buffer.buffer[k + 3]));
+            }
+            bufferIndex = end;
+
+            if (!mViewPortHandler.isInBoundsLeft(right))
+                continue;
+            if (!mViewPortHandler.isInBoundsRight(left))
+                break;
+
+            c.drawRoundRect(left, top, right, bottom, cornerRadius, cornerRadius, mRenderPaint);
+
+            if (drawBorder) {
+                c.drawRoundRect(left, top, right, bottom, cornerRadius, cornerRadius, mBarBorderPaint);
+            }
+        }
     }
 }

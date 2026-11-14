@@ -80,6 +80,7 @@ public class LowLineChartClass {
         ArrayList<Integer> textColors = new ArrayList<>();
         final ArrayList<String> xAxisLabel = new ArrayList<>();
         int count = hba1c_data.size() - 1;
+        int selectedTextColor = textColor; // Fallback
 
         for (int i = 0; i <= count; i++) {
             Hba1cEntry entry = hba1c_data.get(count - i);
@@ -112,6 +113,7 @@ public class LowLineChartClass {
 
             if (useDaySelected && i == daySelected) {
                 dataBubbleSel.add(new Entry((float) i, minGlucose, entryData));
+                selectedTextColor = textCol;   // Farbe des selektierten Eintrags merken
             }
         }
 
@@ -140,7 +142,7 @@ public class LowLineChartClass {
         dataBubbleSelSet.setDrawValues(true);
         dataBubbleSelSet.setValueTextSize(20f);
         dataBubbleSelSet.setValueFormatter(formatter);
-        dataBubbleSelSet.setValueTextColor(textColor);
+        dataBubbleSelSet.setValueTextColor(selectedTextColor);
 
         dataSets = new ArrayList<>();
         dataSets.add(dataTextSet);

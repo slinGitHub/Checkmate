@@ -55,7 +55,7 @@ public class LineChartClass {
 
         //Initialize Colors
         xAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorXAxisText, Color.BLACK);
-        bubbleColorSelected = MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.BLACK);
+        bubbleColorSelected = MaterialColors.getColor(mainActivity, R.attr.colorSelectedLine, Color.BLACK);
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
@@ -183,7 +183,7 @@ public class LineChartClass {
 
                 colorBubbleSel = colors.get(i);
                 dataBubbleSel.add(new Entry((float) i, hba1c_value, hba1c_value));
-                colors.set(i, Color.WHITE);
+                colors.set(i, bubbleColorSelected);
 
             }
         }
