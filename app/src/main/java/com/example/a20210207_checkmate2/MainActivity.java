@@ -445,146 +445,66 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         dayLineChart.createChart(calcHba1c.getHba1cData().size() - 1, true, calcHba1c.sgvMin, calcHba1c.sgvMax);
 
         //-------------------------------------------------------------------------------
-        // Synchronize line and bar chart
+        // Synchronize line and bar chart with ChartSync
         //-------------------------------------------------------------------------------
-        lineChart.mChart.setOnChartGestureListener(new CoupleChartGestureListener(
-                lineChart.mChart, new Chart[]{barChart.bChart, lowLineChart.mChart}));
-        barChart.bChart.setOnChartGestureListener(new CoupleChartGestureListener(
-                barChart.bChart, new Chart[]{lineChart.mChart, lowLineChart.mChart}));
-        lowLineChart.mChart.setOnChartGestureListener(new CoupleChartGestureListener(
-                lowLineChart.mChart, new Chart[]{lineChart.mChart, barChart.bChart}));
+        ChartSync chartSync = new ChartSync();
+        chartSync.add(lineChart.mChart);
+        chartSync.add(lowLineChart.mChart);
+        chartSync.add(barChart.bChart);
 
-        // Synchronize line chart gesture
-        lineChart.mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+        OnChartValueSelectedListener daySelected = new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                lineChart.createChart((int) e.getX(), true);
+                int x = (int) e.getX();
+                lineChart.createChart(x, true);
                 lineAvgChart.createChart(false);
 
-                lowLineChart.createChart((int) e.getX(), true);
+                lowLineChart.createChart(x, true);
                 lowLineAvgChart.createChart(false);
 
-                barChart.createChart((int) e.getX(), true);
+                barChart.createChart(x, true);
                 barAvgChart.createChart(calcHba1c.nDays, false);
 
-                dayLineChart.createChart((int) e.getX(), true, calcHba1c.sgvMin, calcHba1c.sgvMax);
+                dayLineChart.createChart(x, true, calcHba1c.sgvMin, calcHba1c.sgvMax);
+                lineChart.mChart.post(() -> chartSync.syncFrom(lineChart.mChart));
             }
 
             @Override
             public void onNothingSelected() {
             }
-        });
+        };
 
-        // Synchronize low line chart gesture
-        lowLineChart.mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+        OnChartValueSelectedListener avgSelected = new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                lineChart.createChart((int) e.getX(), true);
-                lineAvgChart.createChart(false);
-
-                lowLineChart.createChart((int) e.getX(), true);
-                lowLineAvgChart.createChart(false);
-
-                barChart.createChart((int) e.getX(), true);
-                barAvgChart.createChart(calcHba1c.nDays, false);
-
-                dayLineChart.createChart((int) e.getX(), true, calcHba1c.sgvMin, calcHba1c.sgvMax);
-            }
-
-            @Override
-            public void onNothingSelected() {
-            }
-        });
-
-        // Synchronize line chart gesture
-        lineAvgChart.mAChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                lineChart.createChart((int) e.getX(), false);
+                int x = (int) e.getX();
+                lineChart.createChart(x, false);
                 lineAvgChart.createChart(true);
 
-                lowLineChart.createChart((int) e.getX(), false);
+                lowLineChart.createChart(x, false);
                 lowLineAvgChart.createChart(true);
 
-                barChart.createChart((int) e.getX(), false);
+                barChart.createChart(x, false);
                 barAvgChart.createChart(calcHba1c.nDays, true);
 
                 int meanDays = parseInt(sharedPref.getString(KEY_PREF_MEAN_DAYS, "7"));
                 calcDayLineChartStats.CalcMedian(meanDays);
                 dayLineChart.createMeanChart();
+                lineChart.mChart.post(() -> chartSync.syncFrom(lineChart.mChart));
             }
 
             @Override
             public void onNothingSelected() {
             }
-        });
+        };
 
-        // Synchronize low avg line chart gesture
-        lowLineAvgChart.mAChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                lineChart.createChart((int) e.getX(), false);
-                lineAvgChart.createChart(true);
+        lineChart.mChart.setOnChartValueSelectedListener(daySelected);
+        lowLineChart.mChart.setOnChartValueSelectedListener(daySelected);
+        barChart.bChart.setOnChartValueSelectedListener(daySelected);
 
-                lowLineChart.createChart((int) e.getX(), false);
-                lowLineAvgChart.createChart(true);
-
-                barChart.createChart((int) e.getX(), false);
-                barAvgChart.createChart(calcHba1c.nDays, true);
-
-                int meanDays = parseInt(sharedPref.getString(KEY_PREF_MEAN_DAYS, "7"));
-                calcDayLineChartStats.CalcMedian(meanDays);
-                dayLineChart.createMeanChart();
-            }
-
-            @Override
-            public void onNothingSelected() {
-            }
-        });
-
-        // Synchronize bar chart gesture
-        barChart.bChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                lineChart.createChart((int) e.getX(), true);
-                lineAvgChart.createChart(false);
-
-                lowLineChart.createChart((int) e.getX(), true);
-                lowLineAvgChart.createChart(false);
-
-                barChart.createChart((int) e.getX(), true);
-                barAvgChart.createChart(calcHba1c.nDays, false);
-
-                dayLineChart.createChart((int) e.getX(), true, calcHba1c.sgvMin, calcHba1c.sgvMax);
-            }
-
-            @Override
-            public void onNothingSelected() {
-            }
-        });
-
-        // Synchronize bar chart gesture
-        barAvgChart.bAvgChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                lineChart.createChart((int) e.getX(), false);
-                lineAvgChart.createChart(true);
-
-                lowLineChart.createChart((int) e.getX(), false);
-                lowLineAvgChart.createChart(true);
-
-                barChart.createChart((int) e.getX(), false);
-                barAvgChart.createChart(calcHba1c.nDays, true);
-
-                int meanDays = parseInt(sharedPref.getString(KEY_PREF_MEAN_DAYS, "7"));
-                calcDayLineChartStats.CalcMedian(meanDays);
-                dayLineChart.createMeanChart();
-            }
-
-            @Override
-            public void onNothingSelected() {
-            }
-        });
+        lineAvgChart.mAChart.setOnChartValueSelectedListener(avgSelected);
+        lowLineAvgChart.mAChart.setOnChartValueSelectedListener(avgSelected);
+        barAvgChart.bAvgChart.setOnChartValueSelectedListener(avgSelected);
 
 
         //-------------------------------------------------------------------------------
@@ -612,39 +532,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         return cm.getActiveNetworkInfo() != null;
     }
 
-//    public void myAlarm() {
-//        int notificationId = 1;
-//        String notification_time = sharedPref.getString(SettingsActivity.KEY_PREF_NOTIFICATION_TIME, "20:00");
-//        String[] values = notification_time.split(":");
-//
-//
-//        //Calendar calendar = Calendar.getInstance();
-//        //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-///*        try {
-//            calendar.setTime(sdf.parse(notification_time));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//
-//        }*/
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(Calendar.HOUR_OF_DAY, parseInt(values[0]));
-//        calendar.set(Calendar.MINUTE, parseInt(values[1]));
-//        calendar.set(Calendar.SECOND, 0);
-//
-//        if (calendar.getTime().compareTo(new Date()) < 0)
-//            calendar.add(Calendar.DAY_OF_MONTH, 1);
-//
-//        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//
-//        if (alarmManager != null) {
-//            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//
-//        }
-//
-//    }
 
     //-------------------------------------------------------------------------------
     // Options Menu
