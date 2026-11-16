@@ -91,7 +91,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -161,37 +161,54 @@
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <TextView
-        android:id="@+id/lowLineText"
+        android:id="@+id/barText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:elevation="6dp"
-        android:text="Min Glucose &amp; No Min Events"
+        android:text="In Range (70-140mg/dl)"
         android:textColor="?attr/colorTextHeading"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/LowLineChart"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/BarChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="-20dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="-20dp"
+        android:layout_marginBottom="-10dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineLowEvents"
         app:layout_constraintEnd_toEndOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/LowLineChartAvg"
+
+<!--    <com.github.mikephil.charting.charts.LineChart-->
+<!--        android:id="@+id/LowLineChart"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="-20dp"-->
+<!--        android:layout_marginTop="25dp"-->
+<!--        android:layout_marginEnd="-20dp"-->
+<!--        android:elevation="2dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/guidelineLowEvents"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/guideline5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/guideline" />-->
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/BarChartAvg"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="25dp"
+        android:layout_marginStart="0dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginBottom="-10dp"
         android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineLowEvents"
         app:layout_constraintEnd_toEndOf="parent"
@@ -199,20 +216,20 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <TextView
-        android:id="@+id/barText"
+        android:id="@+id/lowEventText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         android:layout_marginTop="10dp"
-        android:text="In Range (70-140mg/dl)"
+        android:text="Min Glucose &amp; No Min Events"
         android:textColor="?attr/colorTextHeading"
         android:textStyle="bold"
         android:elevation="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineLowEvents" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/BarChart"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/LowLineChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="-20dp"
@@ -225,8 +242,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineLowEvents" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/BarChartAvg"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/LowLineChartAvg"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="25dp"

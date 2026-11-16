@@ -17,10 +17,70 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CenteredTextLineChartRenderer extends LineChartRenderer {
+
+    private ArrayList<Integer> mColors;
 
     public CenteredTextLineChartRenderer(LineDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
         super(chart, animator, viewPortHandler);
+    }
+
+    public CenteredTextLineChartRenderer(LineDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler, ArrayList<Integer> colors) {
+        super(chart, animator, viewPortHandler);
+        this.mColors = colors;
+    }
+
+    @Override
+    protected void drawDataSet(Canvas c, ILineDataSet dataSet) {
+        if (dataSet.getLabel() != null && dataSet.getLabel().equals("Line") && mColors != null && !mColors.isEmpty()) {
+            Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
+            mXBounds.set(mChart, dataSet);
+
+            float[] positions = trans.generateTransformedValuesLine(dataSet, mAnimator.getPhaseX(), mAnimator.getPhaseY(), mXBounds.min, mXBounds.max);
+
+            mRenderPaint.setStyle(Paint.Style.STROKE);
+            mRenderPaint.setStrokeWidth(dataSet.getLineWidth());
+            mRenderPaint.setPathEffect(dataSet.getDashPathEffect());
+
+            for (int j = 0; j < positions.length - 2; j += 2) {
+                float x1 = positions[j];
+                float y1 = positions[j + 1];
+                float x2 = positions[j + 2];
+                float y2 = positions[j + 3];
+
+                if (!mViewPortHandler.isInBoundsLeft(x2) && !mViewPortHandler.isInBoundsRight(x1))
+                    continue;
+
+                int entryIndex1 = j / 2 + mXBounds.min;
+                int entryIndex2 = entryIndex1 + 1;
+
+                if (entryIndex1 < 0 || entryIndex2 >= mColors.size())
+                    continue;
+
+                int color1 = mColors.get(entryIndex1);
+                int color2 = mColors.get(entryIndex2);
+
+                float xMid = (x1 + x2) / 2f;
+                float yMid = (y1 + y2) / 2f;
+
+                // Draw first half with color1
+                mRenderPaint.setColor(color1);
+                c.drawLine(x1, y1, xMid, yMid, mRenderPaint);
+
+                // Draw second half with color2
+                mRenderPaint.setColor(color2);
+                c.drawLine(xMid, yMid, x2, y2, mRenderPaint);
+            }
+
+            if (dataSet.isDrawCirclesEnabled()) {
+                // drawCircles doesn't need dataSet parameter or handled by bubble dataset
+            }
+        } else {
+            super.drawDataSet(c, dataSet);
+        }
     }
 
     //Modified drawValues Method

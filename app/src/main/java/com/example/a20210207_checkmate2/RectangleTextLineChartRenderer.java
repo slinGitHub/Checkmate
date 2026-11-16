@@ -54,7 +54,7 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
 
                 float boxPadding = Utils.convertDpToPixel(4f);
                 float cornerRadius = Utils.convertDpToPixel(6f);          // Außenradius
-                float innerOffset = Utils.convertDpToPixel(2f);           // Rahmenstärke
+                float innerOffset = Utils.convertDpToPixel(3f);           // Rahmenstärke (3f)
                 float innerRadius = Math.max(0f, cornerRadius - innerOffset);
 
                 Paint rectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -104,8 +104,8 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     }
 
                     if ("BubbleSel".equals(dataSetLabel)) {
-                        // Weißer Rahmen (Außenbox)
-                        rectPaint.setColor(Color.WHITE);
+                        // Rahmen (Außenbox) mit dem dunklen Textfarbton (valueTextColor)
+                        rectPaint.setColor(valueTextColor);
                         c.drawRoundRect(rect, cornerRadius, cornerRadius, rectPaint);
 
                         // Farbige Innenbox

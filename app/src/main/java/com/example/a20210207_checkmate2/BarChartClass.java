@@ -94,6 +94,7 @@ public class BarChartClass {
         int count = hba1c_data.size() - 1;
         ArrayList<String> xAxisLabel = new ArrayList<>();
         int selectedBarColor = 0;
+        int selectedBarTextColor = textColorInRange;
 
         for (int i = 0; i <= count; i++) {
 
@@ -134,12 +135,13 @@ public class BarChartClass {
             if (useDaySelected == true && i == daySelected){
                 dataBarSel.add(new BarEntry(i, val2));
                 selectedBarColor = bcolors.get(i);
+                selectedBarTextColor = bTextColors.get(i);
             }
         }
 
         //Draw x-Axis labels
-        bChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
-        bChart.setXAxisRenderer(new ValueFormatterDateXAxis(bChart.getViewPortHandler(), bChart.getXAxis(), bChart.getTransformer(YAxis.AxisDependency.LEFT)));
+        //bChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
+        //bChart.setXAxisRenderer(new ValueFormatterDateXAxis(bChart.getViewPortHandler(), bChart.getXAxis(), bChart.getTransformer(YAxis.AxisDependency.LEFT)));
 
         //Bar in background with out and in Range Values
         BarDataSet dataBarSet = new BarDataSet(dataBar, "BarBackground");
@@ -163,8 +165,8 @@ public class BarChartClass {
         BarDataSet dataBarSetSel = new BarDataSet(dataBarSel, "BarSelected");
         dataBarSetSel.setDrawValues(false);
         dataBarSetSel.setColor(selectedBarColor);
-        dataBarSetSel.setBarBorderWidth(0f);
-        dataBarSetSel.setBarBorderColor(barSelectedLineColor);
+        dataBarSetSel.setBarBorderWidth(3f);
+        dataBarSetSel.setBarBorderColor(selectedBarTextColor);
 
         ArrayList<IBarDataSet> dataSetsBar = new ArrayList<>();
         dataSetsBar.add(dataBarSet);
@@ -187,16 +189,18 @@ public class BarChartClass {
         bChart.setScaleEnabled(false);
         bChart.setDrawValueAboveBar(false);
         bChart.setExtraOffsets(0, 0, 0, 0);
+        //bChart.setViewPortOffsets(0f, 0f, 0f, 0f);
+
+        bChart.getDescription().setEnabled(false);
 
 
         //bChart.setViewPortOffsets(0f,0f,40f,130f);
         //bChart.setMinOffset(0f);
         //float yMax = bChart.getData().getDataSetByIndex(0).getYMax();
-        //float yMin = bChart.getData().getDataSetByIndex(0).getYMin();
+        float yMin = bChart.getData().getDataSetByIndex(0).getYMin();
         //bLeft.setAxisMaximum(yMax);
-        //bLeft.setAxisMinimum(yMin);
+        bLeft.setAxisMinimum(yMin);
 
-        //Set the description for the bar chart
         double glucoseRangeLow = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_LOWER_RANGE,"70"));
         double glucoseRangeHigh = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_UPPER_RANGE,"140"));
 

@@ -36,7 +36,6 @@ public class LineChartClass {
     int daysGoingBackCount;
 
     int xAxisTextColor;
-    int bubbleColorSelected;
     int bubbleColorInRange;
     int bubbleColorAboveRange;
     int bubbleColorHighAbRange;
@@ -55,7 +54,6 @@ public class LineChartClass {
 
         //Initialize Colors
         xAxisTextColor = MaterialColors.getColor(mainActivity, R.attr.colorXAxisText, Color.BLACK);
-        bubbleColorSelected = MaterialColors.getColor(mainActivity, R.attr.colorSelectedLine, Color.BLACK);
         bubbleColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
         bubbleColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
         bubbleColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
@@ -136,6 +134,7 @@ public class LineChartClass {
 
         //Initialize new color array
         colors = new ArrayList<Integer>();
+        ArrayList<Integer> lineColors = new ArrayList<>();
         ArrayList<Integer> textColors = new ArrayList<>();
         int colorBubbleSel = 0;
 
@@ -165,16 +164,26 @@ public class LineChartClass {
             //if ((hba1c_data.get(count - i).nValues > (0.5 * maxValues)) || i == count) {
                 if (value <= hba1cGoal) {
                     colors.add(bubbleColorInRange);
+                    if (count - daysGoingBackCount < i) {
+                        lineColors.add(bubbleColorInRange);
+                    }
                     textColors.add(textColorInRange);
                 } else if (value > hba1cGoal && value < hba1cHigh) {
                     colors.add(bubbleColorAboveRange);
+                    if (count - daysGoingBackCount < i) {
+                        lineColors.add(bubbleColorAboveRange);
+                    }
                     textColors.add(textColorAboveRange);
                 } else {
                     colors.add(bubbleColorHighAbRange);
+                    if (count - daysGoingBackCount < i) {
+                        lineColors.add(bubbleColorHighAbRange);
+                    }
                     textColors.add(textColorHighAbRange);
                 }
             //} else {
             //    colors.add(bubbleNotEnoughDataColor);
+            //    lineColors.add(bubbleNotEnoughDataColor);
             //    textColors.add(textColor);
             //}
 
@@ -183,7 +192,7 @@ public class LineChartClass {
 
                 colorBubbleSel = colors.get(i);
                 dataBubbleSel.add(new Entry((float) i, hba1c_value, hba1c_value));
-                colors.set(i, bubbleColorSelected);
+                colors.set(i, textColors.get(i));
 
             }
         }
@@ -236,7 +245,7 @@ public class LineChartClass {
         dataBubbleSet.setCircleColors(colors);
         dataBubbleSet.setDrawValues(false);
         //dataBubbleSet.setValueTextColors(Collections.singletonList(mainActivity.getResources().getColor(R.color.blue)));
-        dataBubbleSet.setCircleRadius(20);
+        dataBubbleSet.setCircleRadius(21f);
         dataBubbleSet.enableDashedLine(0f,1f,0f);
         dataBubbleSet.setDrawCircleHole(false);
         //dataBubbleSet.setValueFormatter(new ValueFormatterOneDecimal());
@@ -246,7 +255,7 @@ public class LineChartClass {
         //Format Bubble Data Selected
         dataBubbleSelSet.setFillAlpha(0);
         dataBubbleSelSet.setCircleColor(colorBubbleSel);
-        dataBubbleSelSet.setCircleRadius(20);
+        dataBubbleSelSet.setCircleRadius(18);
         dataBubbleSelSet.setDrawValues(false);
         dataBubbleSelSet.setDrawCircleHole(false);
 
@@ -271,7 +280,7 @@ public class LineChartClass {
         mChart.setData(data);
         mChart.invalidate();
 
-        mChart.setRenderer(new CenteredTextLineChartRenderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler()));
+        mChart.setRenderer(new CenteredTextLineChartRenderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler(), lineColors));
 
         //Set number of displayed values (Default is 6)
         float numberOfVisibleBubbleBars = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_SCREEN_VISIBLE_BUBBLEBARS, "6"));
@@ -281,7 +290,7 @@ public class LineChartClass {
         mChart.getLegend().setEnabled(false);
         mChart.setScaleEnabled(false);
         mChart.setExtraOffsets(0, 10, 0, 0); //X-Axis Labels on top, heading below, chart plot starts below heading
-
+        //mChart.setViewPortOffsets(0f, 0f, 0f, 0f);
         //mChart.setViewPortOffsets(0f,0f,120f,0f);
     }
 

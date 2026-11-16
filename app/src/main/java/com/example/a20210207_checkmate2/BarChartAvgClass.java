@@ -11,6 +11,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.color.MaterialColors;
 import androidx.preference.PreferenceManager;
 
@@ -32,6 +33,7 @@ int bxAxisTextColor;
 int textColorInRange;
 int textColorAboveRange;
 int textColorHighAbRange;
+int barSelectedLineColor;
 
         //Constructor
         BarChartAvgClass(MainActivity mainActivity,ArrayList<Hba1cEntry> hba1c_data,ArrayList<Hba1cEntry> hba1cAverageData) {
@@ -45,6 +47,7 @@ int textColorHighAbRange;
             textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
             textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
             textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
+            barSelectedLineColor = MaterialColors.getColor(mainActivity, R.attr.colorSelectedLine, Color.BLACK);
         }
 
     public void createChart(int nDays, boolean selected) {
@@ -61,13 +64,13 @@ int textColorHighAbRange;
         bxAxis.setDrawLabels(false);
         bxAxis.setDrawGridLines(false);
         bxAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        //bxAxis.setSpaceMax(0.8f);
-        //bxAxis.setSpaceMin(0.8f);
-
-
+        bxAxis.setSpaceMax(0.8f);
+        bxAxis.setSpaceMin(0.8f);
 
         bxAxis.setTextColor(bxAxisTextColor);
         bxAxis.setTextSize(15);
+        bxAxis.setGranularityEnabled(true);
+        bxAxis.setGranularity(1f);
 
 
         bLeft.setDrawLabels(false); // no axis labels
@@ -106,8 +109,10 @@ int textColorHighAbRange;
             bAcolors.add(MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK));
             bATextColors.add(textColorHighAbRange);
         }
+        int selectedBarColor = 0;
         if (selected) {
             dataBarSel.add(new BarEntry(0f, val2));
+            selectedBarColor = bAcolors.isEmpty() ? 0 : bAcolors.get(0);
         }
 
         //Draw x-Axis labels
@@ -119,7 +124,7 @@ int textColorHighAbRange;
         dataBarSet.setDrawValues(false);
         dataBarSet.setHighlightEnabled(false);
         int[] colorsInt = new int[]{MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK), MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK), MaterialColors.getColor(mainActivity, R.attr.colorBarInRangeBackground, Color.BLACK)};
-        dataBarSet.setColors(colorsInt,MaterialColors.getColor(mainActivity, R.attr.alphaBarInRangeBackground, 80));
+        dataBarSet.setColors(colorsInt,MaterialColors.getColor(mainActivity, R.attr.alphaBarInRangeBackground, 255));
 
         //dataBarSet.setStackLabels(new String[]{"<70", "InRange", ">140"}); //Hardcoded
 
@@ -134,9 +139,9 @@ int textColorHighAbRange;
         //Bar Selected with border around bar
         BarDataSet dataBarSetSel = new BarDataSet(dataBarSel, "BarSelected");
         dataBarSetSel.setDrawValues(false);
-        dataBarSetSel.setColors(bAcolors);
-        dataBarSetSel.setBarBorderWidth(3f);
-        dataBarSetSel.setBarBorderColor(Color.WHITE);
+        dataBarSetSel.setColor(selectedBarColor);
+        dataBarSetSel.setBarBorderWidth(0f);
+        dataBarSetSel.setBarBorderColor(barSelectedLineColor);
 
         ArrayList<IBarDataSet> dataSetsBar = new ArrayList<>();
         dataSetsBar.add(dataBarSet);
@@ -144,14 +149,23 @@ int textColorHighAbRange;
         dataSetsBar.add(dataBarSetSel);
 
         BarData dataBarChart = new BarData(dataSetsBar);
-        dataBarChart.setBarWidth(1.2f);
+        dataBarChart.setBarWidth(0.9f);
         dataBarChart.setValueFormatter(new ValueFormatterPercentage());
 
         bAvgChart.setRenderer(new CustomBarChartRenderer(bAvgChart, bAvgChart.getAnimator(), bAvgChart.getViewPortHandler()));
         bAvgChart.setData(dataBarChart);
         bAvgChart.setTouchEnabled(true);
-        bAvgChart.setFitBars(true); //Makes an error so that the bar chart is jumping to the left at reload -> do not use
+        bAvgChart.setFitBars(false); //Makes an error so that the bar chart is jumping to the left at reload -> do not use
         bAvgChart.setVisibleXRangeMinimum(dataBar.size());
+
+        // Remove the default 15dp chart padding/margin
+        // Convert dp to pixels for precise control (left, top, right, bottom)
+        float leftOffset = Utils.convertDpToPixel(9f);
+        float topOffset = Utils.convertDpToPixel(15f);
+        float rightOffset = Utils.convertDpToPixel(9f);
+        float bottomOffset = Utils.convertDpToPixel(15f);
+        bAvgChart.setViewPortOffsets(leftOffset, topOffset, rightOffset, bottomOffset);
+
         bAvgChart.invalidate();
         //bAvgChart.setVisibleXRangeMaximum(1);
         bAvgChart.moveViewToX(1);
