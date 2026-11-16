@@ -14,6 +14,7 @@ import java.util.List;
 public class ChartSync {
     private final List<BarLineChartBase<?>> charts = new ArrayList<>();
     private final float[] src = new float[9], dst = new float[9];
+    public Runnable onSynced;
 
     public void add(final BarLineChartBase<?> chart) {
         charts.add(chart);
@@ -58,5 +59,6 @@ public class ChartSync {
             m.setValues(dst);
             c.getViewPortHandler().refresh(m, c, true);
         }
+        if (onSynced != null) onSynced.run();
     }
 }

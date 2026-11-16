@@ -452,10 +452,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         chartSync.add(lowLineChart.mChart);
         chartSync.add(barChart.bChart);
 
+        SelectionBandView band = findViewById(R.id.selectionBand);
+        band.attach(lineChart.mChart);
+        chartSync.onSynced = band::invalidate;
+        band.select(calcHba1c.getHba1cData().size() - 1, false);
+
         OnChartValueSelectedListener daySelected = new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 int x = (int) e.getX();
+                band.select(x, true);
                 lineChart.createChart(x, true);
                 lineAvgChart.createChart(false);
 
@@ -478,6 +484,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 int x = (int) e.getX();
+                band.select(x, true);
                 lineChart.createChart(x, false);
                 lineAvgChart.createChart(true);
 

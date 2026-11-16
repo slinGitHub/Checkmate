@@ -37,6 +37,18 @@
         app:layout_constraintStart_toStartOf="@+id/BarChart"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
+    <com.example.a20210207_checkmate2.SelectionBandView
+        android:id="@+id/selectionBand"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="9dp"
+        android:elevation="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5" />
+
     <View
         android:id="@+id/lineText5"
         android:layout_width="0dp"
@@ -93,7 +105,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.81" />
+        app:layout_constraintGuide_percent="0.80" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/LineChart"

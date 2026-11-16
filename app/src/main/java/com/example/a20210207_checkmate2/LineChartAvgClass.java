@@ -122,7 +122,7 @@ public class LineChartAvgClass {
         }
 
         ArrayList<String> xAxisLabel = new ArrayList<>();
-        xAxisLabel.add("30 Day");
+        xAxisLabel.add("30\nDay");
         dataLineAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
         dataTextAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
 

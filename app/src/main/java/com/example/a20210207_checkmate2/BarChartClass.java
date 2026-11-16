@@ -163,7 +163,7 @@ public class BarChartClass {
         BarDataSet dataBarSetSel = new BarDataSet(dataBarSel, "BarSelected");
         dataBarSetSel.setDrawValues(false);
         dataBarSetSel.setColor(selectedBarColor);
-        dataBarSetSel.setBarBorderWidth(3f);
+        dataBarSetSel.setBarBorderWidth(0f);
         dataBarSetSel.setBarBorderColor(barSelectedLineColor);
 
         ArrayList<IBarDataSet> dataSetsBar = new ArrayList<>();

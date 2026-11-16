@@ -194,7 +194,7 @@ public class LineChartClass {
             float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL, "50"));
             //Owl Icon - Check if Hba1c and Bar are in Range
             if ((val2 >= inRangeGoal) && (hba1c_value <= hba1cGoal))
-                dataOwlIcon.add(new Entry((float) count, hba1c_value, ContextCompat.getDrawable(mainActivity, R.drawable.owl_check3)));
+                dataOwlIcon.add(new Entry((float) count, hba1c_value, ContextCompat.getDrawable(mainActivity, R.drawable.owlcheck_dark)));
         }
 
         //-------------------------------------------------------------------------------
@@ -246,7 +246,7 @@ public class LineChartClass {
         //Format Bubble Data Selected
         dataBubbleSelSet.setFillAlpha(0);
         dataBubbleSelSet.setCircleColor(colorBubbleSel);
-        dataBubbleSelSet.setCircleRadius(17);
+        dataBubbleSelSet.setCircleRadius(20);
         dataBubbleSelSet.setDrawValues(false);
         dataBubbleSelSet.setDrawCircleHole(false);
 
