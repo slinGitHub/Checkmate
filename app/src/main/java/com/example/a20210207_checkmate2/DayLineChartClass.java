@@ -216,55 +216,117 @@ public class DayLineChartClass {
         double minutes;
         double Time;
 
+        int colorInRange = MaterialColors.getColor(mainActivity, R.attr.colorInRange, Color.BLACK);
+        int colorOutOfRange = MaterialColors.getColor(mainActivity, R.attr.colorOutOfRange, Color.BLACK);
+        int colorVeryOutOfRange = MaterialColors.getColor(mainActivity, R.attr.colorVeryOutOfRange, Color.BLACK);
+
         int i = 0;
         if (useDaySelected == true)
             i = daySelected;
 
         //for (int i = 0; i <= count; i++) {
 
-            ArrayList<Entry> oneDayEntry = new ArrayList<>();
-            circleEntry = new ArrayList<>();
-            count_svg = hba1c_data.get(count - i).glucoseData.size()-1;
+        ArrayList<Entry> allEntries = new ArrayList<>();
+        circleEntry = new ArrayList<>();
+        count_svg = hba1c_data.get(count - i).glucoseData.size()-1;
 
-            for (int j = 0; j <= count_svg; j++)
-            {
-                //Calulate X-Axis Position based on time at day in minutes
-                hours = Double.valueOf(dfHour.format(hba1c_data.get(count - i).glucoseData.get(count_svg - j).date));
-                minutes = Double.valueOf(dfMin.format(hba1c_data.get(count - i).glucoseData.get(count_svg - j).date));
-                Time = hours*60 + minutes;
-                //Date l = Instant.ofEpochMilli(dateTime).truncatedTo(ChronoUnit.DAYS).toEpochMilli();
-                //xAxisLabel.add(dateString);
-                sgv_value = hba1c_data.get(count - i).glucoseData.get(count_svg - j).sgv;
+        for (int j = 0; j <= count_svg; j++)
+        {
+            //Calulate X-Axis Position based on time at day in minutes
+            hours = Double.valueOf(dfHour.format(hba1c_data.get(count - i).glucoseData.get(count_svg - j).date));
+            minutes = Double.valueOf(dfMin.format(hba1c_data.get(count - i).glucoseData.get(count_svg - j).date));
+            Time = hours*60 + minutes;
+            //Date l = Instant.ofEpochMilli(dateTime).truncatedTo(ChronoUnit.DAYS).toEpochMilli();
+            //xAxisLabel.add(dateString);
+            sgv_value = hba1c_data.get(count - i).glucoseData.get(count_svg - j).sgv;
 
-                oneDayEntry.add(new Entry((float) Time, sgv_value));
+            allEntries.add(new Entry((float) Time, sgv_value));
+        }
 
+        for (int j = 0; j < allEntries.size() - 1; j++) {
+            Entry e1 = allEntries.get(j);
+            Entry e2 = allEntries.get(j + 1);
+
+            float x1 = e1.getX();
+            float y1 = e1.getY();
+            float x2 = e2.getX();
+            float y2 = e2.getY();
+
+            ArrayList<Entry> milestones = new ArrayList<>();
+            milestones.add(e1);
+
+            double t_min = -1;
+            double t_max = -1;
+            if ((y1 < minRange && y2 > minRange) || (y1 > minRange && y2 < minRange)) {
+                t_min = (minRange - y1) / (y2 - y1);
+            }
+            if ((y1 < maxRange && y2 > maxRange) || (y1 > maxRange && y2 < maxRange)) {
+                t_max = (maxRange - y1) / (y2 - y1);
             }
 
-
-
-            LineDataSet d = new LineDataSet(oneDayEntry,"Day" + i);
-            d.setDrawCircles(false);
-            d.setColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
-
-            d.setCircleColor(MaterialColors.getColor(mainActivity, R.attr.colorCircle, Color.WHITE));
-            d.setLineWidth(3);
-            d.setHighlightEnabled(false);
-            d.setDrawValues(false);
-            d.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-
-            dataSets.add(d);
-
-            //Draw a circle at the end of the line only if present day is activ
-            if (i==hba1c_data.size()-1) {
-                //Get last Element from oneDayEntry
-                circleEntry.add(oneDayEntry.get(count_svg));
-                LineDataSet circle = new LineDataSet(circleEntry, "Day" + i);
-                circle.setCircleColor(MaterialColors.getColor(mainActivity, R.attr.colorCircle, Color.WHITE));
-                circle.setHighlightEnabled(false);
-                circle.setDrawValues(false);
-                circle.setCircleRadius(5);
-                dataSets.add(circle);
+            if (t_min > 0 && t_min < 1 && t_max > 0 && t_max < 1) {
+                float x_min = (float)(x1 + t_min * (x2 - x1));
+                float x_max = (float)(x1 + t_max * (x2 - x1));
+                Entry eMin = new Entry(x_min, (float)minRange);
+                Entry eMax = new Entry(x_max, (float)maxRange);
+                if (t_min < t_max) {
+                    milestones.add(eMin);
+                    milestones.add(eMax);
+                } else {
+                    milestones.add(eMax);
+                    milestones.add(eMin);
+                }
+            } else if (t_min > 0 && t_min < 1) {
+                float x_min = (float)(x1 + t_min * (x2 - x1));
+                milestones.add(new Entry(x_min, (float)minRange));
+            } else if (t_max > 0 && t_max < 1) {
+                float x_max = (float)(x1 + t_max * (x2 - x1));
+                milestones.add(new Entry(x_max, (float)maxRange));
             }
+
+            milestones.add(e2);
+
+            for (int m = 0; m < milestones.size() - 1; m++) {
+                Entry subE1 = milestones.get(m);
+                Entry subE2 = milestones.get(m + 1);
+
+                ArrayList<Entry> segmentEntries = new ArrayList<>();
+                segmentEntries.add(subE1);
+                segmentEntries.add(subE2);
+
+                float midY = (subE1.getY() + subE2.getY()) / 2f;
+                int segmentColor;
+                if (midY < minRange) {
+                    segmentColor = colorVeryOutOfRange;
+                } else if (midY > maxRange) {
+                    segmentColor = colorOutOfRange;
+                } else {
+                    segmentColor = colorInRange;
+                }
+
+                LineDataSet segmentDataSet = new LineDataSet(segmentEntries, "Day" + i + "_seg" + j + "_" + m);
+                segmentDataSet.setDrawCircles(false);
+                segmentDataSet.setColor(segmentColor);
+                segmentDataSet.setLineWidth(3);
+                segmentDataSet.setHighlightEnabled(false);
+                segmentDataSet.setDrawValues(false);
+                segmentDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+                dataSets.add(segmentDataSet);
+            }
+        }
+
+        //Draw a circle at the end of the line only if present day is activ
+        if (i==hba1c_data.size()-1 && !allEntries.isEmpty()) {
+            //Get last Element from allEntries
+            circleEntry.add(allEntries.get(allEntries.size() - 1));
+            LineDataSet circle = new LineDataSet(circleEntry, "Day" + i);
+            circle.setCircleColor(MaterialColors.getColor(mainActivity, R.attr.colorCircle, Color.WHITE));
+            circle.setHighlightEnabled(false);
+            circle.setDrawValues(false);
+            circle.setCircleRadius(5);
+            dataSets.add(circle);
+        }
 
         LineData lineData = new LineData(dataSets);
 
