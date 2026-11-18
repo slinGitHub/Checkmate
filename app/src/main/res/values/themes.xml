@@ -22,26 +22,32 @@
         <item name="alphaBarInRangeBackground">255</item>
         <item name="colorBarInRangeBackground">#EEF0F3</item>
 
+<!--    Bubble/Bar Chart Colors -->
+        <item name="colorXAxisText">#6F7582</item>
+
         <item name="colorInRange">#7AD6AE</item>
         <item name="colorOutOfRange">#F6C645</item>
         <item name="colorVeryOutOfRange">#F78F85</item>
-        <item name="colorNotEnoughData">#AEAEAE</item>
 
-        <item name="colorDayLineInRange">#ffffff</item>
-        <item name="alphaDayLineInRange">70</item>
-
-        <item name="colorDayLine">#012D37</item>
-
-        LineChartLine and X-Axis Text Color
-        <item name="colorGMIline">#6F7582</item>
-        <item name="colorXAxisText">#6F7582</item>
-        <item name="colorCircle">#eeeeee</item>
-        <item name="colorLineDayGraphPerc">#eeeeee</item>
-        <item name="colorTextHeading">#6F7582</item>
         <item name="colorTextInRange">#063B27</item>
         <item name="colorTextOutOfRange">#4B3600</item>
         <item name="colorTextVeryOutOfRange">#5F130C</item>
 
+        <item name="colorGMIline">#6F7582</item>
+
+        <item name="colorNotEnoughData">#AEAEAE</item>
+
+<!--    DayChart -->
+        <item name="colorDayLineInRange">#EEF0F3</item>
+        <item name="alphaDayLineInRange">255</item>
+
+        <item name="colorDayLine">#012D37</item>
+
+<!--    To Be CHECKED!!-->
+
+        <item name="colorCircle">#eeeeee</item>
+        <item name="colorLineDayGraphPerc">#eeeeee</item>
+        <item name="colorTextHeading">#6F7582</item>
         <item name="colorSelectedLine">#012D37</item>
 
     </style>

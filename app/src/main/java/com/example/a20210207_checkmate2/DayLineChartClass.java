@@ -22,6 +22,7 @@ import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.renderer.DataRenderer;
 import com.github.mikephil.charting.renderer.LineChartRenderer;
 import com.google.android.material.color.MaterialColors;
+import com.github.mikephil.charting.components.LimitLine;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,6 +80,17 @@ public class DayLineChartClass {
         xAxis.setAxisMinimum(0f);
         //String testLabel = xAxis.getValueFormatter().getFormattedValue(300f);
 
+        // Genau 5 Labels: 0, 360, 720, 1080, 1440 min
+        xAxis.setLabelCount(5, true);       // true = exakt 5, keine "schönen" Zwischenwerte
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(360f);         // Absicherung gegen Zwischenlabels beim Zoomen
+        xAxis.setAvoidFirstLastClipping(false);   // sonst doppelte Verschiebung bei "0h"
+
+        mDayChart.setXAxisRenderer(new EdgeAlignedXAxisRenderer(
+                mDayChart.getViewPortHandler(),
+                mDayChart.getXAxis(),
+                mDayChart.getTransformer(YAxis.AxisDependency.LEFT)));
+
 // Linke Achse: unsichtbar, aber mit identischem Range
 // (die DataSets haben die Default-Dependency LEFT, daher muss der Range gesetzt bleiben)
         YAxis left = mDayChart.getAxisLeft();
@@ -88,15 +100,32 @@ public class DayLineChartClass {
         left.setAxisMaximum(300f);
         left.setAxisMinimum(0f);
 
-// Rechte Achse: sichtbar, gleicher Range
+//// Rechte Achse: sichtbar, gleicher Range
+//        YAxis right = mDayChart.getAxisRight();
+//        right.setDrawLabels(true);
+//        right.setDrawAxisLine(true);
+//        right.setDrawGridLines(false);
+//        right.setTextSize(15);
+//        right.setTextColor(xAxisTextColor);
+//        right.setAxisMaximum(300f);
+//        right.setAxisMinimum(0f);
+//
+//// mol / mg/dl
+//        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
+//        if (switchToMol)
+//            right.setValueFormatter(new ValueFormatterDayPlotYAxis());
+//        else
+//            right.setValueFormatter(new DefaultValueFormatter(0));
+
+        // Rechte Achse: keine Beschriftung, bleibt aber enabled (Voraussetzung für LimitLines)
         YAxis right = mDayChart.getAxisRight();
-        right.setDrawLabels(true);
-        right.setDrawAxisLine(true);
+        right.setEnabled(true);
+        right.setDrawLabels(false);      // kein Platz am Rand reserviert
+        right.setDrawAxisLine(false);
         right.setDrawGridLines(false);
-        right.setTextSize(15);
-        right.setTextColor(xAxisTextColor);
         right.setAxisMaximum(300f);
         right.setAxisMinimum(0f);
+        right.setDrawLimitLinesBehindData(true);
 
 // mol / mg/dl
         Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
@@ -127,15 +156,20 @@ public class DayLineChartClass {
         double minRange = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_LOWER_RANGE,"70"));
         double maxRange = Double.valueOf(sharedPref.getString(SettingsActivity.KEY_PREF_UPPER_RANGE,"140"));
 
+        // Range-Beschriftung am rechten Rand (über/unter dem Band)
+        right.removeAllLimitLines();
+        right.addLimitLine(createRangeLabel((float) maxRange, LimitLine.LimitLabelPosition.RIGHT_TOP, right));
+        right.addLimitLine(createRangeLabel((float) minRange, LimitLine.LimitLabelPosition.RIGHT_BOTTOM, right));
+
         //Min
         minOneDayEntry = new ArrayList<>();
         minOneDayEntry.add(new Entry(0f, (float) minRange));
         minOneDayEntry.add(new Entry(24*60, (float) minRange));
         LineDataSet minRangeDataSet = new LineDataSet(minOneDayEntry,"MinRange");
         minRangeDataSet.setColor(Color.WHITE);
-        minRangeDataSet.enableDashedLine(30f,10f,0f);
+        //minRangeDataSet.enableDashedLine(30f,10f,0f);
         minRangeDataSet.setDrawCircles(false);
-        minRangeDataSet.setLineWidth(1);
+        //minRangeDataSet.setLineWidth(1);
         minRangeDataSet.setHighlightEnabled(false);
         minRangeDataSet.setDrawValues(false);
 
@@ -147,9 +181,9 @@ public class DayLineChartClass {
         maxOneDayEntry.add(new Entry(24*60, (float) maxRange));
         LineDataSet maxRangeDataSet = new LineDataSet(maxOneDayEntry,"MaxRange");
         maxRangeDataSet.setColor(Color.WHITE);
-        maxRangeDataSet.enableDashedLine(30f,10f,0f);
+        //maxRangeDataSet.enableDashedLine(30f,10f,0f);
         maxRangeDataSet.setDrawCircles(false);
-        maxRangeDataSet.setLineWidth(1);
+        //maxRangeDataSet.setLineWidth(1);
         maxRangeDataSet.setDrawFilled(true);
         maxRangeDataSet.setHighlightEnabled(false);
         maxRangeDataSet.setDrawValues(false);
@@ -419,4 +453,16 @@ public class DayLineChartClass {
 
 
     }
+
+    private LimitLine createRangeLabel(float value, LimitLine.LimitLabelPosition pos, YAxis axis) {
+        LimitLine ll = new LimitLine(value, axis.getValueFormatter().getAxisLabel(value, axis));
+        ll.setLineColor(Color.TRANSPARENT);   // Linie zeichnet schon dein DataSet
+        ll.setLabelPosition(pos);             // RIGHT_TOP = über der Linie, RIGHT_BOTTOM = darunter
+        ll.setTextSize(15f);
+        ll.setTextColor(xAxisTextColor);
+        ll.setYOffset(2f);                    // Abstand Text ↔ Linie
+        ll.setXOffset(4f);                    // Abstand zum rechten Rand
+        return ll;
+    }
+
 }

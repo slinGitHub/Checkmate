@@ -81,6 +81,10 @@ public class LineChartAvgClass {
         xAxis.setTextSize(15); //Leave space on right side
         xAxis.setTextColor(xAxisTextColor);
         xAxis.setCenterAxisLabels(false);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(1f);
+        xAxis.setAxisMaximum(0f + 0.5f);
+        xAxis.setAxisMinimum(0f - 0.5f);
 
         left.setDrawLabels(false); // no axis labels
         left.setDrawAxisLine(false); // no axis line
@@ -122,7 +126,8 @@ public class LineChartAvgClass {
         }
 
         ArrayList<String> xAxisLabel = new ArrayList<>();
-        xAxisLabel.add("30\nDay");
+        String hba1cDays = sharedPref.getString(SettingsActivity.KEY_PREF_HBA1C_DAYS, "30");
+        xAxisLabel.add(hba1cDays + " Day\nAvg");
         dataLineAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
         dataTextAvg.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
 

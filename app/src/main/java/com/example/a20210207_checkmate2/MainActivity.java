@@ -410,12 +410,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         lowLineChart.createChart(calcHba1c.getHba1cData().size() - 1, true);
         lowLineChart.mChart.moveViewToX(calcHba1c.getHba1cData().size());
 
-        LowLineChartAvgClass lowLineAvgChart = new LowLineChartAvgClass(this, calcHba1c.getHba1cData(), calcHba1c.getHba1cAverageData());
-        lowLineAvgChart.createChart(false);
-        YAxis LowYAxisLeft = lowLineChart.mChart.getAxisLeft();
-        lowLineAvgChart.left.setAxisMaximum(LowYAxisLeft.mAxisMaximum);
-        lowLineAvgChart.left.setAxisMinimum(LowYAxisLeft.mAxisMinimum);
-
         //-------------------------------------------------------------------------------
         // Create Bar Chart
         //-------------------------------------------------------------------------------
@@ -466,7 +460,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 lineAvgChart.createChart(false);
 
                 lowLineChart.createChart(x, true);
-                lowLineAvgChart.createChart(false);
 
                 barChart.createChart(x, true);
                 barAvgChart.createChart(calcHba1c.nDays, false);
@@ -489,7 +482,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 lineAvgChart.createChart(true);
 
                 lowLineChart.createChart(x, false);
-                lowLineAvgChart.createChart(true);
 
                 barChart.createChart(x, false);
                 barAvgChart.createChart(calcHba1c.nDays, true);
@@ -510,7 +502,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         barChart.bChart.setOnChartValueSelectedListener(daySelected);
 
         lineAvgChart.mAChart.setOnChartValueSelectedListener(avgSelected);
-        lowLineAvgChart.mAChart.setOnChartValueSelectedListener(avgSelected);
         barAvgChart.bAvgChart.setOnChartValueSelectedListener(avgSelected);
 
 

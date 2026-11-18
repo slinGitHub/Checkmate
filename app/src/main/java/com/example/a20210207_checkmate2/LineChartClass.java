@@ -217,7 +217,8 @@ public class LineChartClass {
 
         mChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
         //xAxis.setGranularity(1f); // minimum axis-step (interval) is
-        mChart.setXAxisRenderer(new ValueFormatterDateXAxis(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT)));
+        int colorControlNormal = MaterialColors.getColor(mainActivity, androidx.appcompat.R.attr.colorControlNormal, Color.BLACK);
+        mChart.setXAxisRenderer(new ValueFormatterDateXAxis(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT), xAxisTextColor, colorControlNormal, daySelected, useDaySelected));
         //xAxis.setLabelRotationAngle(20);
 
         //Format Line Data
