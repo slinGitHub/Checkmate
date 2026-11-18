@@ -243,6 +243,19 @@ public class DayLineChartClass {
             allEntries.add(new Entry((float) Time, sgv_value));
         }
 
+        class SubSegment {
+            final Entry start;
+            final Entry end;
+            final int color;
+            SubSegment(Entry start, Entry end, int color) {
+                this.start = start;
+                this.end = end;
+                this.color = color;
+            }
+        }
+
+        ArrayList<SubSegment> allSubSegments = new ArrayList<>();
+
         for (int j = 0; j < allEntries.size() - 1; j++) {
             Entry e1 = allEntries.get(j);
             Entry e2 = allEntries.get(j + 1);
@@ -290,10 +303,6 @@ public class DayLineChartClass {
                 Entry subE1 = milestones.get(m);
                 Entry subE2 = milestones.get(m + 1);
 
-                ArrayList<Entry> segmentEntries = new ArrayList<>();
-                segmentEntries.add(subE1);
-                segmentEntries.add(subE2);
-
                 float midY = (subE1.getY() + subE2.getY()) / 2f;
                 int segmentColor;
                 if (midY < minRange) {
@@ -304,15 +313,47 @@ public class DayLineChartClass {
                     segmentColor = colorInRange;
                 }
 
-                LineDataSet segmentDataSet = new LineDataSet(segmentEntries, "Day" + i + "_seg" + j + "_" + m);
-                segmentDataSet.setDrawCircles(false);
-                segmentDataSet.setColor(segmentColor);
-                segmentDataSet.setLineWidth(3);
-                segmentDataSet.setHighlightEnabled(false);
-                segmentDataSet.setDrawValues(false);
-                segmentDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                allSubSegments.add(new SubSegment(subE1, subE2, segmentColor));
+            }
+        }
 
-                dataSets.add(segmentDataSet);
+        if (!allSubSegments.isEmpty()) {
+            ArrayList<Entry> currentGroupEntries = new ArrayList<>();
+            int currentColor = allSubSegments.get(0).color;
+
+            currentGroupEntries.add(allSubSegments.get(0).start);
+            currentGroupEntries.add(allSubSegments.get(0).end);
+
+            for (int k = 1; k < allSubSegments.size(); k++) {
+                SubSegment seg = allSubSegments.get(k);
+                if (seg.color == currentColor) {
+                    currentGroupEntries.add(seg.end);
+                } else {
+                    LineDataSet dataSet = new LineDataSet(currentGroupEntries, "Day" + i + "_group_" + k);
+                    dataSet.setDrawCircles(false);
+                    dataSet.setColor(currentColor);
+                    dataSet.setLineWidth(3);
+                    dataSet.setHighlightEnabled(false);
+                    dataSet.setDrawValues(false);
+                    dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                    dataSets.add(dataSet);
+
+                    currentGroupEntries = new ArrayList<>();
+                    currentGroupEntries.add(seg.start);
+                    currentGroupEntries.add(seg.end);
+                    currentColor = seg.color;
+                }
+            }
+
+            if (!currentGroupEntries.isEmpty()) {
+                LineDataSet dataSet = new LineDataSet(currentGroupEntries, "Day" + i + "_group_final");
+                dataSet.setDrawCircles(false);
+                dataSet.setColor(currentColor);
+                dataSet.setLineWidth(3);
+                dataSet.setHighlightEnabled(false);
+                dataSet.setDrawValues(false);
+                dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+                dataSets.add(dataSet);
             }
         }
 
