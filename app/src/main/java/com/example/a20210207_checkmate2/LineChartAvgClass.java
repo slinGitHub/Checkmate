@@ -4,6 +4,9 @@ import static com.example.a20210207_checkmate2.Utils.getHba1c_mmol;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.view.View;
 
 import androidx.preference.PreferenceManager;
 
@@ -71,6 +74,18 @@ public class LineChartAvgClass {
 
     public void createChart(boolean selected) {
 
+        View cardAvg = mainActivity.findViewById(R.id.lineText5);
+        if (cardAvg != null) {
+            android.graphics.drawable.Drawable bg = cardAvg.getBackground();
+            if (bg instanceof GradientDrawable) {
+                GradientDrawable shape = (GradientDrawable) bg.mutate();
+                int color = selected ?
+                        MaterialColors.getColor(mainActivity, R.attr.colorBackgroundCheckmateAvg, Color.DKGRAY) :
+                        MaterialColors.getColor(mainActivity, R.attr.colorBackgroundCheckmateBright, Color.WHITE);
+                shape.setColor(color);
+            }
+        }
+
         //Format Axes
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawLabels(true);
@@ -135,12 +150,13 @@ public class LineChartAvgClass {
         if (selected == true) {
             colorBubbleSel = colorAvg;
             dataBubbleSel.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
-            colorAvg = MaterialColors.getColor(mainActivity, R.attr.colorTextHeading, Color.BLACK);
+            colorAvg = textColorAvg;
         }
 
         //Set Custom Label
         mAChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
-        mAChart.setXAxisRenderer(new ValueFormatterDateXAxis(mAChart.getViewPortHandler(), mAChart.getXAxis(), mAChart.getTransformer(YAxis.AxisDependency.LEFT)));
+        int colorControlNormal = MaterialColors.getColor(mainActivity, androidx.appcompat.R.attr.colorControlNormal, Color.BLACK);
+        mAChart.setXAxisRenderer(new ValueFormatterDateXAxis(mAChart.getViewPortHandler(), mAChart.getXAxis(), mAChart.getTransformer(YAxis.AxisDependency.LEFT), xAxisTextColor, colorControlNormal, 0, selected));
 
         LineDataSet dataLineAvgSet = new LineDataSet(dataLineAvg, "LineAvg");
         LineDataSet dataTextAvgSet = new LineDataSet(dataTextAvg, "TextAvg");

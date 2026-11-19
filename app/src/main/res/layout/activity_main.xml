@@ -98,7 +98,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.80" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -131,21 +131,6 @@
         android:textColor="?attr/colorTextHeading"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
-
-    <TextView
-        android:id="@+id/lineTextAverage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="45dp"
-        android:elevation="6dp"
-        android:text="Avg"
-        android:textColor="?attr/colorTextHeading"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
     <com.github.mikephil.charting.charts.LineChart

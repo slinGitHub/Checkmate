@@ -2,6 +2,8 @@ package com.example.a20210207_checkmate2;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -52,6 +54,18 @@ int barSelectedLineColor;
 
     public void createChart(int nDays, boolean selected) {
 
+        View cardAvg = mainActivity.findViewById(R.id.lineText5);
+        if (cardAvg != null) {
+            android.graphics.drawable.Drawable bg = cardAvg.getBackground();
+            if (bg instanceof GradientDrawable) {
+                GradientDrawable shape = (GradientDrawable) bg.mutate();
+                int color = selected ?
+                        MaterialColors.getColor(mainActivity, R.attr.colorBackgroundCheckmateAvg, Color.DKGRAY) :
+                        MaterialColors.getColor(mainActivity, R.attr.colorBackgroundCheckmateBright, Color.WHITE);
+                shape.setColor(color);
+            }
+        }
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL,"50"));
         float inRangeTooLow = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_TOO_LOW,"30"));
@@ -66,12 +80,10 @@ int barSelectedLineColor;
         bxAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         bxAxis.setSpaceMax(0.8f);
         bxAxis.setSpaceMin(0.8f);
-
         bxAxis.setTextColor(bxAxisTextColor);
         bxAxis.setTextSize(15);
         bxAxis.setGranularityEnabled(true);
         bxAxis.setGranularity(1f);
-
 
         bLeft.setDrawLabels(false); // no axis labels
         bLeft.setDrawAxisLine(false); // no axis line
@@ -80,8 +92,6 @@ int barSelectedLineColor;
         bRight.setDrawLabels(false); // no axis labels
         bRight.setDrawAxisLine(false); // no axis line
         bRight.setDrawGridLines(false); // no grid lines
-
-
 
         //Load Data in Chart
         ArrayList<BarEntry> dataBar = new ArrayList<BarEntry>();
@@ -140,7 +150,7 @@ int barSelectedLineColor;
         BarDataSet dataBarSetSel = new BarDataSet(dataBarSel, "BarSelected");
         dataBarSetSel.setDrawValues(false);
         dataBarSetSel.setColor(selectedBarColor);
-        dataBarSetSel.setBarBorderWidth(0f);
+        dataBarSetSel.setBarBorderWidth(3f);
         dataBarSetSel.setBarBorderColor(barSelectedLineColor);
 
         ArrayList<IBarDataSet> dataSetsBar = new ArrayList<>();

@@ -40,7 +40,17 @@ public class SelectionBandView extends View {
 
     public void select(float newX, boolean animate) {
         if (anim != null) anim.cancel();
-        if (!animate || Float.isNaN(x)) { x = newX; invalidate(); return; }
+        if (!animate) { x = newX; invalidate(); return; }
+        if (Float.isNaN(x)) {
+            float startX = Math.max(newX + 15f, (ref != null && ref.getData() != null) ? ref.getData().getXMax() + 10f : newX + 15f);
+            x = startX;
+            anim = ValueAnimator.ofFloat(startX, newX);
+            anim.setDuration(350);
+            anim.setInterpolator(new FastOutSlowInInterpolator());
+            anim.addUpdateListener(a -> { x = (float) a.getAnimatedValue(); invalidate(); });
+            anim.start();
+            return;
+        }
         anim = ValueAnimator.ofFloat(x, newX);
         anim.setDuration(250);
         anim.setInterpolator(new FastOutSlowInInterpolator());

@@ -449,7 +449,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         SelectionBandView band = findViewById(R.id.selectionBand);
         band.attach(lineChart.mChart);
         chartSync.onSynced = band::invalidate;
-        band.select(calcHba1c.getHba1cData().size() - 1, false);
+        band.select(calcHba1c.getHba1cData().size() - 1, true);
 
         OnChartValueSelectedListener daySelected = new OnChartValueSelectedListener() {
             @Override

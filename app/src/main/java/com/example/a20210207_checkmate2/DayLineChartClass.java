@@ -38,6 +38,9 @@ public class DayLineChartClass {
     CalcDayLineChartStats calcDayLineChartStats;
     int xAxisTextColor;
 
+    private static final float Y_AXIS_MIN = 0f;
+    private static final float Y_AXIS_DEFAULT_MAX = 300f;
+
     //Constructor
     DayLineChartClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data, ArrayList<GlucoseEntry> glucose_data, CalcDayLineChartStats calcDayLineChartStats) {
         mDayChart = (LineChart) mainActivity.findViewById(R.id.DayLineChart);
@@ -78,7 +81,6 @@ public class DayLineChartClass {
         xAxis.setLabelCount(8,true);
         xAxis.setAxisMaximum(1440f);
         xAxis.setAxisMinimum(0f);
-        //String testLabel = xAxis.getValueFormatter().getFormattedValue(300f);
 
         // Genau 5 Labels: 0, 360, 720, 1080, 1440 min
         xAxis.setLabelCount(5, true);       // true = exakt 5, keine "schönen" Zwischenwerte
@@ -91,8 +93,8 @@ public class DayLineChartClass {
                 mDayChart.getXAxis(),
                 mDayChart.getTransformer(YAxis.AxisDependency.LEFT)));
 
-// Linke Achse: unsichtbar, aber mit identischem Range
-// (die DataSets haben die Default-Dependency LEFT, daher muss der Range gesetzt bleiben)
+        // Linke Achse: unsichtbar, aber mit identischem Range
+        // (die DataSets haben die Default-Dependency LEFT, daher muss der Range gesetzt bleiben)
         YAxis left = mDayChart.getAxisLeft();
         left.setDrawLabels(false);
         left.setDrawAxisLine(false);
@@ -100,50 +102,20 @@ public class DayLineChartClass {
         left.setAxisMaximum(300f);
         left.setAxisMinimum(0f);
 
-//// Rechte Achse: sichtbar, gleicher Range
-//        YAxis right = mDayChart.getAxisRight();
-//        right.setDrawLabels(true);
-//        right.setDrawAxisLine(true);
-//        right.setDrawGridLines(false);
-//        right.setTextSize(15);
-//        right.setTextColor(xAxisTextColor);
-//        right.setAxisMaximum(300f);
-//        right.setAxisMinimum(0f);
-//
-//// mol / mg/dl
-//        Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
-//        if (switchToMol)
-//            right.setValueFormatter(new ValueFormatterDayPlotYAxis());
-//        else
-//            right.setValueFormatter(new DefaultValueFormatter(0));
-
         // Rechte Achse: keine Beschriftung, bleibt aber enabled (Voraussetzung für LimitLines)
         YAxis right = mDayChart.getAxisRight();
         right.setEnabled(true);
         right.setDrawLabels(false);      // kein Platz am Rand reserviert
         right.setDrawAxisLine(false);
         right.setDrawGridLines(false);
-        right.setAxisMaximum(300f);
-        right.setAxisMinimum(0f);
         right.setDrawLimitLinesBehindData(true);
 
-// mol / mg/dl
+        // mol / mg/dl
         Boolean switchToMol = sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_GLUCOSE_MOL, false);
         if (switchToMol)
             right.setValueFormatter(new ValueFormatterDayPlotYAxis());
         else
             right.setValueFormatter(new DefaultValueFormatter(0));
-
-        //Check if yMax/yMin is sufficient
-//        if (yMax > 200)
-//            left.setAxisMaximum((float) yMax);
-//        else
-        left.setAxisMaximum(300f);
-
-//        if (yMin < 50)
-//            left.setAxisMinimum((float) yMin);
-//        else
-        left.setAxisMinimum(0f);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         ArrayList<Entry> minOneDayEntry = new ArrayList<>();
@@ -162,6 +134,7 @@ public class DayLineChartClass {
         right.addLimitLine(createRangeLabel((float) minRange, LimitLine.LimitLabelPosition.RIGHT_BOTTOM, right));
 
         //Min
+        //
         minOneDayEntry = new ArrayList<>();
         minOneDayEntry.add(new Entry(0f, (float) minRange));
         minOneDayEntry.add(new Entry(24*60, (float) minRange));
@@ -172,7 +145,6 @@ public class DayLineChartClass {
         //minRangeDataSet.setLineWidth(1);
         minRangeDataSet.setHighlightEnabled(false);
         minRangeDataSet.setDrawValues(false);
-
         dataSets.add(minRangeDataSet);
 
         //Max
@@ -242,6 +214,18 @@ public class DayLineChartClass {
 
             allEntries.add(new Entry((float) Time, sgv_value));
         }
+
+        float dayMax = 0f;
+        for (Entry e : allEntries) dayMax = Math.max(dayMax, e.getY());
+
+        // > 300: scale up (rounded to the next 10 for headroom so the 3px line isn't clipped); otherwise fixed 300
+        float yAxisMax = dayMax > Y_AXIS_DEFAULT_MAX
+                ? (float) Math.ceil(dayMax / 10f) * 10f
+                : Y_AXIS_DEFAULT_MAX;
+        left.setAxisMinimum(Y_AXIS_MIN);
+        left.setAxisMaximum(yAxisMax);
+        right.setAxisMinimum(Y_AXIS_MIN);
+        right.setAxisMaximum(yAxisMax);
 
         class SubSegment {
             final Entry start;
@@ -362,10 +346,10 @@ public class DayLineChartClass {
             //Get last Element from allEntries
             circleEntry.add(allEntries.get(allEntries.size() - 1));
             LineDataSet circle = new LineDataSet(circleEntry, "Day" + i);
-            circle.setCircleColor(MaterialColors.getColor(mainActivity, R.attr.colorCircle, Color.WHITE));
+            circle.setCircleColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
             circle.setHighlightEnabled(false);
             circle.setDrawValues(false);
-            circle.setCircleRadius(5);
+            circle.setCircleRadius(3);
             dataSets.add(circle);
         }
 
@@ -409,12 +393,11 @@ public class DayLineChartClass {
         minOneDayEntry.add(new Entry(24*60, (float) minRange));
         LineDataSet minRangeDataSet = new LineDataSet(minOneDayEntry,"MinRange");
         minRangeDataSet.setColor(Color.WHITE);
-        minRangeDataSet.enableDashedLine(30f,10f,0f);
+//        minRangeDataSet.enableDashedLine(30f,10f,0f);
         minRangeDataSet.setDrawCircles(false);
-        minRangeDataSet.setLineWidth(1);
+//        minRangeDataSet.setLineWidth(1);
         minRangeDataSet.setHighlightEnabled(false);
         minRangeDataSet.setDrawValues(false);
-
         dataSets.add(minRangeDataSet);
 
         //Max
@@ -424,16 +407,15 @@ public class DayLineChartClass {
         maxOneDayEntry.add(new Entry(24*60, (float) maxRange));
         LineDataSet maxRangeDataSet = new LineDataSet(maxOneDayEntry,"MaxRange");
         maxRangeDataSet.setColor(Color.WHITE);
-        maxRangeDataSet.enableDashedLine(30f,10f,0f);
+//        maxRangeDataSet.enableDashedLine(30f,10f,0f);
         maxRangeDataSet.setDrawCircles(false);
-        maxRangeDataSet.setLineWidth(1);
+//        maxRangeDataSet.setLineWidth(1);
         maxRangeDataSet.setDrawFilled(true);
         maxRangeDataSet.setHighlightEnabled(false);
         maxRangeDataSet.setDrawValues(false);
         maxRangeDataSet.setFillColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLineInRange, Color.BLACK));
-
         maxRangeDataSet.setFillFormatter(new AreaFillFormatter(minRangeDataSet));
-        maxRangeDataSet.setFillAlpha(0);
+        maxRangeDataSet.setFillAlpha(255);
 
         dataSets.add(maxRangeDataSet);
 
@@ -451,15 +433,12 @@ public class DayLineChartClass {
         }
         LineDataSet d5 = new LineDataSet(oneDayEntry5Glucose,"5");
         d5.setDrawCircles(false);
-        d5.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
+        d5.setColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
         d5.setLineWidth(1);
         d5.setHighlightEnabled(false);
         d5.setDrawValues(false);
         d5.enableDashedLine(0, 1, 0);
-
         dataSets.add(d5);
-
-
 
         ArrayList<Double> yGlucoseData95 = calcDayLineChartStats.getPercentileGlucoseYAxis(90);
         ArrayList<Entry> oneDayEntry95Glucose = new ArrayList<>();
@@ -469,7 +448,7 @@ public class DayLineChartClass {
         }
         LineDataSet d95 = new LineDataSet(oneDayEntry95Glucose,"95");
         d95.setDrawCircles(false);
-        d95.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
+        d95.setColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
         d95.setLineWidth(1);
         d95.setHighlightEnabled(false);
         d95.setDrawValues(false);
@@ -478,8 +457,8 @@ public class DayLineChartClass {
         dataSets.add(d95);
 
         d95.setDrawFilled(true);
-        d95.setFillAlpha(80);
-        d95.setFillColor(Color.LTGRAY);
+        d95.setFillAlpha(50);
+        d95.setFillColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
         d95.setFillFormatter(new AreaFillFormatter(d5));
 
         //-------------------------------------------------------------------------------
@@ -494,15 +473,12 @@ public class DayLineChartClass {
         }
         LineDataSet d25 = new LineDataSet(oneDayEntry25Glucose,"25");
         d25.setDrawCircles(false);
-        d25.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
+        d25.setColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
         d25.setLineWidth(1);
         d25.setHighlightEnabled(false);
         d25.setDrawValues(false);
         d25.enableDashedLine(0, 1, 0);
-
         dataSets.add(d25);
-
-
 
         ArrayList<Double> yGlucoseData75 = calcDayLineChartStats.getPercentileGlucoseYAxis(75);
         ArrayList<Entry> oneDayEntry75Glucose = new ArrayList<>();
@@ -512,7 +488,7 @@ public class DayLineChartClass {
         }
         LineDataSet d75 = new LineDataSet(oneDayEntry75Glucose,"75");
         d75.setDrawCircles(false);
-        d75.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
+        d75.setColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
         d75.setLineWidth(1);
         d75.setHighlightEnabled(false);
         d75.setDrawValues(false);
@@ -521,8 +497,8 @@ public class DayLineChartClass {
         dataSets.add(d75);
 
         d75.setDrawFilled(true);
-        d75.setFillAlpha(180);
-        d75.setFillColor(Color.LTGRAY);
+        d75.setFillAlpha(100);
+        d75.setFillColor(MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.WHITE));
         d75.setFillFormatter(new AreaFillFormatter(d25));
 
         //-------------------------------------------------------------------------------
@@ -536,14 +512,12 @@ public class DayLineChartClass {
         }
         LineDataSet dMean = new LineDataSet(oneDayEntryMeanGlucose,"Day");
         dMean.setDrawCircles(false);
-        dMean.setColor(MaterialColors.getColor(mainActivity, R.attr.colorLineDayGraphPerc, Color.WHITE));
+        dMean.setColor( MaterialColors.getColor(mainActivity, R.attr.colorDayLine, Color.BLACK));
         dMean.setLineWidth(3);
         dMean.setHighlightEnabled(false);
         dMean.setDrawValues(false);
-
+        dMean.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSets.add(dMean);
-
-
 
         LineData lineData = new LineData(dataSets);
         mDayChart.setRenderer(new AreaLineLegendRenderer(mDayChart, mDayChart.getAnimator(), mDayChart.getViewPortHandler()));

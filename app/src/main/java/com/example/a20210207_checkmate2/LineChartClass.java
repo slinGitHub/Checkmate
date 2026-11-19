@@ -246,7 +246,7 @@ public class LineChartClass {
         dataBubbleSet.setCircleColors(colors);
         dataBubbleSet.setDrawValues(false);
         //dataBubbleSet.setValueTextColors(Collections.singletonList(mainActivity.getResources().getColor(R.color.blue)));
-        dataBubbleSet.setCircleRadius(21f);
+        dataBubbleSet.setCircleRadius(20);
         dataBubbleSet.enableDashedLine(0f,1f,0f);
         dataBubbleSet.setDrawCircleHole(false);
         //dataBubbleSet.setValueFormatter(new ValueFormatterOneDecimal());
@@ -256,7 +256,7 @@ public class LineChartClass {
         //Format Bubble Data Selected
         dataBubbleSelSet.setFillAlpha(0);
         dataBubbleSelSet.setCircleColor(colorBubbleSel);
-        dataBubbleSelSet.setCircleRadius(18);
+        dataBubbleSelSet.setCircleRadius(17);
         dataBubbleSelSet.setDrawValues(false);
         dataBubbleSelSet.setDrawCircleHole(false);
 
