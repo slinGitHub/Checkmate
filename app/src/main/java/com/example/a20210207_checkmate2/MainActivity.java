@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     //-------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        androidx.core.splashscreen.SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightStatusBars(true);
@@ -604,27 +605,33 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     public void onDaysButtonClick(View view) {
 
         // Days Array
-        int[] daysArray = new int[]{7, 15, 30, 90};
+        int[] daysArray = new int[]{7, 15, 31};
 
         // Get days from Shared Preferences
-        int meanDays = parseInt(sharedPref.getString(KEY_PREF_MEAN_DAYS, "90"));
+        int meanDays = parseInt(sharedPref.getString(KEY_PREF_MEAN_DAYS, "7"));
 
         // Get next element from array
+        int nextDays = daysArray[0];
+        boolean found = false;
         for (int i = 0; i < daysArray.length; i++) {
-            if (meanDays == daysArray[3]) {
-                meanDays = daysArray[0];
-                break;
-            }
-
             if (meanDays == daysArray[i]) {
-                meanDays = daysArray[i + 1];
+                nextDays = daysArray[(i + 1) % daysArray.length];
+                found = true;
                 break;
             }
         }
+        if (!found) {
+            for (int d : daysArray) {
+                if (d > meanDays) {
+                    nextDays = d;
+                    break;
+                }
+            }
+        }
+        meanDays = nextDays;
 
         // Store Number of Days in Shared Preferences
         sharedPref.edit().putString(KEY_PREF_MEAN_DAYS, String.valueOf(meanDays)).apply();
-        sharedPref.edit().apply();
 
         CalcDayLineChartStats calcDayLineChartStats = new CalcDayLineChartStats(calcHba1c.getGlucoseData());
         calcDayLineChartStats.CalcMedian(meanDays);

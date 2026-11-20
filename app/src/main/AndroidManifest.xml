@@ -3,9 +3,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher3"
         android:label=" Checkmate"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher3_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme_bright"
         android:hardwareAccelerated="false">

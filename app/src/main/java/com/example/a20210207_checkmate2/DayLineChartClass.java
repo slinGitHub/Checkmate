@@ -61,7 +61,7 @@ public class DayLineChartClass {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
 
         TextView HeaderDayMeanChart = (TextView) mainActivity.findViewById(R.id.DayLineChartText);
-        HeaderDayMeanChart.setText("Glucose Day Plot");
+        HeaderDayMeanChart.setText("Day Plot");
 
         Button DayLineChartButton = (Button) mainActivity.findViewById(R.id.DayLineChartButton );
         DayLineChartButton.setVisibility(View.GONE);
@@ -350,6 +350,7 @@ public class DayLineChartClass {
             circle.setHighlightEnabled(false);
             circle.setDrawValues(false);
             circle.setCircleRadius(3);
+            circle.setDrawCircleHole(false);
             dataSets.add(circle);
         }
 
@@ -370,13 +371,14 @@ public class DayLineChartClass {
         //Display 7d/30d Button
         Button DayLineChartButton = (Button) mainActivity.findViewById(R.id.DayLineChartButton );
         DayLineChartButton.setVisibility(View.VISIBLE);
-        DayLineChartButton.setText(String.valueOf(calcDayLineChartStats.nDays));
+        DayLineChartButton.setText(calcDayLineChartStats.nDays + " day");
+        DayLineChartButton.setOnClickListener(v -> mainActivity.onDaysButtonClick(v));
 
         TextView DayLineChartTextPercentage = (TextView) mainActivity.findViewById(R.id.DayLineChartTextPercentage);
-        DayLineChartTextPercentage.setVisibility(View.VISIBLE);
+        DayLineChartTextPercentage.setVisibility(View.GONE);
 
         TextView HeaderDayMeanChart = (TextView) mainActivity.findViewById(R.id.DayLineChartText);
-        HeaderDayMeanChart.setText("Glucose Mean Chart (" + String.valueOf(calcDayLineChartStats.nDays) + " Days)");
+        HeaderDayMeanChart.setText("Mean Chart");
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 

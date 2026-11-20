@@ -29,4 +29,5 @@
 
     <!-- Not enough Glucose Data Points -->
     <color name="notEnoughDataPoints">#AEAEAE</color>
+
 </resources>
