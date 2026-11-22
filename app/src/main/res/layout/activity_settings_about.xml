@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@mipmap/ic_launcher3" />
+        app:srcCompat="@mipmap/ic_launcher4" />
 
     <TextView
         android:id="@+id/textVersion"

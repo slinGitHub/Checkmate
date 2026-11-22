@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.core.graphics.Insets;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,6 +20,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -35,6 +38,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -118,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
         setAppTheme(theme);
 
+        boolean isDark = "dark".equals(theme);
+        WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightStatusBars(!isDark);
+
         setContentView(R.layout.activity_main);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_layout), (v, windowInsets) -> {
@@ -128,7 +136,24 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setIcon(R.drawable.ic_action_checkmateactionbarowl_black2); // Show Icon in Toolbar
+        
+        Drawable owlIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_action_checkmateactionbarowl_black2, getTheme());
+        if (owlIcon != null) {
+            Drawable wrappedIcon = DrawableCompat.wrap(owlIcon);
+            int tintColor = isDark ? Color.WHITE : Color.parseColor("#012D37");
+            DrawableCompat.setTint(wrappedIcon, tintColor);
+            getSupportActionBar().setIcon(wrappedIcon);
+        } else {
+            getSupportActionBar().setIcon(R.drawable.ic_action_checkmateactionbarowl_black2);
+        }
+
+        if (isDark) {
+            myToolbar.setTitleTextColor(Color.WHITE);
+            myToolbar.setPopupTheme(androidx.appcompat.R.style.ThemeOverlay_AppCompat_Dark);
+        } else {
+            myToolbar.setTitleTextColor(Color.parseColor("#012D37"));
+            myToolbar.setPopupTheme(androidx.appcompat.R.style.ThemeOverlay_AppCompat_Light);
+        }
 
         // Notification Alarm Scheduler
         if (sharedPref.getBoolean(SettingsActivity.KEY_PREF_SWITCH_NOTIFICAION, true)) {
@@ -183,6 +208,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         switch (theme) {
             case "bright":
                 setTheme(R.style.AppTheme_bright);
+                break;
+            case "dark":
+                setTheme(R.style.AppTheme_dark);
                 break;
 //            case "blue":
 //                setTheme(R.style.AppTheme_Blue);

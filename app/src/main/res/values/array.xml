@@ -2,17 +2,11 @@
 <resources>
     <string-array name="colorTheme">
         <item>bright</item>
-        <item>darkBlue</item>
-        <item>blue</item>
-        <item>green</item>
-        <item>violet</item>
+        <item>dark</item>
     </string-array>
     <string-array name="colorThemeValues">
         <item>Bright</item>
-        <item>Dark Blue</item>
-        <item>Blue</item>
-        <item>Green</item>
-        <item>Violet</item>
+        <item>Dark</item>
     </string-array>
 
     <string-array name="glucoseUnit">

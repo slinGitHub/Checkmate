@@ -60,7 +60,7 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="HbA1c Estimation">
+    <PreferenceCategory android:title="GMI - Chart Limits">
 
         <EditTextPreference
             android:defaultValue="90"
@@ -70,16 +70,12 @@
             android:title="Days Used for HbA1c Calculation"
             app:useSimpleSummaryProvider="true" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Treatment Goals">
-
         <EditTextPreference
             android:defaultValue="6.3"
             android:key="hba1c_goal"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="GMI Goal (x.x) %"
+            android:title="GMI Target &lt;= x.x %"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
@@ -87,7 +83,7 @@
             android:key="hba1c_goal_mol"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="GMI Goal (xx) mmol/mol"
+            android:title="GMI Target &lt;= xx mmol/mol"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
@@ -95,7 +91,7 @@
             android:key="hba1c_veryHigh"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="GMI Very High (x.x) %"
+            android:title="GMI Very High &gt;= x.x %"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
@@ -103,31 +99,16 @@
             android:key="hba1c_veryHigh_mol"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="GMI Very High (xx) mmol/mol"
-            app:useSimpleSummaryProvider="true" />
-
-        <EditTextPreference
-            android:defaultValue="50"
-            android:key="in_range_goal"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="In Range Goal (x) %"
-            app:useSimpleSummaryProvider="true" />
-
-        <EditTextPreference
-            android:defaultValue="40"
-            android:key="in_range_too_low"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="In Range Too Low (x) %"
+            android:title="GMI Very High &gt;= xx mmol/mol"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Glucose Level for In-Range Evaluation">
+
+    <PreferenceCategory android:title="In Range - Chart Limits">
 
         <EditTextPreference
-            android:defaultValue="140"
+            android:defaultValue="180"
             android:key="upper_range"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -159,6 +140,28 @@
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="Min Glucose Events - Chart Limits">
+
+
+    <EditTextPreference
+            android:defaultValue="70"
+            android:key="in_range_goal"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="In Range - Target &gt; X %"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="60"
+            android:key="in_range_too_low"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="In Range - Very Low &lt; X %"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
 
     <PreferenceCategory android:title="Daily HbA1c Notification">
 
