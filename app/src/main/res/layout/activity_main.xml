@@ -14,12 +14,9 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?colorBackgroundCheckmate"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="#012D37"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/AppTheme_bright" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 <!--     Spacing Views instead of TextViews for better performance -->
     <View
