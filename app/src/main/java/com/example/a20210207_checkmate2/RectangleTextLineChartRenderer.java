@@ -36,6 +36,7 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
 
             // Themefarbe für die "Nx"-Anzeige über der Blase (einmal pro Zeichnen auflösen)
             int eventLabelColor = MaterialColors.getColor(context, R.attr.colorXAxisText, Color.BLACK);
+            int selectedLineColor = MaterialColors.getColor(context, R.attr.colorSelectedLine, Color.BLACK);
 
             for (int i = 0; i < dataSets.size(); i++) {
                 ILineDataSet dataSet = dataSets.get(i);
@@ -104,8 +105,8 @@ public class RectangleTextLineChartRenderer extends LineChartRenderer {
                     }
 
                     if ("BubbleSel".equals(dataSetLabel)) {
-                        // Rahmen (Außenbox) mit dem dunklen Textfarbton (valueTextColor)
-                        rectPaint.setColor(valueTextColor);
+                        // Rahmen (Außenbox) mit colorSelectedLine
+                        rectPaint.setColor(selectedLineColor);
                         c.drawRoundRect(rect, cornerRadius, cornerRadius, rectPaint);
 
                         // Farbige Innenbox

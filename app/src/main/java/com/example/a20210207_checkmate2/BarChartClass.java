@@ -43,6 +43,7 @@ public class BarChartClass {
         textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
         textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
         textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
+
         barSelectedLineColor = MaterialColors.getColor(mainActivity, R.attr.colorSelectedLine, Color.BLACK);
     }
 
@@ -94,7 +95,6 @@ public class BarChartClass {
         int count = hba1c_data.size() - 1;
         ArrayList<String> xAxisLabel = new ArrayList<>();
         int selectedBarColor = 0;
-        int selectedBarTextColor = textColorInRange;
 
         for (int i = 0; i <= count; i++) {
 
@@ -135,7 +135,6 @@ public class BarChartClass {
             if (useDaySelected == true && i == daySelected){
                 dataBarSel.add(new BarEntry(i, val2));
                 selectedBarColor = bcolors.get(i);
-                selectedBarTextColor = bTextColors.get(i);
             }
         }
 
@@ -166,7 +165,7 @@ public class BarChartClass {
         dataBarSetSel.setDrawValues(false);
         dataBarSetSel.setColor(selectedBarColor);
         dataBarSetSel.setBarBorderWidth(3f);
-        dataBarSetSel.setBarBorderColor(selectedBarTextColor);
+        dataBarSetSel.setBarBorderColor(barSelectedLineColor);
 
         ArrayList<IBarDataSet> dataSetsBar = new ArrayList<>();
         dataSetsBar.add(dataBarSet);

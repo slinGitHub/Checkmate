@@ -32,5 +32,8 @@
     <attr name="colorTextVeryOutOfRange" format="reference|color" />
 
     <attr name="colorSelectedLine" format="reference|color" />
+    <attr name="colorChartBorder" format="reference|color" />
+    <attr name="colorRangeLine" format="reference|color" />
+
 
 </resources>

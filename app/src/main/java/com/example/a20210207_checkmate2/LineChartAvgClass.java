@@ -45,6 +45,7 @@ public class LineChartAvgClass {
     int textColorInRange;
     int textColorAboveRange;
     int textColorHighAbRange;
+    int selectedLineColor;
 
     //Constructor
     LineChartAvgClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data,ArrayList<Hba1cEntry> hba1cAverageData) {
@@ -70,6 +71,7 @@ public class LineChartAvgClass {
         textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
         textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
         textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
+        selectedLineColor = MaterialColors.getColor(mainActivity, R.attr.colorSelectedLine, Color.BLACK);
     }
 
     public void createChart(boolean selected) {
@@ -150,7 +152,7 @@ public class LineChartAvgClass {
         if (selected == true) {
             colorBubbleSel = colorAvg;
             dataBubbleSel.add(new Entry(0, (float)hba1cAvgValue, (float)hba1cAvgValue));
-            colorAvg = textColorAvg;
+            colorAvg = selectedLineColor;
         }
 
         //Set Custom Label

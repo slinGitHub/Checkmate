@@ -139,7 +139,7 @@ public class DayLineChartClass {
         minOneDayEntry.add(new Entry(0f, (float) minRange));
         minOneDayEntry.add(new Entry(24*60, (float) minRange));
         LineDataSet minRangeDataSet = new LineDataSet(minOneDayEntry,"MinRange");
-        minRangeDataSet.setColor(Color.WHITE);
+        minRangeDataSet.setColor(MaterialColors.getColor(mainActivity, R.attr.colorRangeLine, Color.WHITE));
         //minRangeDataSet.enableDashedLine(30f,10f,0f);
         minRangeDataSet.setDrawCircles(false);
         //minRangeDataSet.setLineWidth(1);
@@ -152,7 +152,7 @@ public class DayLineChartClass {
         maxOneDayEntry.add(new Entry(0f, (float) maxRange));
         maxOneDayEntry.add(new Entry(24*60, (float) maxRange));
         LineDataSet maxRangeDataSet = new LineDataSet(maxOneDayEntry,"MaxRange");
-        maxRangeDataSet.setColor(Color.WHITE);
+        maxRangeDataSet.setColor(MaterialColors.getColor(mainActivity, R.attr.colorRangeLine, Color.WHITE));
         //maxRangeDataSet.enableDashedLine(30f,10f,0f);
         maxRangeDataSet.setDrawCircles(false);
         //maxRangeDataSet.setLineWidth(1);
@@ -394,7 +394,7 @@ public class DayLineChartClass {
         minOneDayEntry.add(new Entry(0f, (float) minRange));
         minOneDayEntry.add(new Entry(24*60, (float) minRange));
         LineDataSet minRangeDataSet = new LineDataSet(minOneDayEntry,"MinRange");
-        minRangeDataSet.setColor(Color.WHITE);
+        minRangeDataSet.setColor(MaterialColors.getColor(mainActivity, R.attr.colorRangeLine, Color.WHITE));
 //        minRangeDataSet.enableDashedLine(30f,10f,0f);
         minRangeDataSet.setDrawCircles(false);
 //        minRangeDataSet.setLineWidth(1);
@@ -408,7 +408,7 @@ public class DayLineChartClass {
         maxOneDayEntry.add(new Entry(0f, (float) maxRange));
         maxOneDayEntry.add(new Entry(24*60, (float) maxRange));
         LineDataSet maxRangeDataSet = new LineDataSet(maxOneDayEntry,"MaxRange");
-        maxRangeDataSet.setColor(Color.WHITE);
+        maxRangeDataSet.setColor(MaterialColors.getColor(mainActivity, R.attr.colorRangeLine, Color.WHITE));
 //        maxRangeDataSet.enableDashedLine(30f,10f,0f);
         maxRangeDataSet.setDrawCircles(false);
 //        maxRangeDataSet.setLineWidth(1);

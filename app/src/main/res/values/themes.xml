@@ -20,6 +20,13 @@
         <item name="alphaBarInRangeBackground">255</item>
         <item name="colorBarInRangeBackground">#EEF0F3</item>
 
+        <!--    Border Colors bg_card-->
+        <item name="colorChartBorder">#E5E8ED</item>
+
+        <!--   Selected Entity-->
+        <item name="colorSelectedLine">#012D37</item>
+
+
 <!--    Bubble/Bar Chart Colors -->
         <item name="colorXAxisText">#6F7582</item>
 
@@ -39,14 +46,18 @@
         <item name="colorDayLineInRange">#EEF0F3</item>
         <item name="alphaDayLineInRange">255</item>
 
+        <item name="colorRangeLine">#EEF0F3</item>
+
         <item name="colorDayLine">#012D37</item>
+
 
 <!--    To Be CHECKED!!-->
 
         <item name="colorCircle">#eeeeee</item>
         <item name="colorLineDayGraphPerc">#eeeeee</item>
         <item name="colorTextHeading">#6F7582</item>
-        <item name="colorSelectedLine">#012D37</item>
+
+
 
     </style>
 
@@ -63,11 +74,19 @@
 
         <item name="colorTextBubbleBar">#81D4FA</item>
         <item name="colorBackgroundCheckmate">#121212</item>
-        <item name="colorBackgroundCheckmateAvg">#1E1E1E</item>
+        <!--    Band Selected Entrys Fill Color-->
+        <item name="colorBackgroundCheckmateAvg">#595959</item>
         <item name="colorBackgroundCheckmateBright">#2D2D2D</item>
 
         <item name="alphaBarInRangeBackground">255</item>
-        <item name="colorBarInRangeBackground">#1E1E1E</item>
+        <item name="colorBarInRangeBackground">#404040</item>
+
+        <!--    Border Colors bg_card-->
+        <item name="colorChartBorder">#2D2D2D</item>
+
+        <!--   Selected Entity-->
+        <item name="colorSelectedLine">#FFFFFF</item>
+
 
 <!--    Bubble/Bar Chart Colors -->
         <item name="colorXAxisText">#B0BEC5</item>
@@ -76,17 +95,19 @@
         <item name="colorOutOfRange">#FFB74D</item>
         <item name="colorVeryOutOfRange">#E57373</item>
 
-        <item name="colorTextInRange">#1B5E20</item>
-        <item name="colorTextOutOfRange">#4E342E</item>
-        <item name="colorTextVeryOutOfRange">#B71C1C</item>
+        <item name="colorTextInRange">#063B27</item>
+        <item name="colorTextOutOfRange">#4B3600</item>
+        <item name="colorTextVeryOutOfRange">#5F130C</item>
 
         <item name="colorGMIline">#B0BEC5</item>
 
         <item name="colorNotEnoughData">#757575</item>
 
 <!--    DayChart -->
-        <item name="colorDayLineInRange">#1E1E1E</item>
+        <item name="colorDayLineInRange">#595959</item>
         <item name="alphaDayLineInRange">255</item>
+
+        <item name="colorRangeLine">#2D2D2D</item>
 
         <item name="colorDayLine">#FFFFFF</item>
 
@@ -95,7 +116,8 @@
         <item name="colorCircle">#2D2D2D</item>
         <item name="colorLineDayGraphPerc">#424242</item>
         <item name="colorTextHeading">#B0BEC5</item>
-        <item name="colorSelectedLine">#FFFFFF</item>
+
+
 
     </style>
 

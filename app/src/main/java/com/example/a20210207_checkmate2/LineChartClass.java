@@ -44,6 +44,7 @@ public class LineChartClass {
     int textColorInRange;
     int textColorAboveRange;
     int textColorHighAbRange;
+    int selectedLineColor;
 
     //Constructor
     LineChartClass(MainActivity mainActivity, ArrayList<Hba1cEntry> hba1c_data, int daysGoingBackCount) {
@@ -62,6 +63,7 @@ public class LineChartClass {
         textColorInRange = MaterialColors.getColor(mainActivity, R.attr.colorTextInRange, Color.BLACK);
         textColorAboveRange = MaterialColors.getColor(mainActivity, R.attr.colorTextOutOfRange, Color.BLACK);
         textColorHighAbRange = MaterialColors.getColor(mainActivity, R.attr.colorTextVeryOutOfRange, Color.BLACK);
+        selectedLineColor = MaterialColors.getColor(mainActivity, R.attr.colorSelectedLine, Color.BLACK);
     }
 
     public void createChart(int daySelected, boolean useDaySelected) {
@@ -192,7 +194,7 @@ public class LineChartClass {
 
                 colorBubbleSel = colors.get(i);
                 dataBubbleSel.add(new Entry((float) i, hba1c_value, hba1c_value));
-                colors.set(i, textColors.get(i));
+                colors.set(i, selectedLineColor);
 
             }
         }
