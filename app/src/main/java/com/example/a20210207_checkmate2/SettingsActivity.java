@@ -58,6 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String theme = sharedPref.getString(SettingsActivity.KEY_PREF_COLOR_THEME, "bright");
+        setAppTheme(theme);
         boolean isDark = "dark".equals(theme);
         WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightStatusBars(!isDark);
 
@@ -75,6 +76,20 @@ public class SettingsActivity extends AppCompatActivity {
                     .commit();
         }
 
+    }
+
+    public void setAppTheme(String theme) {
+        switch (theme) {
+            case "bright":
+                setTheme(R.style.AppTheme_bright);
+                break;
+            case "dark":
+                setTheme(R.style.AppTheme_dark);
+                break;
+            default:
+                setTheme(R.style.AppTheme_bright);
+                break;
+        }
     }
 
  /*   @Override

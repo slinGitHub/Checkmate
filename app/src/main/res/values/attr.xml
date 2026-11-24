@@ -3,6 +3,7 @@
     <attr name="colorBackgroundCheckmate" format="reference|color" />
     <attr name="colorBackgroundCheckmateAvg" format="reference|color" />
     <attr name="colorBackgroundCheckmateBright" format="reference|color" />
+    <attr name="colorSettingsBackground" format="reference|color" />
     <attr name="colorActionBarCheckmate" format="reference|color" />
     <attr name="colorTextBubbleBar" format="reference|color" />
 

@@ -16,6 +16,7 @@
         <item name="colorBackgroundCheckmate">#EEF0F3</item>
         <item name="colorBackgroundCheckmateAvg">#F6F7F9</item>
         <item name="colorBackgroundCheckmateBright">#FFFFFF</item>
+        <item name="colorSettingsBackground">#EEF0F3</item>
 
         <item name="alphaBarInRangeBackground">255</item>
         <item name="colorBarInRangeBackground">#EEF0F3</item>
@@ -69,6 +70,7 @@
         <item name="android:windowSplashScreenBackground">#121212</item>
 
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#E0E0E0</item>
         <item name="colorControlNormal">#E0E0E0</item>
 
@@ -77,16 +79,16 @@
         <!--    Band Selected Entrys Fill Color-->
         <item name="colorBackgroundCheckmateAvg">#595959</item>
         <item name="colorBackgroundCheckmateBright">#2D2D2D</item>
+        <item name="colorSettingsBackground">#2D2D2D</item>
 
         <item name="alphaBarInRangeBackground">255</item>
         <item name="colorBarInRangeBackground">#404040</item>
 
         <!--    Border Colors bg_card-->
-        <item name="colorChartBorder">#2D2D2D</item>
+        <item name="colorChartBorder">#3F3F3F</item>
 
         <!--   Selected Entity-->
         <item name="colorSelectedLine">#FFFFFF</item>
-
 
 <!--    Bubble/Bar Chart Colors -->
         <item name="colorXAxisText">#B0BEC5</item>
