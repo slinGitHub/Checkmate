@@ -204,13 +204,18 @@ public class LineChartClass {
             float val2 = BigDecimal.valueOf(hba1c_data.get(0).inRange * 100).setScale(0, BigDecimal.ROUND_HALF_DOWN).floatValue(); //InRange
             float inRangeGoal = Float.parseFloat(sharedPref.getString(SettingsActivity.KEY_PREF_IN_RANGE_GOAL, "50"));
             //Owl Icon - Check if Hba1c and Bar are in Range
-            if ((val2 >= inRangeGoal) && (hba1c_value <= hba1cGoal))
-                dataOwlIcon.add(new Entry((float) count, hba1c_value, ContextCompat.getDrawable(mainActivity, R.drawable.owlcheck_dark)));
+            if ((val2 >= inRangeGoal) && (hba1c_value <= hba1cGoal)) {
+                String theme = sharedPref.getString(SettingsActivity.KEY_PREF_COLOR_THEME, "bright");
+                boolean isDark = "dark".equals(theme);
+                int owlRes = isDark ? R.drawable.owl_check3 : R.drawable.owlcheck_dark;
+                dataOwlIcon.add(new Entry((float) count, hba1c_value, ContextCompat.getDrawable(mainActivity, owlRes)));
+            }
         }
 
         //-------------------------------------------------------------------------------
         //Format Line and Textdata
-        //-------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------,3
+
         LineDataSet dataLineSet = new LineDataSet(dataLine, "Line");
         LineDataSet dataBubbleSet = new LineDataSet(dataBubble, "Bubble");
         LineDataSet dataTextSet = new LineDataSet(dataText, "Text");

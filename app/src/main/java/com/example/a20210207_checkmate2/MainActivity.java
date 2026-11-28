@@ -95,6 +95,15 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     //-------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String initialTheme = sharedPref.getString(SettingsActivity.KEY_PREF_COLOR_THEME, "dark");
+        if ("bright".equals(initialTheme)) {
+            setTheme(R.style.AppTheme_bright);
+        } else {
+            setTheme(R.style.AppTheme_dark);
+        }
+
         androidx.core.splashscreen.SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -111,9 +120,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         initNightscoutURL = false;
 
         // Set Theme if changed
-        // Load Default Preference Settings
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         currentTheme = sharedPref.getString("currentTheme", "darkBlue");
 
         String theme = sharedPref.getString(SettingsActivity.KEY_PREF_COLOR_THEME, "darkBlue");
